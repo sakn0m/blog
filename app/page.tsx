@@ -1,0 +1,59 @@
+import Link from "next/link";
+import { ThemeToggle } from "./theme-toggle";
+
+const POSTS = [
+  {
+    slug: "hello-world",
+    title: "Hello World",
+    date: "Jan 1, 2024",
+  },
+  {
+    slug: "my-setup",
+    title: "My Setup",
+    date: "Jan 15, 2024",
+  },
+];
+
+export default function Home() {
+  return (
+    <main className="max-w-[600px] mx-auto px-6 py-24 md:py-32 font-serif fade-in relative">
+
+      {/* Dark Mode Button (Absolute Position Top Right) */}
+      <div className="absolute top-6 right-6 md:top-12 md:right-0">
+        <ThemeToggle />
+      </div>
+
+      {/* Header */}
+      <header className="mb-12">
+        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-2 dark:text-white">
+          Giorgio Vanini
+        </h1>
+        <p className="text-xl text-neutral-500 dark:text-neutral-400 italic">
+          thoughts
+        </p>
+      </header>
+
+      {/* Articles Section */}
+      <section className="space-y-6">
+        <ul className="flex flex-col gap-4">
+          {POSTS.map((post) => (
+            <li key={post.slug}>
+              <Link
+                href={`/posts/${post.slug}`}
+                className="group flex flex-row items-baseline justify-between"
+              >
+                <span className="text-lg text-neutral-800 dark:text-neutral-300 border-b border-transparent group-hover:border-neutral-400 dark:group-hover:border-neutral-500 transition-all">
+                  {post.title}
+                </span>
+                <span className="text-sm text-neutral-400 dark:text-neutral-500 italic">
+                  {post.date}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+    </main>
+  );
+}
