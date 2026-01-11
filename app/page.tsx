@@ -1,20 +1,10 @@
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
-
-const POSTS = [
-  {
-    slug: "hello-world",
-    title: "Hello World",
-    date: "Jan 1, 2024",
-  },
-  {
-    slug: "my-setup",
-    title: "My Setup",
-    date: "Jan 15, 2024",
-  },
-];
+import { getAllPosts } from "./lib/posts";
 
 export default function Home() {
+  const posts = getAllPosts();
+
   return (
     <main className="max-w-[600px] mx-auto px-6 py-24 md:py-32 font-serif fade-in relative">
 
@@ -34,7 +24,7 @@ export default function Home() {
       {/* Articles Section */}
       <section className="space-y-6">
         <ul className="flex flex-col gap-4">
-          {POSTS.map((post) => (
+          {posts.map((post) => (
             <li key={post.slug}>
               <Link
                 href={`/posts/${post.slug}`}

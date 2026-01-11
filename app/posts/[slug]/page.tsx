@@ -1,8 +1,11 @@
 import Link from "next/link";
+import Markdown from "markdown-to-jsx";
 import { ThemeToggle } from "../../theme-toggle";
+import { getPostBySlug } from "../../lib/posts";
 
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
+    const post = getPostBySlug(slug);
 
     return (
         <main className="max-w-[600px] mx-auto px-6 py-24 md:py-32 font-serif fade-in relative">
@@ -14,12 +17,14 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 ← Back
             </Link>
 
-            <article className="prose dark:prose-invert">
-                <h1 className="text-3xl font-medium mb-4 capitalize text-neutral-900 dark:text-neutral-100">{slug.replace("-", " ")}</h1>
-                <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed font-serif text-lg">
-                    This is a placeholder for the article content. In a real application,
-                    this would verify the slug and render Markdown/MDX.
-                </p>
+            <article className="prose dark:prose-invert prose-neutral max-w-none">
+                <h1 className="text-3xl font-medium mb-4 capitalize text-neutral-900 dark:text-neutral-100">{post.title}</h1>
+                <div className="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8">
+                    {post.date}
+                </div>
+                <div className="text-lg text-neutral-800 dark:text-neutral-300 leading-relaxed">
+                    <Markdown>{post.content}</Markdown>
+                </div>
             </article>
         </main>
     );
