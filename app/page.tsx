@@ -24,13 +24,11 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="mb-12">
-        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-2 dark:text-white">
-          Giorgio Vanini
+      <header className="mb-1">
+        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-white">
+          jojo thoughs
         </h1>
-        <p className="text-xl text-neutral-500 dark:text-neutral-400 italic">
-          thoughts
-        </p>
+        <hr className="border-neutral-200 dark:border-neutral-800" />
       </header>
 
       {/* Articles Section */}
