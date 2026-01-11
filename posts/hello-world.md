@@ -1,5 +1,5 @@
 ---
-title: "Hello World"
+title: "hello world"
 date: "Jan 1, 2024"
 ---
 hello, world!

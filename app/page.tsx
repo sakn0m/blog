@@ -6,7 +6,7 @@ export default function Home() {
   const posts = getAllPosts();
 
   return (
-    <main className="max-w-[600px] mx-auto px-6 py-24 md:py-32 font-serif relative">
+    <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
 
       {/* Dark Mode Button (Absolute Position Top Right) */}
       <div className="absolute top-6 right-6 md:top-12 md:right-0">

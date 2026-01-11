@@ -8,7 +8,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     const post = getPostBySlug(slug);
 
     return (
-        <main className="max-w-[600px] mx-auto px-6 py-24 md:py-32 font-serif relative">
+        <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
             <div className="absolute top-6 right-6 md:top-12 md:right-0">
                 <ThemeToggle />
             </div>
