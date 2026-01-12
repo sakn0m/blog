@@ -1,7 +1,12 @@
 ---
 title: "hello world"
-date: "Jan 1, 2024"
+date: "Jan 12, 2026"
 ---
+
+![](/images/palestine-flag.jpeg)
+
+<br />
+
 hello, world!
 
 <br />
