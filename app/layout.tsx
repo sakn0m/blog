@@ -10,7 +10,7 @@ const garamond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "jojo thoughs",
+  title: "jojo's thoughts",
   description: "just random thoughts, whatever comes to mind",
 };
 
