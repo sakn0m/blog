@@ -18,7 +18,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
             </Link>
 
             <article className="prose dark:prose-invert prose-neutral max-w-none">
-                <h1 className="text-3xl font-medium mb-4 capitalize text-neutral-900 dark:text-neutral-100">{post.title}</h1>
+                <h1 className="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-100">{post.title}</h1>
                 <div className="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8">
                     {post.date}
                 </div>
