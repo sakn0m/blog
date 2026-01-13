@@ -9,7 +9,7 @@ let isFirstLoadGlobal = true;
 
 export default function Template({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-    const [isFirstLoad, setIsFirstLoad] = useState(isFirstLoadGlobal);
+    const [isFirstLoad] = useState(isFirstLoadGlobal);
     const isPost = pathname.startsWith("/posts");
 
     useEffect(() => {
