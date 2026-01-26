@@ -1,18 +1,12 @@
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
+
 import { getAllPosts } from "./lib/posts";
 
 export default function Home() {
   const posts = getAllPosts();
 
   return (
-    <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
-
-      {/* Dark Mode Button (Absolute Position Top Right) */}
-      <div className="absolute top-6 right-6 md:top-12 md:right-0">
-        <ThemeToggle />
-      </div>
-
+    <>
       {/* Header */}
       <header className="mb-1">
         <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-white">
@@ -41,7 +35,6 @@ export default function Home() {
           ))}
         </ul>
       </section>
-
-    </main>
+    </>
   );
 }
