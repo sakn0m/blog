@@ -11,7 +11,7 @@ const garamond = EB_Garamond({
 
 export const metadata: Metadata = {
   title: "jojo's thoughts",
-  description: "just whatever comes to mind",
+  description: "just whatever comes to my mind",
 };
 
 export default function RootLayout({
