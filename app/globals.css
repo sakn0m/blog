@@ -14,6 +14,10 @@
 
 @layer base {
 
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   html,
   body {
     @apply h-full;
