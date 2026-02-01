@@ -24,7 +24,7 @@ export default function Home() {
                 href={`/posts/${post.slug}`}
                 className="group flex flex-row items-baseline justify-between"
               >
-                <span className="text-lg text-neutral-800 dark:text-neutral-300 underline decoration-transparent decoration-1 underline-offset-[4px] md:group-hover:decoration-neutral-400 md:dark:group-hover:decoration-neutral-500 group-active:decoration-neutral-400 dark:group-active:decoration-neutral-500 transition-colors duration-450 md:duration-150 ease-out group-active:duration-0">
+                <span className="text-lg text-neutral-800 dark:text-neutral-300 underline decoration-transparent decoration-1 underline-offset-[4px] md:group-hover:decoration-neutral-400 md:dark:group-hover:decoration-neutral-500 group-active:decoration-neutral-400 dark:group-active:decoration-neutral-500 transition-colors duration-550 md:duration-150 ease-out group-active:duration-0">
                   {post.title}
                 </span>
                 <span className="text-sm text-neutral-400 dark:text-neutral-500 italic">
