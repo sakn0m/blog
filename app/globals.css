@@ -20,7 +20,14 @@
 
   html,
   body {
-    @apply h-full;
+    @apply h-full overflow-x-hidden;
+  }
+
+  /* Force breathing room for table cells */
+  .prose :where(td, th) {
+    padding: 0.5rem 1.5rem !important;
+    min-width: 12rem;
+    line-height: 1.5 !important;
   }
 
   body {

@@ -3,6 +3,7 @@ import Markdown from "markdown-to-jsx";
 
 import { getPostBySlug, getAllPosts } from "../../lib/posts";
 import { MarkdownImage } from "../../components/markdown-image";
+import { MarkdownTable } from "../../components/markdown-table";
 
 export async function generateStaticParams() {
     const posts = getAllPosts();
@@ -27,7 +28,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                     {post.date}
                 </div>
                 <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none">
-                    <Markdown options={{ overrides: { img: MarkdownImage } }}>{post.content}</Markdown>
+                    <Markdown options={{ overrides: { img: MarkdownImage, table: MarkdownTable } }}>{post.content}</Markdown>
                 </div>
             </article>
         </>
