@@ -17,7 +17,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
     return (
         <>
-            <Link href="/" className="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 transition-colors mb-8 block outline-none">
+            <Link href="/" className="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 transition-colors mb-8 block outline-none">
                 ← Back
             </Link>
 

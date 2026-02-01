@@ -24,7 +24,7 @@ export default function Home() {
                 href={`/posts/${post.slug}`}
                 className="group flex flex-row items-baseline justify-between"
               >
-                <span className="text-lg text-neutral-800 dark:text-neutral-300 border-b border-transparent group-hover:border-neutral-400 dark:group-hover:border-neutral-500 transition-all">
+                <span className="text-lg text-neutral-800 dark:text-neutral-300 border-b border-transparent group-hover:border-neutral-400 dark:group-hover:border-neutral-500 group-active:border-neutral-400 dark:group-active:border-neutral-500 transition-all">
                   {post.title}
                 </span>
                 <span className="text-sm text-neutral-400 dark:text-neutral-500 italic">
