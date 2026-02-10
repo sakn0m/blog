@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { EB_Garamond } from "next/font/google";
-import { Providers } from "./providers";
-import { ThemeToggle } from "./theme-toggle";
+import { Providers } from "@/app/providers";
+import { ThemeToggle } from "@/app/theme-toggle";
 import "./globals.css";
 
 const garamond = EB_Garamond({
@@ -11,8 +11,17 @@ const garamond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "jojo's thoughts",
+  metadataBase: new URL("https://jojo.news"),
+  title: {
+    default: "jojo's thoughts",
+    template: "%s",
+  },
   description: "just whatever comes to my mind",
+  openGraph: {
+    title: "jojo's thoughts",
+    description: "just whatever comes to my mind",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

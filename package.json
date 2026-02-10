@@ -6,10 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint"
   },
   "dependencies": {
-    "framer-motion": "^12.25.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.562.0",
     "markdown-to-jsx": "^9.5.5",

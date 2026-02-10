@@ -42,3 +42,5 @@ Disallow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://jojo.news/sitemap.xml

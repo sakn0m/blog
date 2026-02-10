@@ -14,7 +14,7 @@ export function ThemeToggle() {
         setMounted(true);
     }, []);
 
-    if (!mounted) return null;
+    if (!mounted) return <div className="w-10 h-10 rounded-full" />;
 
     return (
         <button
