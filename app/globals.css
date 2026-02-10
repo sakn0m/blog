@@ -33,18 +33,20 @@
     }
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-left {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slide-right {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
   }
 
-  .animate-fade-in {
-    animation: fade-in 0.2s ease-out both;
-  }
+  .animate-fade-up    { animation: fade-up 0.2s ease-out both; }
+  .animate-slide-left  { animation: slide-left 0.2s ease-out both; }
+  .animate-slide-right { animation: slide-right 0.2s ease-out both; }
 }
