@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { EB_Garamond } from "next/font/google";
 import { Providers } from "@/app/providers";
 import { ThemeToggle } from "@/app/theme-toggle";
 import "./globals.css";
-
-const garamond = EB_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-garamond",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jojo.news"),
@@ -31,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${garamond.variable} font-serif antialiased transition-colors duration-500`}>
+      <body className="font-serif antialiased transition-colors duration-500">
         <Providers>
           <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
             <div className="absolute top-6 right-6 md:top-12 md:right-0">
