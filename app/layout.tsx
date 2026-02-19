@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import { Source_Serif_4 } from "next/font/google";
 import { Providers } from "@/app/providers";
 import { ThemeToggle } from "@/app/theme-toggle";
 import "./globals.css";
+
+const sourceSerif4 = Source_Serif_4({
+  subsets: ["latin"],
+  weight: "variable",
+  variable: "--font-source-serif-4",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jojo.news"),
@@ -24,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-serif antialiased transition-colors duration-500">
+      <body className={`${sourceSerif4.variable} font-serif antialiased transition-colors duration-500`}>
         <Providers>
           <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
             <div className="absolute top-6 right-6 md:top-12 md:right-0">
