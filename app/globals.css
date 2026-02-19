@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-serif: var(--font-source-serif-4), Georgia, ui-serif, serif;
+  --font-serif: var(--font-charter), Georgia, ui-serif, serif;
 }
 
 /* 
