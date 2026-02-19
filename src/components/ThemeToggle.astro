@@ -1,0 +1,74 @@
+---
+---
+
+<button
+  id="theme-toggle"
+  aria-label="Toggle Dark Mode"
+  class="group z-50 cursor-pointer p-2 rounded-full text-neutral-500 hover-hover:hover:bg-neutral-100 hover-hover:dark:hover:bg-neutral-800 transition-colors relative w-10 h-10 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 dark:focus-visible:ring-neutral-700"
+>
+  <!-- Sun icon -->
+  <svg
+    class="w-5 h-5 absolute transition-all duration-500 rotate-0 scale-100 dark:-rotate-90 dark:scale-0 text-amber-500"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="m4.93 4.93 1.41 1.41"></path>
+    <path d="m17.66 17.66 1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="m6.34 17.66-1.41 1.41"></path>
+    <path d="m19.07 4.93-1.41 1.41"></path>
+  </svg>
+
+  <!-- Moon icon -->
+  <svg
+    class="w-5 h-5 absolute transition-all duration-500 rotate-90 scale-0 dark:rotate-0 dark:scale-100 text-neutral-100"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<script>
+  function initThemeToggle() {
+    const button = document.getElementById('theme-toggle');
+    if (!button) return;
+
+    button.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark');
+
+      if (isDark) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  }
+
+  // Run on initial load
+  initThemeToggle();
+
+  // Re-run after Astro page transitions (View Transitions)
+  document.addEventListener('astro:after-swap', initThemeToggle);
+</script>

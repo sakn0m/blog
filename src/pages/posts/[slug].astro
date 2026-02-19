@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const isoDate = new Date(post.data.date).toISOString().split('T')[0];
+const description = post.body?.slice(0, 160).replace(/\n/g, ' ').trim() || '';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  datePublished: isoDate,
+  author: { "@type": "Person", name: "jojo" },
+};
+---
+
+<Layout
+  title={`${post.data.title} — jojo's thoughts`}
+  description={description}
+  ogImage={`https://jojo.news/og/${post.id}.png`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <a href="/" class="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 transition-colors mb-8 block outline-none">
+    &larr; Back
+  </a>
+
+  <article class="max-w-none">
+    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50">{post.data.title}</h1>
+    <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block">
+      {post.data.date}
+    </time>
+    <div class="prose prose-lg prose-neutral dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </article>
+</Layout>

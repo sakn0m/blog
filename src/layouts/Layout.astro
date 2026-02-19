@@ -1,0 +1,81 @@
+---
+import ThemeToggle from '../components/ThemeToggle.astro';
+import '../styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = "jojo's thoughts",
+  description = "just whatever comes to my mind",
+  ogImage
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="h-full" style="--font-charter: 'Charter';">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Charter font -->
+    <style>
+      @font-face {
+        font-family: 'Charter';
+        src: url('/fonts/charter-regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: optional;
+      }
+      @font-face {
+        font-family: 'Charter';
+        src: url('/fonts/charter-italic.woff2') format('woff2');
+        font-weight: 400;
+        font-style: italic;
+        font-display: optional;
+      }
+      @font-face {
+        font-family: 'Charter';
+        src: url('/fonts/charter-bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+        font-display: optional;
+      }
+      @font-face {
+        font-family: 'Charter';
+        src: url('/fonts/charter-bold-italic.woff2') format('woff2');
+        font-weight: 700;
+        font-style: italic;
+        font-display: optional;
+      }
+    </style>
+
+    <!-- Dark mode: apply before render to prevent flash -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="font-serif h-full">
+    <main class="max-w-[750px] mx-auto px-6 py-24 md:py-32 relative">
+      <div class="absolute top-6 right-6 md:top-12 md:right-0">
+        <ThemeToggle />
+      </div>
+      <slot />
+    </main>
+  </body>
+</html>
