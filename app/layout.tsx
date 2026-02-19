@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { EB_Garamond } from "next/font/google";
+import { Source_Serif_4 } from "next/font/google";
 import { Providers } from "@/app/providers";
 import { ThemeToggle } from "@/app/theme-toggle";
 import "./globals.css";
 
-const garamond = EB_Garamond({
+const sourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-garamond",
+  weight: "variable",
+  variable: "--font-source-serif-4",
 });
 
 export const metadata: Metadata = {
@@ -30,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${garamond.variable} font-serif antialiased transition-colors duration-500`}>
+    <html lang="en" suppressHydrationWarning className={sourceSerif4.variable}>
+      <body className="font-serif antialiased transition-colors duration-500">
         <Providers>
           <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
             <div className="absolute top-6 right-6 md:top-12 md:right-0">
