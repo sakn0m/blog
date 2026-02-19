@@ -76,10 +76,13 @@ const {
     <script is:inline>
       function applyTheme() {
         const stored = localStorage.getItem('theme');
+        const docEl = document.documentElement;
         if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
+          docEl.classList.add('dark');
+          docEl.style.colorScheme = 'dark';
         } else {
-          document.documentElement.classList.remove('dark');
+          docEl.classList.remove('dark');
+          docEl.style.colorScheme = 'light';
         }
       }
       applyTheme();

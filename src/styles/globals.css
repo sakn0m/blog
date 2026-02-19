@@ -25,6 +25,7 @@
     @apply antialiased transition-colors duration-500 bg-white text-neutral-900;
 
     .dark & {
+      color-scheme: dark;
       @apply bg-neutral-950 text-neutral-50;
     }
   }
