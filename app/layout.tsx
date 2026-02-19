@@ -12,7 +12,7 @@ const charter = localFont({
     { path: "../public/fonts/charter-bold-italic.woff2", weight: "700", style: "italic" },
   ],
   variable: "--font-charter",
-  display: "swap",
+  display: "optional",
 });
 
 export const metadata: Metadata = {
