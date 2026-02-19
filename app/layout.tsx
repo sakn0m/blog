@@ -30,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${sourceSerif4.variable} font-serif antialiased transition-colors duration-500`}>
+    <html lang="en" suppressHydrationWarning className={sourceSerif4.variable}>
+      <body className="font-serif antialiased transition-colors duration-500">
         <Providers>
           <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
             <div className="absolute top-6 right-6 md:top-12 md:right-0">
