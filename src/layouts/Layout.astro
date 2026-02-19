@@ -93,12 +93,6 @@ const {
           link.classList.add('is-navigating');
         }
       });
-      document.addEventListener('touchstart', (e) => {
-        const link = e.target.closest('a');
-        if (link && link.href && link.hostname === location.hostname && link.target !== '_blank') {
-          link.classList.add('is-navigating');
-        }
-      }, { passive: true });
       document.addEventListener('touchcancel', () => {
         document.querySelectorAll('.is-navigating').forEach(el => el.classList.remove('is-navigating'));
       }, { passive: true });

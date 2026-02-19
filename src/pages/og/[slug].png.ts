@@ -2,9 +2,7 @@ import type { APIRoute, InferGetStaticPropsType } from 'astro';
 import { getCollection } from 'astro:content';
 import satori from 'satori';
 import sharp from 'sharp';
-import { decompress } from 'wawoff2';
-import fs from 'node:fs';
-import path from 'node:path';
+import { getCharterFont } from '../../lib/og-font';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -19,9 +17,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 export const GET: APIRoute = async ({ props }) => {
   const { post } = props as Props;
 
-  const fontPath = path.resolve('./public/fonts/charter-regular.woff2');
-  const woff2 = fs.readFileSync(fontPath);
-  const fontData = await decompress(woff2);
+  const fontData = await getCharterFont();
 
   const svg = await satori(
     {
@@ -48,7 +44,7 @@ export const GET: APIRoute = async ({ props }) => {
             type: 'div',
             props: {
               style: { fontSize: 24, color: '#a3a3a3', marginTop: 16, fontStyle: 'italic' },
-              children: post.data.date,
+              children: post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
             },
           },
         ],

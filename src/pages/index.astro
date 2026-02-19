@@ -3,11 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { slide } from 'astro:transitions';
 
-const posts = (await getCollection('posts')).sort((a, b) => {
-  const dateA = new Date(a.data.date).toISOString();
-  const dateB = new Date(b.data.date).toISOString();
-  return dateB > dateA ? 1 : -1;
-});
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 
 // Homepage always enters from left, exits to left
 const s = slide({ duration: '0.2s' });
@@ -25,7 +23,7 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
   <section class="space-y-6 animate-fade-up delay-100">
     <ul class="flex flex-col gap-4">
       {posts.map((post) => {
-        const isoDate = new Date(post.data.date).toISOString().split('T')[0];
+        const isoDate = post.data.date.toISOString().split('T')[0];
         return (
           <li>
             <a
@@ -36,7 +34,7 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
                 {post.data.title}
               </span>
               <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic">
-                {post.data.date}
+                {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </time>
             </a>
           </li>

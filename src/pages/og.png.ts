@@ -1,14 +1,10 @@
 import type { APIRoute } from 'astro';
 import satori from 'satori';
 import sharp from 'sharp';
-import { decompress } from 'wawoff2';
-import fs from 'node:fs';
-import path from 'node:path';
+import { getCharterFont } from '../lib/og-font';
 
 export const GET: APIRoute = async () => {
-  const fontPath = path.resolve('./public/fonts/charter-regular.woff2');
-  const woff2 = fs.readFileSync(fontPath);
-  const fontData = await decompress(woff2);
+  const fontData = await getCharterFont();
 
   const svg = await satori(
     {
