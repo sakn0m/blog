@@ -6,10 +6,10 @@ date: "Jan 17, 2026"
 hello world!
 
 
-this is a little very minimal website i made to host my thoughts and shit. it's not much but it's fully mine. nothing inherently interesting or particularly deep, just a place to freely write whatever passes on my mind without being contstrained by the terrible layout of instagram stories or whatever other platform the tech lords give us. most importantly **without any data collection or AI training.**
+this is a little very minimal website i made to host my thoughts. it's not much but it's fully mine, a place to freely write whatever passes on my mind without being constrained by the terrible layout of instagram stories or the shortcomings of whatever other platform the tech lords give us. 
 
+most importantly this website **has no data collection whatsoever for you** and should also prevent crawling bots to use the contents to train AI models.
 
-to be fair i started this because i found a cool domain lol. hope you'll enjoy the schizo posts!
-
+to be fair i’m also very happy for the cool domain i found! hope you'll enjoy the schizo posts!
 
 :)
