@@ -23,9 +23,7 @@ Questa sezione descrive l'organizzazione delle cartelle e dei file principali de
 │   └── content.config.ts # Definizione schema Zod per i Content
 ├── docs/                 # Documentazione del progetto
 ├── public/               # File statici serviti senza elaborazione (immagini, fonts)
-├── .github/              # Workflow GitHub (CI/CD)
-├── astro.config.mjs      # Configurazione vite, tailwind e sitemap per Astro 
-├── vercel.json           # Configurazione routing proxy/headers per Vercel
+├── astro.config.mjs      # Configurazione vite, tailwind e sitemap per Astro
 ├── package.json          # Dipendenze e script npm
 └── tsconfig.json         # Configurazione TypeScript
 ```

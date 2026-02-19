@@ -53,14 +53,11 @@ Sono state definite alcune animazioni custom css keyframed per regalare una pres
 
 **Animazioni Base:**
 -   `animate-fade-up`
--   `animate-slide-left`
--   `animate-slide-right`
 
 **Classi per Staggering (Ritardi temporizzati):**
 Aggiungendo queste classi ad elementi fratelli generi un effetto a "cascata".
 -   `delay-100` (100ms)
--   `delay-200`
--   `delay-300`
+-   `delay-200` (200ms)
 
 **Esempio in Astro:**
 ```html

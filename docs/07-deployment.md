@@ -4,13 +4,13 @@ Il blog è ottimizzato per il deploy su piattaforme di hosting statico o serverl
 
 ## Vercel (Consigliato)
 
-Essendo un progetto Next.js, Vercel offre l'integrazione migliore.
+Essendo un progetto Astro, Vercel offre l'integrazione migliore.
 
 1.  Collega il repository GitHub a Vercel.
-2.  Vercel rileverà automaticamente che è un progetto Next.js.
+2.  Vercel rileverà automaticamente che è un progetto Astro.
 3.  Configurazione di build predefinita:
-    -   **Build Command**: `next build`
-    -   **Output Directory**: `.next`
+    -   **Build Command**: `astro build`
+    -   **Output Directory**: `dist/`
     -   **Install Command**: `npm install`
 4.  Deploy.
 
@@ -18,13 +18,16 @@ Ogni volta che fai push su `main`, Vercel ricostruirà il sito e aggiornerà i c
 
 ## Generazione di Immagini Open Graph (OG)
 
-Il progetto include `opengraph-image.tsx` nella cartella `app/posts/[slug]/`.
-Next.js genererà automaticamente un'immagine di anteprima per i social media per ogni post, basandosi sul titolo o altri metadati del post. Non è necessaria alcuna configurazione manuale.
-L'immagine sarà disponibile all'URL del post.
+Il progetto genera le immagini OG al momento della build tramite `satori` e `sharp`:
+
+- `src/pages/og.png.ts` — immagine OG per la homepage.
+- `src/pages/og/[slug].png.ts` — immagini OG per ogni singolo post.
+
+Le immagini vengono create automaticamente durante `astro build` e incluse nella cartella `dist/`. Non è necessaria alcuna configurazione manuale.
 
 ## Performance Check
 
 Prima di andare in produzione, verifica:
 -   **Lighthouse Score**: Esegui un audit in Chrome DevTools.
--   **Immagini**: Assicurati che le immagini in `public/` non siano eccessivamente pesanti (meglio usare WebP se possibile, anche se Next.js ottimizza molto).
+-   **Immagini**: Assicurati che le immagini in `public/` non siano eccessivamente pesanti (meglio usare WebP se possibile).
 -   **Link Rotti**: Controlla che tutti i link nei file Markdown siano corretti.

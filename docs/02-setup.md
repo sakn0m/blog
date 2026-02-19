@@ -21,7 +21,7 @@ Assicurati di avere installato:
     ```bash
     npm install
     ```
-    Questo installerà tutte le librerie elencate in `package.json`, inclusi Next.js, React, e Tailwind CSS.
+    Questo installerà tutte le librerie elencate in `package.json`, inclusi Astro e Tailwind CSS.
 
 ## Comandi Disponibili
 
