@@ -1,15 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { slide } from 'astro:transitions';
 
 const posts = (await getCollection('posts')).sort((a, b) => {
   const dateA = new Date(a.data.date).toISOString();
   const dateB = new Date(b.data.date).toISOString();
   return dateB > dateA ? 1 : -1;
 });
+
+// Homepage always enters from left, exits to left
+const s = slide({ duration: '0.2s' });
+const homeTransition = { forwards: s.backwards, backwards: s.backwards };
 ---
 
-<Layout ogImage="https://jojo.news/og.png">
+<Layout ogImage="https://jojo.news/og.png" transition={homeTransition}>
   <header class="mb-1">
     <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50">
       jojo's thoughts

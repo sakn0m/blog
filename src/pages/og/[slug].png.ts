@@ -1,4 +1,4 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute, InferGetStaticPropsType } from 'astro';
 import { getCollection } from 'astro:content';
 import satori from 'satori';
 import sharp from 'sharp';
@@ -14,8 +14,10 @@ export async function getStaticPaths() {
   }));
 }
 
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
 export const GET: APIRoute = async ({ props }) => {
-  const { post } = props as any;
+  const { post } = props as Props;
 
   const fontPath = path.resolve('./public/fonts/charter-regular.woff2');
   const woff2 = fs.readFileSync(fontPath);

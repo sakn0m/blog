@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+import type { TransitionDirectionalAnimations } from 'astro:transitions';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/globals.css';
 
@@ -6,12 +8,14 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  transition?: TransitionDirectionalAnimations;
 }
 
 const {
   title = "jojo's thoughts",
   description = "just whatever comes to my mind",
-  ogImage
+  ogImage,
+  transition
 } = Astro.props;
 ---
 
@@ -60,14 +64,20 @@ const {
       }
     </style>
 
+    <ViewTransitions />
+
     <!-- Dark mode: apply before render to prevent flash -->
     <script is:inline>
-      (function() {
+      function applyTheme() {
         const stored = localStorage.getItem('theme');
         if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
-      })();
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
     </script>
   </head>
   <body class="font-serif h-full">
@@ -75,7 +85,9 @@ const {
       <div class="absolute top-6 right-6 md:top-12 md:right-0">
         <ThemeToggle />
       </div>
-      <slot />
+      <div transition:name="content" transition:animate={transition || 'none'}>
+        <slot />
+      </div>
     </main>
   </body>
 </html>

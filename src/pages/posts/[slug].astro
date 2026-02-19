@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
+import { slide } from 'astro:transitions';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -22,12 +23,17 @@ const jsonLd = {
   datePublished: isoDate,
   author: { "@type": "Person", name: "jojo" },
 };
+
+// Post page always enters from right, exits to right
+const s = slide({ duration: '0.2s' });
+const postTransition = { forwards: s.forwards, backwards: s.forwards };
 ---
 
 <Layout
   title={`${post.data.title} — jojo's thoughts`}
   description={description}
   ogImage={`https://jojo.news/og/${post.id}.png`}
+  transition={postTransition}
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
