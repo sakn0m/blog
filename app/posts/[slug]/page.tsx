@@ -50,7 +50,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
             </Link>
 
             <article className="max-w-none">
-                <h1 className="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-100">{post.title}</h1>
+                <h1 className="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50">{post.title}</h1>
                 <time dateTime={post.isoDate} className="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block">
                     {post.date}
                 </time>

@@ -36,9 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={charter.variable}>
-      <body className="font-serif antialiased transition-colors duration-500">
+      <body className="font-serif">
         <Providers>
-          <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 font-serif relative">
+          <main className="max-w-[750px] mx-auto px-6 py-24 md:py-32 relative">
             <div className="absolute top-6 right-6 md:top-12 md:right-0">
               <ThemeToggle />
             </div>

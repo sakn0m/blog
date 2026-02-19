@@ -13,7 +13,7 @@ export type Post = {
     content: string;
 };
 
-export function getPostSlugs() {
+function getPostSlugs() {
     return fs.readdirSync(postsDirectory).filter((file) => file.endsWith(".md"));
 }
 

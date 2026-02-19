@@ -9,7 +9,7 @@ export default function Home() {
     <>
       {/* Header */}
       <header className="mb-1">
-        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-white">
+        <h1 className="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50">
           jojo&apos;s thoughts
         </h1>
         <hr className="border-neutral-200 dark:border-neutral-800" />
