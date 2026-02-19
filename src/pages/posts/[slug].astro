@@ -37,12 +37,12 @@ const postTransition = { forwards: s.forwards, backwards: s.forwards };
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <a href="/" class="font-sans text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 transition-colors mb-8 block outline-none">
+  <a href="/" class="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 transition-colors mb-8 block outline-none">
     &larr; Back
   </a>
 
   <article class="max-w-none">
-    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50 animate-fade-up">{post.data.title}</h1>
+    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50 transition-colors duration-500 animate-fade-up">{post.data.title}</h1>
     <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block animate-fade-up delay-100">
       {post.data.date}
     </time>
