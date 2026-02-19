@@ -16,13 +16,18 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  a,
+  button {
+    touch-action: manipulation;
+  }
+
   html,
   body {
     @apply h-full;
   }
 
   body {
-    @apply antialiased transition-colors duration-500 bg-white text-neutral-900;
+    @apply antialiased transition-[background-color] duration-500 bg-white text-neutral-900;
 
     .dark & {
       color-scheme: dark;
@@ -72,14 +77,17 @@
   }
 
   .animate-fade-up {
+    will-change: transform, opacity;
     animation: fade-up 0.4s ease-out both;
   }
 
   .animate-slide-left {
+    will-change: transform, opacity;
     animation: slide-left 0.4s ease-out both;
   }
 
   .animate-slide-right {
+    will-change: transform, opacity;
     animation: slide-right 0.4s ease-out both;
   }
 
