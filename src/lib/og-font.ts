@@ -1,11 +1,9 @@
 import { decompress } from 'wawoff2';
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
-// Resolved relative to this file — robust regardless of build cwd
-const fontPath = fileURLToPath(
-    new URL('../../public/fonts/charter-regular.woff2', import.meta.url)
-);
+// path.resolve() is anchored to CWD, which Astro always sets to the project root at build time
+const fontPath = path.resolve('./public/fonts/charter-regular.woff2');
 
 let cached: ArrayBuffer | null = null;
 
