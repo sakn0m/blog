@@ -30,9 +30,9 @@
     }
   }
 
-  /* Smooth dark mode color transition for prose content */
-  :where(.prose, .prose *) {
-    transition: color 500ms ease, background-color 500ms ease, border-color 500ms ease;
+  /* Smooth dark mode color transition for prose content - only structural props, not every text node */
+  :where(.prose) {
+    transition: background-color 500ms ease, border-color 500ms ease;
   }
 
   @keyframes fade-up {
