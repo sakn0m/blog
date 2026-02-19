@@ -33,7 +33,7 @@ Per avviare il server di sviluppo con hot-reloading:
 npm run dev
 ```
 
-Il sito sarà accessibile a `http://localhost:3000`.
+Il sito sarà accessibile a `http://localhost:4321` (porta di default di Astro).
 
 ### Build di Produzione
 
@@ -43,20 +43,12 @@ Per creare una build ottimizzata per la produzione:
 npm run build
 ```
 
-Questo comando genererà i file statici e compilerà il codice server-side nella cartella `.next`.
+Questo comando genererà i file statici nella cartella `dist/`.
 
-### Avvio Produzione
+### Avvio Preview Locale
 
-Per avviare il server usando la build di produzione (necessita di `npm run build` prima):
-
-```bash
-npm run start
-```
-
-### Linting
-
-Per verificare la qualità del codice e trovare errori comuni:
+Per testare la build di produzione localmente prima del deploy:
 
 ```bash
-npm run lint
+npm run preview
 ```

@@ -42,11 +42,11 @@ const postTransition = { forwards: s.forwards, backwards: s.forwards };
   </a>
 
   <article class="max-w-none">
-    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50">{post.data.title}</h1>
-    <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block">
+    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50 animate-fade-up">{post.data.title}</h1>
+    <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block animate-fade-up delay-100">
       {post.data.date}
     </time>
-    <div class="prose prose-lg prose-neutral dark:prose-invert max-w-none">
+    <div class="prose prose-lg prose-neutral dark:prose-invert max-w-none animate-fade-up delay-200">
       <Content />
     </div>
   </article>

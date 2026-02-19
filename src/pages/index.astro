@@ -15,14 +15,14 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
 ---
 
 <Layout ogImage="https://jojo.news/og.png" transition={homeTransition}>
-  <header class="mb-1">
+  <header class="mb-1 animate-fade-up">
     <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50">
       jojo's thoughts
     </h1>
     <hr class="border-neutral-200 dark:border-neutral-800" />
   </header>
 
-  <section class="space-y-6">
+  <section class="space-y-6 animate-fade-up delay-100">
     <ul class="flex flex-col gap-4">
       {posts.map((post) => {
         const isoDate = new Date(post.data.date).toISOString().split('T')[0];

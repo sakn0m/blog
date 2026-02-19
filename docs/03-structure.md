@@ -6,47 +6,38 @@ Questa sezione descrive l'organizzazione delle cartelle e dei file principali de
 
 ```
 /
-├── app/                  # Logica applicativa (App Router)
-│   ├── components/       # Componenti specifici dell'app (es. markdown-image.tsx)
-│   ├── lib/              # Funzioni di utilità (es. parsing dei post)
-│   ├── posts/            # Routing dinamico per i singoli post
-│   │   └── [slug]/       # Cartella dinamica base slug
-│   │       ├── page.tsx  # Pagina del singolo post
-│   │       └── opengraph-image.tsx # Generazione immagine OG
-│   ├── globals.css       # Stili globali e configurazione Tailwind
-│   ├── layout.tsx        # Layout principale (Root Layout)
-│   ├── page.tsx          # Homepage (lista dei post)
-│   ├── providers.tsx     # Provider per il contesto (es. ThemeProvider)
-│   └── theme-toggle.tsx  # Componente per il cambio tema
+├── src/                  # Codice sorgente principale di Astro
+│   ├── components/       # Componenti UI (es. ThemeToggle.astro)
+│   ├── content/          # Collezioni di contenuti gestite da Astro
+│   │   └── posts/        # File originali Markdown (.md)
+│   ├── layouts/          # Layout delle pagine (es. Layout.astro)
+│   ├── pages/            # Router file-based
+│   │   ├── index.astro   # Homepage
+│   │   ├── 404.astro     # Pagina errore
+│   │   ├── og.png.ts     # Generazione dinamica OG per la homepage
+│   │   ├── posts/
+│   │   │   └── [slug].astro # Pagina dinamica per ogni post
+│   │   └── og/
+│   │       └── [slug].png.ts # Generazione dinamica OG per singoli post
+│   ├── styles/           # CSS globale (Tailwind)
+│   └── content.config.ts # Definizione schema Zod per i Content
 ├── docs/                 # Documentazione del progetto
-├── posts/                # Contenuti del blog (file .md)
-├── public/               # File statici (immagini, favicon)
+├── public/               # File statici serviti senza elaborazione (immagini, fonts)
 ├── .github/              # Workflow GitHub (CI/CD)
+├── astro.config.mjs      # Configurazione vite, tailwind e sitemap per Astro 
+├── vercel.json           # Configurazione routing proxy/headers per Vercel
 ├── package.json          # Dipendenze e script npm
-├── tsconfig.json         # Configurazione TypeScript
-└── next.config.ts        # Configurazione Next.js
+└── tsconfig.json         # Configurazione TypeScript
 ```
 
 ## Dettagli Cartelle Chiave
 
-### `app/`
-
-Contiene tutto il codice sorgente dell'applicazione Next.js.
--   **`layout.tsx`**: Definisce la struttura comune a tutte le pagine (header, footer, meta tag globali). Include il `theme-toggle`.
--   **`page.tsx`**: La homepage. Recupera la lista dei post usando `getAllPosts()` da `lib/posts.ts` e li visualizza.
--   **`globals.css`**: Importa Tailwind e definisce le variabili CSS per i temi e le animazioni.
-
-### `app/lib/`
-
-Contiene la logica di business separata dall'interfaccia.
--   **`posts.ts`**: Gestisce la lettura del file system per recuperare i file Markdown dalla cartella `posts/` root. Usa `gray-matter` per separare i metadati dal contenuto.
-
-### `posts/` (Root)
-
-Questa è la cartella **più importante per i contenuti**. Qui risiedono i file Markdown (`.md`) che diventano le pagine del blog.
--   Ogni file qui dentro corrisponde a un URL: `posts/mio-articolo.md` -> `yoursite.com/posts/mio-articolo`.
+### `src/`
+Tutta la logica, stile e contenuto processato del blog.
+- **`pages/`**: Definisce le rotte pubbliche. I file qui dentro diventano automaticamente URL. `index.astro` è la `/`.
+- **`content/`**: Sostituisce la vecchia logica manuale di parsing Markdown. Tutti i file qui sono tipizzati e validati.
+- **`layouts/`**: `Layout.astro` costruisce la struttura HTML base, includendo SEO headers e il `ViewTransitions` engine.
 
 ### `public/`
-
-Contiene asset statici come immagini, icone, fonts.
--   Le immagini inserite qui sono accessibili dalla root `/`. Esempio: `public/logo.png` -> `<img src="/logo.png" />`.
+Usata per asset come la favicon e i file *font* locali (`.woff2`) per garantire stabilità visiva.
+Tutto ciò che sta qui è servito dritto nella root del server (es: `/favicon.png`).

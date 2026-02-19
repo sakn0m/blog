@@ -6,28 +6,27 @@ Questo repository contiene un blog statico/dinamico costruito con tecnologie mod
 
 Il progetto utilizza le seguenti tecnologie principali:
 
-- **Framework**: [Next.js 16.1.1](https://nextjs.org/) (App Router)
+- **Framework**: [Astro 5](https://astro.build/)
 - **Linguaggio**: [TypeScript 5](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **UI Libraries**:
-  - [Lucide React](https://lucide.dev/) (Icone)
-  - [Next Themes](https://github.com/pacocoursey/next-themes) (Gestione Dark Mode)
+- **UI Libraries & Tools**:
+  - `satori` e `sharp` per la generazione di immagini Open Graph
 - **Gestione Contenuti**:
-  - [Gray-matter](https://github.com/jonschlinkert/gray-matter) (Parsing Frontmatter)
-  - [Markdown-to-JSX](https://github.com/quantizor/markdown-to-jsx) (Rendering Markdown come Componenti React)
-- **Linting & Formatting**: ESLint 9
+  - Astro Content Collections (`astro:content`) con validazione Zod per i post in Markdown.
+- **Transizioni**:
+  - View Transitions native di Astro per navigazioni fluide tipo SPA.
 
 ## Obiettivo
 
 L'obiettivo è fornire una piattaforma di blogging semplice ma potente dove:
-1.  I contenuti sono scritti in Markdown puro.
-2.  Il design è gestito centralmente tramite Tailwind CSS.
-3.  La performance è massimizzata grazie a Next.js (SSR/SSG).
-4.  L'esperienza utente è fluida (transizioni, dark mode).
+1. I contenuti sono scritti in Markdown puro.
+2. Il design è gestito centralmente tramite Tailwind CSS.
+3. La performance è massimizzata grazie ad Astro (zero JS by default).
+4. L'esperienza utente è fluida (animazioni staggered, transizioni SPA-like, dark mode inline).
 
 ## Caratteristiche Chiave
 
--   **Routing Dinamico**: Le pagine dei post sono generate dinamicamente basandosi sugli slug dei file Markdown. (Vedi `app/posts/[slug]`).
--   **Dark Mode**: Supporto nativo per tema chiaro/scuro con persistenza delle preferenze utente.
--   **SEO Friendly**: Metadata dinamici, Open Graph Images generate automaticamente, Sitemap.
--   **Responsive**: Layout adattivo per mobile, tablet e desktop.
+- **Content Collections**: I post sono strettamente tipizzati tramite schema Zod (Vedi `src/content.config.ts`).
+- **Dark Mode Island**: Supporto nativo per tema chiaro/scuro ottimizzato per prevenire il flash of unstyled content (FOUC).
+- **SEO Friendly**: Metadata dinamici, Open Graph Images generate automaticamente, Sitemap.
+- **Responsive & Animato**: Layout adattivo con micro-animazioni CSS temporizzate per un effetto elegante al primo caricamento.

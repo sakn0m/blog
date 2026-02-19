@@ -38,7 +38,12 @@
     to   { opacity: 1; transform: translateX(0); }
   }
 
-  .animate-fade-up    { animation: fade-up 0.2s ease-out both; }
-  .animate-slide-left  { animation: slide-left 0.2s ease-out both; }
-  .animate-slide-right { animation: slide-right 0.2s ease-out both; }
+  .animate-fade-up    { animation: fade-up 0.4s ease-out both; }
+  .animate-slide-left  { animation: slide-left 0.4s ease-out both; }
+  .animate-slide-right { animation: slide-right 0.4s ease-out both; }
+
+  /* Animation Delays */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
 }
