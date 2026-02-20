@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { slide } from 'astro:transitions';
+import { SITE_URL, SITE_TITLE } from '../lib/consts';
+import { formatDate, toISODate } from '../lib/date';
 
 const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
@@ -12,34 +14,31 @@ const s = slide({ duration: '0.2s' });
 const homeTransition = { forwards: s.backwards, backwards: s.backwards };
 ---
 
-<Layout ogImage="https://jojo.news/og.png" transition={homeTransition}>
-  <header class="mb-1 animate-fade-up">
+<Layout ogImage={`${SITE_URL}/og.png`} transition={homeTransition}>
+  <header class="mb-1">
     <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50 pl-1 -ml-1">
-      jojo's thoughts
+      {SITE_TITLE}
     </h1>
     <hr class="border-neutral-200 dark:border-neutral-800 transition-colors duration-500" />
   </header>
 
-  <section class="space-y-6 animate-fade-up delay-100">
+  <nav aria-label="Blog posts" class="space-y-6 animate-fade-up">
     <ul class="flex flex-col gap-4">
-      {posts.map((post) => {
-        const isoDate = post.data.date.toISOString().split('T')[0];
-        return (
-          <li>
-            <a
-              href={`/posts/${post.id}`}
-              class="group flex flex-row items-baseline justify-between"
-            >
-              <span class="text-lg text-neutral-800 dark:text-neutral-300 underline decoration-transparent decoration-1 underline-offset-[4px] md:group-hover:decoration-neutral-400 md:dark:group-hover:decoration-neutral-500 group-active:decoration-neutral-400 dark:group-active:decoration-neutral-500 group-[.is-navigating]:decoration-neutral-400 dark:group-[.is-navigating]:decoration-neutral-500 transition-[text-decoration-color] duration-0 md:duration-150 ease-out">
-                {post.data.title}
-              </span>
-              <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic">
-                {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-              </time>
-            </a>
-          </li>
-        );
-      })}
+      {posts.map((post) => (
+        <li>
+          <a
+            href={`/posts/${post.id}`}
+            class="group flex flex-row items-baseline justify-between"
+          >
+            <span class="text-lg text-neutral-800 dark:text-neutral-300 underline decoration-transparent decoration-1 underline-offset-[4px] md:group-hover:decoration-neutral-400 md:dark:group-hover:decoration-neutral-500 group-active:decoration-neutral-400 dark:group-active:decoration-neutral-500 group-[.is-navigating]:decoration-neutral-400 dark:group-[.is-navigating]:decoration-neutral-500 transition-[text-decoration-color] duration-0 md:duration-150 ease-out">
+              {post.data.title}
+            </span>
+            <time datetime={toISODate(post.data.date)} class="text-sm text-neutral-400 dark:text-neutral-500 italic">
+              {formatDate(post.data.date)}
+            </time>
+          </a>
+        </li>
+      ))}
     </ul>
-  </section>
+  </nav>
 </Layout>

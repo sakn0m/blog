@@ -52,16 +52,18 @@
     }
   }
 
-  .animate-fade-up {
-    animation: fade-up 0.4s ease-out both;
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-fade-up {
+      animation: fade-up 0.4s ease-out both;
+    }
 
-  /* Animation Delays */
-  .delay-100 {
-    animation-delay: 100ms;
-  }
+    /* Animation Delays */
+    .delay-100 {
+      animation-delay: 100ms;
+    }
 
-  .delay-200 {
-    animation-delay: 200ms;
+    .delay-200 {
+      animation-delay: 200ms;
+    }
   }
 }

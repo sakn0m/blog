@@ -8,9 +8,8 @@ const fontPath = path.resolve('./public/fonts/charter-regular.woff2');
 let cached: ArrayBuffer | null = null;
 
 export async function getCharterFont(): Promise<ArrayBuffer> {
-    if (!cached) {
-        const woff2 = fs.readFileSync(fontPath);
-        cached = await decompress(woff2);
-    }
-    return cached!;
+    if (cached) return cached;
+    const woff2 = fs.readFileSync(fontPath);
+    cached = await decompress(woff2);
+    return cached;
 }
