@@ -30,7 +30,7 @@ export async function renderOgImage(
                 fontSize: options.isHomepage ? 64 : 56,
                 fontWeight: 500,
                 color: '#171717',
-                lineHeight: 1.0
+                lineHeight: 0.9
               },
               children: title,
             },
