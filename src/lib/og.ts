@@ -2,7 +2,11 @@ import satori from 'satori';
 import sharp from 'sharp';
 import { getCharterFont } from './og-font';
 
-export async function renderOgImage(title: string, subtitle: string): Promise<Buffer> {
+export async function renderOgImage(
+  title: string,
+  subtitle: string,
+  options: { isHomepage?: boolean } = {}
+): Promise<Buffer> {
   const fontData = await getCharterFont();
 
   const svg = await satori(
@@ -22,14 +26,24 @@ export async function renderOgImage(title: string, subtitle: string): Promise<Bu
           {
             type: 'div',
             props: {
-              style: { fontSize: 56, fontWeight: 500, color: '#171717' },
+              style: {
+                fontSize: options.isHomepage ? 64 : 56,
+                fontWeight: 500,
+                color: '#171717',
+                lineHeight: 1.1,
+              },
               children: title,
             },
           },
           {
             type: 'div',
             props: {
-              style: { fontSize: 24, color: '#a3a3a3', marginTop: 16, fontStyle: 'italic' },
+              style: {
+                fontSize: options.isHomepage ? 28 : 24,
+                color: '#a3a3a3',
+                marginTop: 24,
+                fontStyle: options.isHomepage ? 'normal' : 'italic'
+              },
               children: subtitle,
             },
           },
