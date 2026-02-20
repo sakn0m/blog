@@ -15,14 +15,14 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
 ---
 
 <Layout ogImage={`${SITE_URL}/og.png`} transition={homeTransition}>
-  <header class="mb-1">
+  <header class="mb-1 animate-fade-up">
     <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50 pl-1 -ml-1">
       {SITE_TITLE}
     </h1>
     <hr class="border-neutral-200 dark:border-neutral-800 transition-colors duration-500" />
   </header>
 
-  <nav aria-label="Blog posts" class="space-y-6 animate-fade-up">
+  <nav aria-label="Blog posts" class="space-y-6 animate-fade-up delay-100">
     <ul class="flex flex-col gap-4">
       {posts.map((post) => (
         <li>
