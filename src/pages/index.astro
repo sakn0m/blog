@@ -28,12 +28,12 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
         <li>
           <a
             href={`/posts/${post.id}`}
-            class="group flex flex-row items-baseline justify-between"
+            class="group flex flex-row items-baseline justify-between gap-4"
           >
             <span class="text-lg text-neutral-800 dark:text-neutral-300 underline decoration-transparent decoration-1 underline-offset-[4px] md:group-hover:decoration-neutral-400 md:dark:group-hover:decoration-neutral-500 group-active:decoration-neutral-400 dark:group-active:decoration-neutral-500 group-[.is-navigating]:decoration-neutral-400 dark:group-[.is-navigating]:decoration-neutral-500 transition-[text-decoration-color] duration-0 md:duration-150 ease-out">
               {post.data.title}
             </span>
-            <time datetime={toISODate(post.data.date)} class="text-sm text-neutral-400 dark:text-neutral-500 italic">
+            <time datetime={toISODate(post.data.date)} class="text-sm text-neutral-400 dark:text-neutral-500 italic shrink-0 whitespace-nowrap">
               {formatDate(post.data.date)}
             </time>
           </a>
