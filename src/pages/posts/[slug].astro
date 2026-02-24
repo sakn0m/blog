@@ -7,10 +7,12 @@ import { formatDate, toISODate } from '../../lib/date';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+  return posts
+    .filter((post) => import.meta.env.PROD ? !post.data.draft : true)
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
 }
 
 const { post } = Astro.props;
