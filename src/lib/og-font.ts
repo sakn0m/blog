@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // path.resolve() is anchored to CWD, which Astro always sets to the project root at build time
-const fontPath = path.resolve('./public/fonts/charter-regular.woff2');
+const fontPath = path.resolve('./src/assets/fonts/charter-regular.woff2');
 
 let cached: ArrayBuffer | null = null;
 
