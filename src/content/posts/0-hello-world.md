@@ -10,6 +10,4 @@ this is a very minimal website i made to host my thoughts. it's not much but it'
 
 most importantly, this website **collects no data from you whatsoever** and should also prevent crawling bots from using its contents to train AI models.
 
-i’m also very happy with the cool domain i found! hope you'll enjoy the schizo posts!
-
-:)
+hope you'll enjoy the schizo posts!
