@@ -22,6 +22,5 @@ Bombing Iran doesn't end the regime. It entrenches it, radicalizes it, and gives
 
 <hr class="w-12 h-px mt-10 mb-5 bg-neutral-200 border-0 dark:bg-neutral-800">
 <p class="text-sm text-neutral-500 dark:text-neutral-400 italic leading-relaxed">
-  I have been wanting to write something about the myth of nation-building for a while, ever since the Maduro capture in January. While this is not exactly what I intended, the last few days of watching shallow, pro-interventionist takes on the matter have been unbearable. It is incomplete, it lacks many other perspectives and arguments and it is not as rigorous as I would like it to be. But still, I felt it was important to put something out.
-  I hope I'll manage to finish the Venezuela piece.
+  I have been wanting to write something about the myth of nation-building for a while, ever since the Maduro capture in January. While this is not exactly what I intended, the last few days of watching shallow, pro-interventionist takes on the matter have been unbearable. It is incomplete, it lacks many other perspectives and arguments and it is not as rigorous as I would like it to be. But still, I felt it was important to put something out. I hope I'll manage to finish the Venezuela piece.
 </p>
