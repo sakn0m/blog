@@ -9,7 +9,7 @@ What military strikes actually do, almost invariably, is consolidate authoritari
 
 Look at what happened in Afghanistan, in Iraq, in Libya, in Syria. Look at what happened after the Iran-Iraq war, after every round of sanctions, after every round of assassinations and sabotage operations. The regime didn't weaken. It purged, it repressed, and it survived, because external pressure gives authoritarian systems a pretext to demand internal unity. The enemy outside becomes the justification for crushing the enemy inside. There is no reason to believe this time will be different.
 
-And when the regime actually collapses, after months if not years of brutal war and slaughter? When the much-touted "regime change" happens? The country fractures into civil war. More people die. Militias fill the vacuum. Genocide follows.
+And when the regime actually collapses, after months if not years of brutal war and slaughter? When the much-touted "regime change" happens? The country fractures into civil war. More people die. Militias fill the vacuum. Genocide often follows.
 
 The people who actually threaten the Islamic Republic are the ones who took to the streets in 2019, in 2022, in 2025, who chanted *"zan, zendegi, azadi"* and *"death to the dictator"* at the cost of their lives. They don't need bombs. They need the world to stop giving the regime the tools of both repression and nationalist legitimacy.
 
