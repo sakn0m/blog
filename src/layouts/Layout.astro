@@ -1,6 +1,5 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import type { TransitionDirectionalAnimations } from 'astro:transitions';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../lib/consts';
 import '../styles/globals.css';
@@ -13,7 +12,6 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
-  transition?: TransitionDirectionalAnimations;
   preloadAllFonts?: boolean;
 }
 
@@ -21,7 +19,6 @@ const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
   ogImage,
-  transition,
   preloadAllFonts = false,
 } = Astro.props;
 ---
@@ -127,8 +124,6 @@ const {
       document.addEventListener('touchend', (e) => {
         const link = e.target.closest('a');
         if (!link || !link.href || link.hostname !== location.hostname || link.target === '_blank') return;
-        if (link.hasAttribute('data-astro-reload')) return;
-
         const dx = Math.abs(e.changedTouches[0].clientX - startX);
         const dy = Math.abs(e.changedTouches[0].clientY - startY);
 
@@ -147,7 +142,7 @@ const {
       <div class="absolute top-6 right-6 md:top-12 md:right-0">
         <ThemeToggle />
       </div>
-      <div transition:name="content" transition:animate={transition || 'none'}>
+      <div>
         <slot />
       </div>
     </main>

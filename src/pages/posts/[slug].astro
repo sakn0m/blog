@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
-import { slide } from 'astro:transitions';
 import { SITE_TITLE, SITE_URL, AUTHOR_NAME } from '../../lib/consts';
 import { formatDate, toISODate } from '../../lib/date';
 
@@ -32,30 +31,26 @@ const jsonLd = {
   author: { "@type": "Person", name: AUTHOR_NAME },
 };
 
-// Post page always enters from right, exits to right
-const s = slide({ duration: '0.2s' });
-const postTransition = { forwards: s.forwards, backwards: s.forwards };
 ---
 
 <Layout
   title={`${post.data.title} — ${SITE_TITLE}`}
   description={description}
   ogImage={`${SITE_URL}/og/${post.id}.png`}
-  transition={postTransition}
   preloadAllFonts
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <a href="/?from=post" data-astro-reload class="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 [&.is-navigating]:text-neutral-600 dark:[&.is-navigating]:text-neutral-200 transition-colors mb-8 block focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 dark:focus-visible:outline-neutral-600">
+  <a href="/" class="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 [&.is-navigating]:text-neutral-600 dark:[&.is-navigating]:text-neutral-200 transition-colors mb-8 block focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 dark:focus-visible:outline-neutral-600">
     <span aria-hidden="true" style="font-family: 'Times New Roman', Times, serif;">&larr;</span> back
   </a>
 
   <article class="max-w-none">
-    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50 animate-fade-up">{post.data.title}</h1>
-    <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block animate-fade-up delay-100">
+    <h1 class="text-3xl font-medium mb-4 text-neutral-900 dark:text-neutral-50">{post.data.title}</h1>
+    <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block">
       {formatDate(post.data.date)}
     </time>
-    <div class="prose prose-lg md:prose-xl prose-neutral dark:prose-invert max-w-none animate-fade-up delay-200">
+    <div class="prose prose-lg md:prose-xl prose-neutral dark:prose-invert max-w-none">
       <Content />
     </div>
   </article>

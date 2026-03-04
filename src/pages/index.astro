@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { slide } from 'astro:transitions';
 import { SITE_URL, SITE_TITLE } from '../lib/consts';
 import { formatDate, toISODate } from '../lib/date';
 
@@ -9,20 +8,17 @@ const posts = (await getCollection('posts'))
   .filter((post) => import.meta.env.PROD ? !post.data.draft : true)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-// Homepage always enters from left, exits to left
-const s = slide({ duration: '0.2s' });
-const homeTransition = { forwards: s.backwards, backwards: s.backwards };
 ---
 
-<Layout ogImage={`${SITE_URL}/og.png`} transition={homeTransition}>
-  <header class="mb-1 animate-fade-up">
+<Layout ogImage={`${SITE_URL}/og.png`}>
+  <header class="mb-1">
     <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50 pl-1 -ml-1">
       {SITE_TITLE}
     </h1>
     <hr class="border-neutral-200 dark:border-neutral-800 transition-colors duration-500" />
   </header>
 
-  <nav aria-label="Blog posts" class="space-y-6 animate-fade-up delay-100">
+  <nav aria-label="Blog posts" class="space-y-6">
     <ul class="flex flex-col gap-4">
       {posts.map((post) => (
         <li>
@@ -42,13 +38,4 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
     </ul>
   </nav>
 
-  <script is:inline>
-    if (new URLSearchParams(window.location.search).has('from')) {
-      document.querySelectorAll('.animate-fade-up').forEach(el => {
-        el.style.animation = 'slide-from-left 0.25s ease-out both';
-        el.style.animationDelay = '0s';
-      });
-      history.replaceState(null, '', '/');
-    }
-  </script>
 </Layout>
