@@ -40,6 +40,23 @@
     transition: background-color 500ms ease, border-color 500ms ease;
   }
 
+  /* Author note: used at the end of articles for personal commentary */
+  .author-note {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid;
+    border-color: theme(--color-neutral-200);
+    font-size: theme(--text-base);
+    line-height: theme(--leading-relaxed);
+    font-style: italic;
+    color: theme(--color-neutral-500);
+
+    .dark & {
+      border-color: theme(--color-neutral-800);
+      color: theme(--color-neutral-400);
+    }
+  }
+
   @keyframes fade-up {
     from {
       opacity: 0;
