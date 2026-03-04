@@ -69,6 +69,18 @@
     }
   }
 
+  @keyframes slide-from-left {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .animate-fade-up {
       animation: fade-up 0.4s ease-out both;

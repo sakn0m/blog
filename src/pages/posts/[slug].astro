@@ -46,7 +46,7 @@ const postTransition = { forwards: s.forwards, backwards: s.forwards };
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <a href="/" class="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 [&.is-navigating]:text-neutral-600 dark:[&.is-navigating]:text-neutral-200 transition-colors mb-8 block focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 dark:focus-visible:outline-neutral-600">
+  <a href="/?from=post" data-astro-reload class="text-neutral-400 hover-hover:hover:text-neutral-600 hover-hover:dark:hover:text-neutral-200 active:text-neutral-600 dark:active:text-neutral-200 [&.is-navigating]:text-neutral-600 dark:[&.is-navigating]:text-neutral-200 transition-colors mb-8 block focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 dark:focus-visible:outline-neutral-600">
     <span aria-hidden="true" style="font-family: 'Times New Roman', Times, serif;">&larr;</span> back
   </a>
 
@@ -55,7 +55,7 @@ const postTransition = { forwards: s.forwards, backwards: s.forwards };
     <time datetime={isoDate} class="text-sm text-neutral-400 dark:text-neutral-500 italic mb-8 block animate-fade-up delay-100">
       {formatDate(post.data.date)}
     </time>
-    <div class="prose prose-xl prose-neutral dark:prose-invert max-w-none animate-fade-up delay-200">
+    <div class="prose prose-lg md:prose-xl prose-neutral dark:prose-invert max-w-none animate-fade-up delay-200">
       <Content />
     </div>
   </article>

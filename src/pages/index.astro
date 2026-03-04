@@ -41,4 +41,14 @@ const homeTransition = { forwards: s.backwards, backwards: s.backwards };
       ))}
     </ul>
   </nav>
+
+  <script is:inline>
+    if (new URLSearchParams(window.location.search).has('from')) {
+      document.querySelectorAll('.animate-fade-up').forEach(el => {
+        el.style.animation = 'slide-from-left 0.25s ease-out both';
+        el.style.animationDelay = '0s';
+      });
+      history.replaceState(null, '', '/');
+    }
+  </script>
 </Layout>

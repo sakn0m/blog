@@ -127,6 +127,7 @@ const {
       document.addEventListener('touchend', (e) => {
         const link = e.target.closest('a');
         if (!link || !link.href || link.hostname !== location.hostname || link.target === '_blank') return;
+        if (link.hasAttribute('data-astro-reload')) return;
 
         const dx = Math.abs(e.changedTouches[0].clientX - startX);
         const dy = Math.abs(e.changedTouches[0].clientY - startY);
