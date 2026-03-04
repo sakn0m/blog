@@ -82,9 +82,9 @@ const {
 
     <!-- Dark mode: apply before render to prevent flash -->
     <script is:inline>
-      function applyTheme() {
+      function applyTheme(doc) {
         const stored = localStorage.getItem('theme');
-        const docEl = document.documentElement;
+        const docEl = doc || document.documentElement;
         if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           docEl.classList.add('dark');
           docEl.style.colorScheme = 'dark';
@@ -94,7 +94,9 @@ const {
         }
       }
       applyTheme();
-      document.addEventListener('astro:after-swap', applyTheme);
+      document.addEventListener('astro:before-swap', (e) => {
+        applyTheme(e.newDocument.documentElement);
+      });
 
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
