@@ -62,8 +62,21 @@
     color-scheme: dark;
   }
 
-  :where(.prose) {
-    transition: background-color 0.4s ease, border-color 0.4s ease;
+  .prose {
+    --tw-prose-body: var(--color-text);
+    --tw-prose-headings: var(--color-text);
+    --tw-prose-links: var(--color-accent);
+    --tw-prose-bold: var(--color-text);
+    --tw-prose-counters: var(--color-muted);
+    --tw-prose-bullets: var(--color-muted);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-text);
+    --tw-prose-quote-borders: var(--color-accent);
+    --tw-prose-captions: var(--color-muted);
+    --tw-prose-code: var(--color-text);
+    --tw-prose-th-borders: var(--color-border);
+    --tw-prose-td-borders: var(--color-border);
+    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
   }
 
   .post-title {
@@ -87,6 +100,22 @@
   .group:active .post-title,
   .group.is-navigating .post-title {
     text-decoration-color: var(--color-accent);
+  }
+
+  .back-link {
+    color: var(--color-muted);
+    transition: color 150ms ease;
+  }
+
+  @media (hover: hover) {
+    .back-link:hover {
+      color: var(--color-text);
+    }
+  }
+
+  .back-link:active,
+  .back-link.is-navigating {
+    color: var(--color-text);
   }
 
   .author-note {
