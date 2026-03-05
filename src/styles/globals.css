@@ -62,23 +62,6 @@
     color-scheme: dark;
   }
 
-  .prose {
-    --tw-prose-body: var(--color-text);
-    --tw-prose-headings: var(--color-text);
-    --tw-prose-links: var(--color-accent);
-    --tw-prose-bold: var(--color-text);
-    --tw-prose-counters: var(--color-muted);
-    --tw-prose-bullets: var(--color-muted);
-    --tw-prose-hr: var(--color-border);
-    --tw-prose-quotes: var(--color-text);
-    --tw-prose-quote-borders: var(--color-accent);
-    --tw-prose-captions: var(--color-muted);
-    --tw-prose-code: var(--color-text);
-    --tw-prose-th-borders: var(--color-border);
-    --tw-prose-td-borders: var(--color-border);
-    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
-  }
-
   .post-title {
     text-decoration: underline;
     text-decoration-color: transparent;
@@ -127,4 +110,44 @@
     font-style: italic;
     color: var(--color-muted);
   }
+}
+
+/*
+ * Prose typography overrides — OUTSIDE @layer so they beat
+ * Tailwind utility classes like prose-neutral / prose-invert.
+ * Our CSS custom properties (--color-*) already switch between
+ * light and dark, so no separate dark override is needed.
+ */
+.prose {
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-muted);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-text);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-text);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+
+.prose a {
+  text-decoration: none;
+  transition: text-decoration-color 150ms ease;
+}
+
+@media (hover: hover) {
+  .prose a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+.prose a:active {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
 }
