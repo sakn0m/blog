@@ -135,19 +135,35 @@
   transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
+/* Prose links: same transparent→accent underline as homepage post titles */
 .prose a {
-  text-decoration: none;
-  transition: text-decoration-color 150ms ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0s ease-out;
 }
 
 @media (hover: hover) {
+  .prose a {
+    transition: text-decoration-color 150ms ease-out;
+  }
+
   .prose a:hover {
-    text-decoration: underline;
     text-decoration-color: var(--color-accent);
   }
 }
 
 .prose a:active {
-  text-decoration: underline;
   text-decoration-color: var(--color-accent);
+}
+
+/* Theme toggle: palette-integrated hover and focus */
+#theme-toggle:hover {
+  background-color: var(--color-selection);
+}
+
+#theme-toggle:focus-visible {
+  outline: 2px solid var(--color-border);
+  outline-offset: 2px;
 }
