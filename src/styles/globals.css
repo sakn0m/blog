@@ -6,14 +6,37 @@
 
 @theme {
   --font-serif: var(--font-charter),
+  "Source Serif 4",
   Georgia,
   ui-serif,
   serif;
 }
 
 @layer base {
+  :root {
+    --color-bg: #FDFBF7;
+    --color-text: #1C1917;
+    --color-accent: #8B5E3C;
+    --color-muted: #78716C;
+    --color-border: #D6D3D1;
+    --color-selection: rgba(139, 94, 60, 0.2);
+  }
+
+  .dark {
+    --color-bg: #1A1A1A;
+    --color-text: #E2E2E2;
+    --color-accent: #D4A373;
+    --color-muted: #A8A29E;
+    --color-border: #333333;
+    --color-selection: rgba(212, 163, 115, 0.25);
+  }
+
   * {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background: var(--color-selection);
   }
 
   a,
@@ -23,36 +46,56 @@
 
   html,
   body {
-    @apply h-full;
+    height: 100%;
   }
 
   body {
-    @apply antialiased transition-[background-color] duration-500 bg-white text-neutral-900;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
 
-    .dark & {
-      color-scheme: dark;
-      @apply bg-neutral-950 text-neutral-50;
-    }
+  .dark body {
+    color-scheme: dark;
   }
 
   :where(.prose) {
-    transition: background-color 500ms ease, border-color 500ms ease;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+  }
+
+  .post-title {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0s ease-out;
+  }
+
+  @media (hover: hover) {
+    .post-title {
+      transition: text-decoration-color 150ms ease-out;
+    }
+
+    .group:hover .post-title {
+      text-decoration-color: var(--color-accent);
+    }
+  }
+
+  .group:active .post-title,
+  .group.is-navigating .post-title {
+    text-decoration-color: var(--color-accent);
   }
 
   .author-note {
     margin-top: 2.5rem;
     padding-top: 1.25rem;
-    border-top: 1px solid;
-    border-color: theme(--color-neutral-200);
+    border-top: 1px solid var(--color-border);
     font-size: theme(--text-base);
     line-height: theme(--leading-relaxed);
     font-style: italic;
-    color: theme(--color-neutral-500);
-
-    .dark & {
-      border-color: theme(--color-neutral-800);
-      color: theme(--color-neutral-400);
-    }
+    color: var(--color-muted);
   }
 }
-

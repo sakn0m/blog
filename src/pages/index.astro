@@ -12,10 +12,10 @@ const posts = (await getCollection('posts'))
 
 <Layout ogImage={`${SITE_URL}/og.png`}>
   <header class="mb-1">
-    <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 dark:text-neutral-50 pl-1 -ml-1">
+    <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 pl-1 -ml-1" style="color: var(--color-text);">
       {SITE_TITLE}
     </h1>
-    <hr class="border-neutral-200 dark:border-neutral-800 transition-colors duration-500" />
+    <hr style="border-color: var(--color-border); transition: border-color 0.4s ease;" />
   </header>
 
   <nav aria-label="Blog posts" class="space-y-6">
@@ -24,12 +24,13 @@ const posts = (await getCollection('posts'))
         <li>
           <a
             href={`/posts/${post.id}`}
-            class="group flex flex-row items-baseline justify-between gap-4"
+            class="group flex flex-row items-baseline gap-0"
           >
-            <span class="text-lg text-neutral-800 dark:text-neutral-300 underline decoration-transparent decoration-1 underline-offset-[4px] md:group-hover:decoration-neutral-400 md:dark:group-hover:decoration-neutral-500 group-active:decoration-neutral-400 dark:group-active:decoration-neutral-500 group-[.is-navigating]:decoration-neutral-400 dark:group-[.is-navigating]:decoration-neutral-500 transition-[text-decoration-color] duration-0 md:duration-150 ease-out">
+            <span class="post-title text-lg shrink-0" style="color: var(--color-text);">
               {post.data.title}
             </span>
-            <time datetime={toISODate(post.data.date)} class="text-sm text-neutral-400 dark:text-neutral-500 italic shrink-0 whitespace-nowrap">
+            <span class="flex-grow mx-2 self-end mb-[5px] border-b border-dotted opacity-30 min-w-[2ch]" style="border-color: var(--color-muted); transition: border-color 0.4s ease;"></span>
+            <time datetime={toISODate(post.data.date)} class="text-sm italic shrink-0 whitespace-nowrap" style="color: var(--color-muted); transition: color 0.4s ease;">
               {formatDate(post.data.date)}
             </time>
           </a>
