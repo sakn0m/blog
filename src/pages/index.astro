@@ -12,10 +12,10 @@ const posts = (await getCollection('posts'))
 
 <Layout ogImage={`${SITE_URL}/og.png`}>
   <header class="mb-1">
-    <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 pl-1 -ml-1" style="color: var(--color-text);">
+    <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 pl-1 -ml-1">
       {SITE_TITLE}
     </h1>
-    <hr style="border-color: var(--color-border); transition: border-color 0.4s ease;" />
+    <hr />
   </header>
 
   <nav aria-label="Blog posts" class="space-y-6">
@@ -26,11 +26,11 @@ const posts = (await getCollection('posts'))
             href={`/posts/${post.id}`}
             class="group flex flex-row items-baseline gap-0"
           >
-            <span class="post-title text-lg shrink-0" style="color: var(--color-text);">
+            <span class="post-title text-lg shrink-0">
               {post.data.title}
             </span>
             <span class="flex-grow mx-2 self-end mb-[5px] border-b border-dotted opacity-30 min-w-[2ch]" style="border-color: var(--color-muted); transition: border-color 0.4s ease;"></span>
-            <time datetime={toISODate(post.data.date)} class="text-sm italic shrink-0 whitespace-nowrap" style="color: var(--color-muted); transition: color 0.4s ease;">
+            <time datetime={toISODate(post.data.date)} class="text-sm italic shrink-0 whitespace-nowrap">
               {formatDate(post.data.date)}
             </time>
           </a>
