@@ -153,7 +153,8 @@
   transition: border-color 0.4s ease;
 }
 
-.prose figcaption {
+.prose figcaption,
+.prose li::marker {
   transition: color 0.4s ease;
 }
 
@@ -165,6 +166,7 @@
   border-radius: 0.25rem;
   font-size: 0.875em;
   font-weight: 500;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .prose code::before,
