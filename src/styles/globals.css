@@ -176,6 +176,7 @@
 
 /* Prose links: same transparent→accent underline as homepage post titles */
 .prose a {
+  font-weight: inherit;
   text-decoration: underline;
   text-decoration-color: transparent;
   text-decoration-thickness: 1px;
