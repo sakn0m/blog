@@ -112,6 +112,11 @@
     transition: color 0.4s ease;
   }
 
+  time {
+    font-family: ui-monospace, 'Menlo', 'Monaco', monospace;
+    font-style: normal;
+  }
+
   .post-separator {
     border-color: var(--color-muted);
     transition: border-color 0.4s ease;
