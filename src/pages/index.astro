@@ -1,12 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
 import { SITE_URL, SITE_TITLE } from '../lib/consts';
 import { formatDate, toISODate } from '../lib/date';
+import { getPublishedPosts } from '../lib/posts';
 
-const posts = (await getCollection('posts'))
-  .filter((post) => import.meta.env.PROD ? !post.data.draft : true)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const posts = await getPublishedPosts();
 
 ---
 

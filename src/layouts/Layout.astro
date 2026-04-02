@@ -7,6 +7,7 @@ import '../styles/globals.css';
 import fontCharterRegular from '../assets/fonts/charter-regular.woff2';
 import fontCharterItalic from '../assets/fonts/charter-italic.woff2';
 import fontCharterBold from '../assets/fonts/charter-bold.woff2';
+import fontCharterBoldItalic from '../assets/fonts/charter-bold-italic.woff2';
 
 interface Props {
   title?: string;
@@ -35,12 +36,19 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:url" content={Astro.url.href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <link rel="canonical" href={Astro.url.href} />
 
     <!-- Preload primary font to prevent FOUT -->
     <link rel="preload" href={fontCharterRegular} as="font" type="font/woff2" crossorigin="anonymous" />
     {preloadAllFonts && (
       <link rel="preload" href={fontCharterItalic} as="font" type="font/woff2" crossorigin="anonymous" />
       <link rel="preload" href={fontCharterBold} as="font" type="font/woff2" crossorigin="anonymous" />
+      <link rel="preload" href={fontCharterBoldItalic} as="font" type="font/woff2" crossorigin="anonymous" />
     )}
 
     <!-- Charter font -->
