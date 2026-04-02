@@ -35,7 +35,7 @@ export async function renderOgImage(
               children: title,
             },
           },
-          {
+          ...(subtitle ? [{
             type: 'div',
             props: {
               style: {
@@ -46,7 +46,7 @@ export async function renderOgImage(
               },
               children: subtitle,
             },
-          },
+          }] : []),
         ],
       },
     },
