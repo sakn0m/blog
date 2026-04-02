@@ -42,6 +42,7 @@ const {
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
     <link rel="canonical" href={Astro.url.href} />
+    <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
 
     <!-- Preload primary font to prevent FOUT -->
     <link rel="preload" href={fontCharterRegular} as="font" type="font/woff2" crossorigin="anonymous" />
@@ -109,12 +110,11 @@ const {
           link.classList.add('is-navigating');
         }
       });
-      document.addEventListener('touchcancel', () => {
+      function clearNavigatingState() {
         document.querySelectorAll('.is-navigating').forEach(el => el.classList.remove('is-navigating'));
-      }, { passive: true });
-      document.addEventListener('astro:after-swap', () => {
-        document.querySelectorAll('.is-navigating').forEach(el => el.classList.remove('is-navigating'));
-      });
+      }
+      document.addEventListener('touchcancel', clearNavigatingState, { passive: true });
+      document.addEventListener('astro:after-swap', clearNavigatingState);
     </script>
 
     <script>

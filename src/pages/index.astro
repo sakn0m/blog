@@ -27,7 +27,7 @@ const posts = await getPublishedPosts();
             <span class="post-title text-lg shrink-0">
               {post.data.title}
             </span>
-            <span class="flex-grow mx-2 self-end mb-[5px] border-b border-dotted opacity-30 min-w-[2ch]" style="border-color: var(--color-muted); transition: border-color 0.4s ease;"></span>
+            <span class="post-separator flex-grow mx-2 self-end mb-[5px] border-b border-dotted opacity-30 min-w-[2ch]"></span>
             <time datetime={toISODate(post.data.date)} class="text-sm italic shrink-0 whitespace-nowrap">
               {formatDate(post.data.date)}
             </time>

@@ -112,6 +112,11 @@
     transition: color 0.4s ease;
   }
 
+  .post-separator {
+    border-color: var(--color-muted);
+    transition: border-color 0.4s ease;
+  }
+
   .author-note {
     margin-top: 2.5rem;
     padding-top: 1.25rem;
