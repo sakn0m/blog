@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { render } from 'astro:content';
 import { SITE_TITLE, SITE_URL, AUTHOR_NAME } from '../../lib/consts';
 import { formatDateLong, toISODate } from '../../lib/date';
 import { getPublishedPosts } from '../../lib/posts';
@@ -14,10 +13,9 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
 const isoDate = toISODate(post.data.date);
-const description = post.data.description ?? post.body
-  ?.replace(/[#*_`\[\]()>~]/g, '')
+const description = post.data.description ?? post.data.html
+  ?.replace(/<[^>]+>/g, '')
   .replace(/\s+/g, ' ')
   .trim()
   .slice(0, 160) ?? '';
@@ -49,8 +47,6 @@ const jsonLd = {
     <time datetime={isoDate} class="text-sm mb-8 block">
       {formatDateLong(post.data.date)}
     </time>
-    <div class="prose prose-lg md:prose-xl max-w-none">
-      <Content />
-    </div>
+    <div class="prose prose-lg md:prose-xl max-w-none" set:html={post.data.html} />
   </article>
 </Layout>
