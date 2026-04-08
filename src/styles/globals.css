@@ -12,6 +12,10 @@
   serif;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 @layer base {
   :root {
     --color-bg: #FDFBF7;
