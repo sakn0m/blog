@@ -30,6 +30,9 @@
           "type": "boolean",
           "default": false
         },
+        "authorNote": {
+          "type": "string"
+        },
         "$schema": {
           "type": "string"
         }

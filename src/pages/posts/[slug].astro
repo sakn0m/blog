@@ -52,5 +52,8 @@ const jsonLd = {
     <div class="prose prose-lg md:prose-xl max-w-none">
       <Content />
     </div>
+    {post.data.authorNote && (
+      <p class="author-note">{post.data.authorNote}</p>
+    )}
   </article>
 </Layout>
