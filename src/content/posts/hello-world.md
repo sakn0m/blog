@@ -1,6 +1,6 @@
 ---
 title: "what is this?"
-date: "Jan 17, 2026"
+date: 2026-01-17
 ---
 
 hello world!

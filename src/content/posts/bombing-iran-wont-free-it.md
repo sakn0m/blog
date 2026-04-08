@@ -1,6 +1,6 @@
 ---
 title: bombing Iran won't free it
-date: Mar, 3 2026
+date: 2026-03-03
 ---
 
 The logic seems almost intuitive: destroy the infrastructure of a regime, and the regime falls. It's the kind of reasoning that sounds clean in everyday talk, on TikTok, or in the talking points of those who've spent decades calling for "maximum pressure" on Tehran. But history and basic political theory tell a very different story.
