@@ -30,17 +30,13 @@
           "type": "boolean",
           "default": false
         },
-        "html": {
-          "type": "string"
-        },
         "$schema": {
           "type": "string"
         }
       },
       "required": [
         "title",
-        "date",
-        "html"
+        "date"
       ],
       "additionalProperties": false
     }

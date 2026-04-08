@@ -1,14 +1,13 @@
 import { defineCollection, z } from "astro:content";
-import { ghostLoader } from "./lib/ghost-loader";
+import { glob } from "astro/loaders";
 
 const posts = defineCollection({
-  loader: ghostLoader(),
+  loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
     description: z.string().optional(),
     draft: z.boolean().default(false),
-    html: z.string(),
   }),
 });
 
