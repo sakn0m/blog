@@ -1,0 +1,10 @@
+{
+  "showRightClickMenu": true,
+  "showFileExplorerIcon": true,
+  "focusLevel": "parent",
+  "hideAncestorFolders": false,
+  "autoHidePaths": [
+    "node_modules",
+    "dist"
+  ]
+}
