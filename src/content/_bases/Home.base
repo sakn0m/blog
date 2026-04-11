@@ -47,11 +47,11 @@ views:
     sort:
       - property: date
         direction: DESC
-    imageFormat: cover
+    imageFormat: none
     showDate: true
     customizeNewButton: true
     newNoteLocation: posts
-    fallbackToEmbeds: if-empty
+    fallbackToEmbeds: never
     propertyDisplay1: file.fullname
     showTextPreview: true
     propertyLabels: above
