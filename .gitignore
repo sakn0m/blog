@@ -25,3 +25,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Vault CMS / Obsidian
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
+**/.obsidian/workspaces.json
+.ref/
