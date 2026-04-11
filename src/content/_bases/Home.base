@@ -40,6 +40,28 @@ properties:
     displayName: Title
 views:
   - type: cms
+    name: Posts
+    filters:
+      and:
+        - file.folder.startsWith("posts")
+    sort:
+      - property: date
+        direction: DESC
+    imageFormat: cover
+    showDate: true
+    customizeNewButton: true
+    newNoteLocation: posts
+    fallbackToEmbeds: if-empty
+    propertyDisplay1: file.fullname
+    showTextPreview: true
+    propertyLabels: above
+    titleProperty: note.title
+    dateProperty: note.date
+    showTags: false
+    showDraftStatus: true
+    draftStatusProperty: note.draft
+    draftStatusReverse: false
+  - type: cms
     name: Vault CMS Guide
     filters:
       and:

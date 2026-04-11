@@ -8,6 +8,12 @@ export default defineConfig({
   integrations: [sitemap()],
   prefetch: { defaultStrategy: 'viewport' },
   vite: {
+    server: {
+      watch: {
+        ignored: ['**/.obsidian/**', '**/_bases/**', '**/bases/**', '**/_home/**', '**/home/**', '**/_base/**', '**/base/**']
+      }
+    },
+    assetsInclude: ['**/*.base', '**/.obsidian/**', '**/_bases/**'],
     plugins: [tailwindcss()],
   },
 });

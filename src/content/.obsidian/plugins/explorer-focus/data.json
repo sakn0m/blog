@@ -2,6 +2,7 @@
   "showRightClickMenu": true,
   "showFileExplorerIcon": true,
   "focusLevel": "parent",
+  "customFolderPath": "",
   "hideAncestorFolders": false,
   "autoHidePaths": [
     "node_modules",
