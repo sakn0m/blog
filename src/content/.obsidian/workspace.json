@@ -126,16 +126,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_bases/Home.base",
+                "file": "posts/bombing-iran-won-t-free-it.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Home"
+              "title": "Outline of bombing-iran-won-t-free-it"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
