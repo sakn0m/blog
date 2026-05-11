@@ -6,14 +6,27 @@ engine: "nixery"
 
 dependencies:
   nixpkgs:
-    - nodejs_22
+    - nodejs
+    - coreutils
+    - curl
+    - glibc
+  github:NixOS/nixpkgs/nixpkgs-unstable:
+    - bun
+
+environment:
+  SITE_PATH: "dist"
+  SITE_NAME: "blog"
+  WISP_HANDLE: "jojo.news"
 
 steps:
-  - name: "Install dependencies"
-    command: "npm ci"
-
   - name: "Build"
-    command: "npm run build"
+    command: |
+      export PATH="$HOME/.nix-profile/bin:$PATH"
+      bun install
+      bun run build
 
   - name: "Deploy to Wisp"
-    command: "npx wispctl@latest deploy jojo.news --path ./dist --site blog --password $WISP_APP_PASSWORD -y"
+    command: |
+      curl https://sites.wisp.place/nekomimi.pet/wisp-cli-binaries/wisp-cli-x86_64-linux -o wisp-cli
+      chmod +x wisp-cli
+      ./wisp-cli "$WISP_HANDLE" --path "$SITE_PATH" --site "$SITE_NAME" --password "$WISP_APP_PASSWORD"
