@@ -1,0 +1,19 @@
+when:
+  - event: ["push"]
+    branch: ["main"]
+
+engine: "nixery"
+
+dependencies:
+  nixpkgs:
+    - nodejs_22
+
+steps:
+  - name: "Install dependencies"
+    command: "npm ci"
+
+  - name: "Build"
+    command: "npm run build"
+
+  - name: "Deploy to Wisp"
+    command: "npx wispctl@latest deploy jojo.news --path ./dist --site blog --password $WISP_APP_PASSWORD -y"
