@@ -109,20 +109,24 @@ const year = new Date().getFullYear();
 
     <header class="site-header">
       <div class="header-banner">
-        <a href="/" class="site-title-link">&#9733; JOJO&#39;S THOUGHTS &#9733;</a>
+        <a href="/" class="site-title-link">
+          <span class="title-star">&#9733;</span> JOJO&#39;S THOUGHTS <span class="title-star">&#9733;</span><span class="title-cursor" aria-hidden="true"></span>
+        </a>
         <p class="site-tagline">just whatever comes to my mind</p>
       </div>
     </header>
 
     <nav class="site-nav" aria-label="Site navigation">
       <div class="site-nav-inner">
-        <a href="/">[ home ]</a>
-        <span class="nav-sep" aria-hidden="true">&nbsp;</span>
-        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">[ rss ]</a>
+        <a href="/">[ index ]</a>
+        <span class="nav-sep" aria-hidden="true">&nbsp;&nbsp;</span>
+        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">[ feed ]</a>
         <span class="nav-spacer"></span>
         <ThemeToggle />
       </div>
     </nav>
+
+    <p class="page-divider" aria-hidden="true">&middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot;</p>
 
     <main id="main-content" class="page-content">
       <slot />
@@ -130,11 +134,13 @@ const year = new Date().getFullYear();
 
     <footer class="site-footer">
       <div class="site-footer-inner">
-        &#9733; end of page &#9733;
+        &#9733; finis &#9733;
         &nbsp;&bull;&nbsp;
-        <a href="/rss.xml">rss feed</a>
+        <a href="/rss.xml">rss</a>
         &nbsp;&bull;&nbsp;
-        {year}
+        no cookies
+        &nbsp;&bull;&nbsp;
+        est. {year}
       </div>
     </footer>
   </body>

@@ -22,6 +22,7 @@ html {
     --nav-border: #ccc;
     --code-bg: #eeebe2;
     --selection: rgba(0, 0, 160, 0.12);
+    --accent: #c8860a;
   }
 
   .dark {
@@ -38,6 +39,7 @@ html {
     --nav-border: #252530;
     --code-bg: #191c25;
     --selection: rgba(119, 153, 238, 0.18);
+    --accent: #e8a020;
   }
 
   * {
@@ -90,6 +92,7 @@ html {
   /* Site header */
   .site-header {
     background-color: var(--header-bg);
+    border-top: 4px solid var(--accent);
     border-bottom: 3px solid #001a33;
     color: var(--header-text);
   }
@@ -111,7 +114,7 @@ html {
     letter-spacing: 0.04em;
     color: var(--header-text);
     text-decoration: none;
-    display: block;
+    display: inline-block;
     margin-bottom: 0.3rem;
   }
 
@@ -121,6 +124,25 @@ html {
 
   .site-title-link:hover {
     text-decoration: underline;
+  }
+
+  .title-star {
+    color: var(--accent);
+  }
+
+  .title-cursor {
+    display: inline-block;
+    width: 0.6ch;
+    height: 1.1em;
+    background: var(--accent);
+    margin-left: 0.15em;
+    vertical-align: text-bottom;
+    animation: blink-cursor 1.4s step-end infinite;
+  }
+
+  @keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
   }
 
   .site-tagline {
@@ -182,12 +204,24 @@ html {
     padding: 2.25rem 1.5rem 3rem;
   }
 
+  /* Decorative separator */
+  .page-divider {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    color: var(--border);
+    letter-spacing: 0.35em;
+    text-align: center;
+    padding: 0.6rem 0;
+    user-select: none;
+    overflow: hidden;
+  }
+
   /* Post list (index page) */
   .posts-label {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.78rem;
     letter-spacing: 0.14em;
-    color: var(--muted);
+    color: var(--accent);
     text-transform: uppercase;
     margin-bottom: 0.75rem;
   }
@@ -206,8 +240,8 @@ html {
   .post-list-link {
     display: flex;
     align-items: baseline;
-    gap: 1.1rem;
-    padding: 0.55rem 0;
+    gap: 1.75rem;
+    padding: 0.6rem 0;
     text-decoration: none;
     color: var(--text);
   }
@@ -222,7 +256,7 @@ html {
     color: var(--muted);
     white-space: nowrap;
     flex-shrink: 0;
-    width: 6.8ch;
+    width: 10ch;
   }
 
   .post-list-title {
