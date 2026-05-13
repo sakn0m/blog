@@ -1,40 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { SITE_URL, SITE_TITLE } from '../lib/consts';
-import { formatDate, toISODate } from '../lib/date';
+import { SITE_URL } from '../lib/consts';
+import { toISODate } from '../lib/date';
 import { getPublishedPosts } from '../lib/posts';
 
 const posts = await getPublishedPosts();
-
 ---
 
 <Layout ogImage={`${SITE_URL}/og.png`}>
-  <header class="mb-1">
-    <h1 class="text-3xl md:text-4xl font-medium tracking-tight mb-8 pl-1 -ml-1">
-      {SITE_TITLE}
-    </h1>
-    <hr />
-  </header>
+  <p class="posts-label">[ posts ]</p>
 
-  <nav aria-label="Blog posts" class="space-y-6">
-    <ul class="flex flex-col gap-4">
+  <nav aria-label="Blog posts">
+    <ul class="post-list">
       {posts.map((post) => (
-        <li>
-          <a
-            href={`/posts/${post.id}`}
-            class="group flex flex-row items-baseline gap-0"
-          >
-            <span class="post-title text-lg shrink-0">
-              {post.data.title}
-            </span>
-            <span aria-hidden="true" class="post-separator flex-grow mx-2 self-end mb-[5px] border-b border-dotted opacity-30 min-w-[2ch]"></span>
-            <time datetime={toISODate(post.data.date)} class="text-sm shrink-0 whitespace-nowrap">
-              {formatDate(post.data.date)}
+        <li class="post-list-item">
+          <a href={`/posts/${post.id}`} class="post-list-link">
+            <time
+              datetime={toISODate(post.data.date)}
+              class="post-list-date"
+            >
+              {toISODate(post.data.date).replace(/-/g, '.')}
             </time>
+            <span class="post-list-title">{post.data.title}</span>
           </a>
         </li>
       ))}
     </ul>
   </nav>
-
 </Layout>

@@ -4,11 +4,6 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../lib/consts';
 import '../styles/globals.css';
 
-import fontCharterRegular from '../assets/fonts/charter-regular.woff2';
-import fontCharterItalic from '../assets/fonts/charter-italic.woff2';
-import fontCharterBold from '../assets/fonts/charter-bold.woff2';
-import fontCharterBoldItalic from '../assets/fonts/charter-bold-italic.woff2';
-
 interface Props {
   title?: string;
   description?: string;
@@ -22,10 +17,12 @@ const {
   ogImage,
   preloadAllFonts = false,
 } = Astro.props;
+
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang="en" class="h-full" style="--font-charter: 'Charter';">
+<html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,46 +40,6 @@ const {
     {ogImage && <meta name="twitter:image" content={ogImage} />}
     <link rel="canonical" href={Astro.url.href} />
     <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
-
-    <!-- Preload primary font to prevent FOUT -->
-    <link rel="preload" href={fontCharterRegular} as="font" type="font/woff2" crossorigin="anonymous" />
-    {preloadAllFonts && (
-      <link rel="preload" href={fontCharterItalic} as="font" type="font/woff2" crossorigin="anonymous" />
-      <link rel="preload" href={fontCharterBold} as="font" type="font/woff2" crossorigin="anonymous" />
-      <link rel="preload" href={fontCharterBoldItalic} as="font" type="font/woff2" crossorigin="anonymous" />
-    )}
-
-    <!-- Charter font -->
-    <style>
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-regular.woff2') format('woff2');
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-italic.woff2') format('woff2');
-        font-weight: 400;
-        font-style: italic;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-bold.woff2') format('woff2');
-        font-weight: 700;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-bold-italic.woff2') format('woff2');
-        font-weight: 700;
-        font-style: italic;
-        font-display: swap;
-      }
-    </style>
 
     <ClientRouter />
 
@@ -118,7 +75,6 @@ const {
     </script>
 
     <script>
-      // Fire Astro navigation on touchend (before click) for zero-latency transitions on mobile
       import { navigate } from 'astro:transitions/client';
 
       let startX = 0;
@@ -134,25 +90,52 @@ const {
         if (!link || !link.href || link.hostname !== location.hostname || link.target === '_blank') return;
         const dx = Math.abs(e.changedTouches[0].clientX - startX);
         const dy = Math.abs(e.changedTouches[0].clientY - startY);
-
-        // Only navigate on a tap, not a swipe or scroll
         if (dx < 8 && dy < 8) {
-          e.preventDefault(); // block the subsequent click event
+          e.preventDefault();
           link.classList.add('is-navigating');
           navigate(link.href);
         }
       }, { passive: false });
     </script>
   </head>
-  <body class="font-serif">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-neutral-900 focus:text-white focus:rounded dark:focus:bg-neutral-100 dark:focus:text-neutral-900">Skip to content</a>
-    <main id="main-content" class="max-w-[65ch] mx-auto px-6 sm:px-8 py-24 md:py-32 relative">
-      <div class="absolute top-6 right-6 md:top-12">
+  <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-1"
+      style="font-family: 'Courier New', monospace; font-size: 0.85rem; background: var(--header-bg); color: var(--header-text); text-decoration: none;"
+    >
+      skip to content
+    </a>
+
+    <header class="site-header">
+      <div class="header-banner">
+        <a href="/" class="site-title-link">&#9733; JOJO&#39;S THOUGHTS &#9733;</a>
+        <p class="site-tagline">just whatever comes to my mind</p>
+      </div>
+    </header>
+
+    <nav class="site-nav" aria-label="Site navigation">
+      <div class="site-nav-inner">
+        <a href="/">[ home ]</a>
+        <span class="nav-sep" aria-hidden="true">&nbsp;</span>
+        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">[ rss ]</a>
+        <span class="nav-spacer"></span>
         <ThemeToggle />
       </div>
-      <div>
-        <slot />
-      </div>
+    </nav>
+
+    <main id="main-content" class="page-content">
+      <slot />
     </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        &#9733; end of page &#9733;
+        &nbsp;&bull;&nbsp;
+        <a href="/rss.xml">rss feed</a>
+        &nbsp;&bull;&nbsp;
+        {year}
+      </div>
+    </footer>
   </body>
 </html>

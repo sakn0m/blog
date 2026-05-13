@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { render } from 'astro:content';
 import { SITE_TITLE, SITE_URL, AUTHOR_NAME } from '../../lib/consts';
-import { formatDateLong, toISODate } from '../../lib/date';
+import { toISODate } from '../../lib/date';
 import { getPublishedPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
@@ -16,6 +16,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const isoDate = toISODate(post.data.date);
+const dotDate = isoDate.replace(/-/g, '.');
 const description = post.data.description ?? post.body
   ?.replace(/[#*_`\[\]()>~]/g, '')
   .replace(/\s+/g, ' ')
@@ -29,7 +30,6 @@ const jsonLd = {
   datePublished: isoDate,
   author: { "@type": "Person", name: AUTHOR_NAME },
 };
-
 ---
 
 <Layout
@@ -40,18 +40,18 @@ const jsonLd = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <a href="/" class="back-link mb-8 inline-block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current">
-<span aria-hidden="true" style="font-family: Georgia, serif;">&larr;</span> back
-  </a>
+  <a href="/" class="post-back-link">&#9668; back to index</a>
 
-  <article class="max-w-none">
-    <h1 class="text-3xl font-medium mb-4">{post.data.title}</h1>
-    <time datetime={isoDate} class="text-sm mb-8 block">
-      {formatDateLong(post.data.date)}
-    </time>
-    <div class="prose prose-lg md:prose-xl max-w-none">
+  <article>
+    <header class="post-header-box">
+      <h1 class="post-h1">{post.data.title}</h1>
+      <time datetime={isoDate} class="post-date-mono">posted: {dotDate}</time>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
       <Content />
     </div>
+
     {post.data.authorNote && (
       <p class="author-note">{post.data.authorNote}</p>
     )}

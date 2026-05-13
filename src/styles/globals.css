@@ -2,15 +2,6 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (.dark &);
-@custom-variant hover-hover (@media (hover: hover));
-
-@theme {
-  --font-serif: var(--font-charter),
-  "Source Serif 4",
-  Georgia,
-  ui-serif,
-  serif;
-}
 
 html {
   overflow-y: scroll;
@@ -18,21 +9,35 @@ html {
 
 @layer base {
   :root {
-    --color-bg: #FDFBF7;
-    --color-text: #1C1917;
-    --color-accent: #8B5E3C;
-    --color-muted: #78716C;
-    --color-border: #D6D3D1;
-    --color-selection: rgba(139, 94, 60, 0.2);
+    --bg: #fdfaf3;
+    --text: #1a1410;
+    --link: #0000cc;
+    --visited: #551a8b;
+    --border: #aaa;
+    --hr: #333;
+    --muted: #666;
+    --header-bg: #003366;
+    --header-text: #ffffff;
+    --nav-bg: #f0ece0;
+    --nav-border: #ccc;
+    --code-bg: #eeebe2;
+    --selection: rgba(0, 0, 160, 0.12);
   }
 
   .dark {
-    --color-bg: #1A1A1A;
-    --color-text: #E2E2E2;
-    --color-accent: #D4A373;
-    --color-muted: #A8A29E;
-    --color-border: #333333;
-    --color-selection: rgba(212, 163, 115, 0.25);
+    --bg: #0e1018;
+    --text: #cbc5b0;
+    --link: #7799ee;
+    --visited: #bb88dd;
+    --border: #2e2e3e;
+    --hr: #444;
+    --muted: #777;
+    --header-bg: #010c1f;
+    --header-text: #ddd8c4;
+    --nav-bg: #111418;
+    --nav-border: #252530;
+    --code-bg: #191c25;
+    --selection: rgba(119, 153, 238, 0.18);
   }
 
   * {
@@ -40,147 +45,359 @@ html {
   }
 
   ::selection {
-    background: var(--color-selection);
-  }
-
-  a,
-  button {
-    touch-action: manipulation;
+    background: var(--selection);
   }
 
   html,
   body {
     height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+    line-height: 1.65;
   }
 
-  .dark body {
-    color-scheme: dark;
-  }
-
-  .post-title {
+  a {
+    color: var(--link);
     text-decoration: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
-    transition: text-decoration-color 0s ease-out;
   }
 
-  @media (hover: hover) {
-    .post-title {
-      transition: text-decoration-color 150ms ease-out;
-    }
-
-    .group:hover .post-title {
-      text-decoration-color: var(--color-accent);
-    }
+  a:visited {
+    color: var(--visited);
   }
 
-  .group:active .post-title,
-  .group.is-navigating .post-title {
-    text-decoration-color: var(--color-accent);
-  }
-
-  .back-link {
-    color: var(--color-muted);
-    transition: color 150ms ease;
-  }
-
-  @media (hover: hover) {
-    .back-link:hover {
-      color: var(--color-text);
-    }
-  }
-
-  .back-link:active,
-  .back-link.is-navigating {
-    color: var(--color-text);
+  a:hover {
+    text-decoration: none;
   }
 
   hr {
-    border-color: var(--color-border);
-    transition: border-color 0.4s ease;
+    border: none;
+    border-top: 2px solid var(--hr);
+    margin: 1.5rem 0;
   }
 
-  time,
-  p.muted {
-    color: var(--color-muted);
-    transition: color 0.4s ease;
+  code,
+  pre {
+    font-family: 'Courier New', Courier, monospace;
   }
 
-  time {
-    font-family: ui-monospace, 'Menlo', 'Monaco', monospace;
-    font-style: normal;
+  /* Site header */
+  .site-header {
+    background-color: var(--header-bg);
+    border-bottom: 3px solid #001a33;
+    color: var(--header-text);
   }
 
-  .post-separator {
-    border-color: var(--color-muted);
-    transition: border-color 0.4s ease;
+  .dark .site-header {
+    border-bottom-color: #000;
+  }
+
+  .header-banner {
+    padding: 1.25rem 1.5rem 1rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .site-title-link {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.35rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: var(--header-text);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .site-title-link:visited {
+    color: var(--header-text);
+  }
+
+  .site-title-link:hover {
+    text-decoration: underline;
+  }
+
+  .site-tagline {
+    font-family: Georgia, serif;
+    font-size: 0.875rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+  }
+
+  .dark .site-tagline {
+    color: rgba(203, 197, 176, 0.5);
+  }
+
+  /* Site nav */
+  .site-nav {
+    background-color: var(--nav-bg);
+    border-bottom: 2px solid var(--nav-border);
+    padding: 0.45rem 1.5rem;
+  }
+
+  .site-nav-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+  }
+
+  .site-nav-inner a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .site-nav-inner a:visited {
+    color: var(--text);
+  }
+
+  .site-nav-inner a:hover {
+    text-decoration: underline;
+    color: var(--link);
+  }
+
+  .nav-sep {
+    color: var(--muted);
+    margin: 0 0.4rem;
+    user-select: none;
+  }
+
+  .nav-spacer {
+    flex: 1;
+  }
+
+  /* Main content area */
+  .page-content {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2.25rem 1.5rem 3rem;
+  }
+
+  /* Post list (index page) */
+  .posts-label {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .post-list-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-list-link {
+    display: flex;
+    align-items: baseline;
+    gap: 1.1rem;
+    padding: 0.55rem 0;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .post-list-link:visited {
+    color: var(--text);
+  }
+
+  .post-list-date {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: 6.8ch;
+  }
+
+  .post-list-title {
+    color: var(--link);
+    text-decoration: underline;
+    font-size: 1rem;
+    font-family: Georgia, serif;
+  }
+
+  .post-list-link:visited .post-list-title {
+    color: var(--visited);
+  }
+
+  .post-list-link:hover .post-list-title {
+    text-decoration: none;
+  }
+
+  /* Site footer */
+  .site-footer {
+    border-top: 2px solid var(--hr);
+    padding: 1.25rem 1.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .site-footer-inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .site-footer a {
+    color: var(--muted);
+    text-decoration: underline;
+  }
+
+  .site-footer a:hover {
+    color: var(--link);
+  }
+
+  /* Post page */
+  .post-back-link {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1.75rem;
+  }
+
+  .post-back-link:visited {
+    color: var(--muted);
+  }
+
+  .post-back-link:hover {
+    text-decoration: underline;
+    color: var(--link);
+  }
+
+  .post-header-box {
+    border-bottom: 3px solid var(--hr);
+    margin-bottom: 1.75rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .post-h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.75rem;
+    font-weight: bold;
+    line-height: 1.3;
+    margin: 0 0 0.45rem;
+    color: var(--text);
+  }
+
+  .post-date-mono {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: block;
   }
 
   .author-note {
-    margin-top: 2.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-border);
-    font-size: theme(--text-base);
-    line-height: theme(--leading-relaxed);
+    margin-top: 2rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--border);
     font-style: italic;
-    color: var(--color-muted);
-    transition: color 0.4s ease, border-color 0.4s ease;
+    color: var(--muted);
+    font-size: 0.925rem;
+    line-height: 1.6;
+  }
+
+  /* Theme toggle */
+  #theme-toggle {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  #theme-toggle:hover {
+    text-decoration: underline;
+    color: var(--link);
+  }
+
+  #theme-label-day {
+    display: none;
+  }
+
+  #theme-label-night {
+    display: inline;
+  }
+
+  .dark #theme-label-day {
+    display: inline;
+  }
+
+  .dark #theme-label-night {
+    display: none;
   }
 }
 
-/*
- * Prose typography overrides — OUTSIDE @layer so they beat
- * Tailwind utility classes like prose-neutral / prose-invert.
- * Our CSS custom properties (--color-*) already switch between
- * light and dark, so no separate dark override is needed.
- */
+/* Prose overrides */
 .prose {
-  --tw-prose-body: inherit;
-  --tw-prose-headings: inherit;
-  --tw-prose-links: var(--color-accent);
-  --tw-prose-bold: inherit;
-  --tw-prose-counters: var(--color-muted);
-  --tw-prose-bullets: var(--color-muted);
-  --tw-prose-hr: var(--color-border);
-  --tw-prose-quotes: inherit;
-  --tw-prose-quote-borders: var(--color-accent);
-  --tw-prose-captions: var(--color-muted);
-  --tw-prose-code: inherit;
-  --tw-prose-th-borders: var(--color-border);
-  --tw-prose-td-borders: var(--color-border);
+  --tw-prose-body: var(--text);
+  --tw-prose-headings: var(--text);
+  --tw-prose-links: var(--link);
+  --tw-prose-bold: var(--text);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-hr: var(--hr);
+  --tw-prose-quotes: var(--text);
+  --tw-prose-quote-borders: var(--hr);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--text);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  max-width: none;
 }
 
-.prose blockquote,
-.prose hr,
-.prose th,
-.prose td {
-  transition: border-color 0.4s ease;
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.prose figcaption,
-.prose li::marker {
-  transition: color 0.4s ease;
+.prose a {
+  color: var(--link);
+  text-decoration: underline;
 }
 
-/* Inline code styling */
+.prose a:visited {
+  color: var(--visited);
+}
+
+.prose a:hover {
+  text-decoration: none;
+}
+
 .prose code {
-  color: var(--color-text);
-  background-color: var(--color-selection);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--code-bg);
+  color: var(--text);
+  padding: 0.1em 0.35em;
   font-size: 0.875em;
-  font-weight: 500;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  border: 1px solid var(--border);
+  border-radius: 0;
 }
 
 .prose code::before,
@@ -188,39 +405,8 @@ html {
   content: "";
 }
 
-/* Prose links: same transparent→accent underline as homepage post titles */
-.prose a {
-  font-weight: inherit;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-  transition: text-decoration-color 0s ease-out, color 0.4s ease;
-}
-
-@media (hover: hover) {
-  .prose a {
-    transition: text-decoration-color 150ms ease-out, color 0.4s ease;
-  }
-
-  .prose a:hover {
-    text-decoration-color: var(--color-accent);
-  }
-}
-
-.prose a:active {
-  text-decoration: underline;
-  text-decoration-color: var(--color-accent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-}
-
-/* Theme toggle: palette-integrated hover and focus */
-#theme-toggle:hover {
-  background-color: var(--color-selection);
-}
-
-#theme-toggle:focus-visible {
-  outline: 2px solid var(--color-border);
-  outline-offset: 2px;
+.prose blockquote {
+  border-left: 3px solid var(--hr);
+  font-style: italic;
+  color: var(--muted);
 }
