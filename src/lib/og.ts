@@ -6,7 +6,7 @@ export async function renderOgImage(
   title: string,
   subtitle: string,
   options: { isHomepage?: boolean } = {}
-): Promise<ArrayBuffer> {
+): Promise<Buffer> {
   const fontData = await getCharterFont();
 
   const svg = await satori(
@@ -64,8 +64,5 @@ export async function renderOgImage(
     }
   );
 
-  const buffer = await sharp(Buffer.from(svg)).png().toBuffer();
-  const arrayBuffer = new ArrayBuffer(buffer.byteLength);
-  new Uint8Array(arrayBuffer).set(buffer);
-  return arrayBuffer;
+  return sharp(Buffer.from(svg)).png().toBuffer();
 }
