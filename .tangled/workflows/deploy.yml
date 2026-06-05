@@ -7,9 +7,6 @@ engine: "nixery"
 dependencies:
   nixpkgs:
     - nodejs
-    - coreutils
-    - curl
-    - glibc
   github:NixOS/nixpkgs/nixpkgs-unstable:
     - bun
 
@@ -27,6 +24,8 @@ steps:
 
   - name: "Deploy to Wisp"
     command: |
-      curl https://sites.wisp.place/nekomimi.pet/wisp-cli-binaries/wisp-cli-x86_64-linux -o wisp-cli
-      chmod +x wisp-cli
-      ./wisp-cli "$WISP_HANDLE" --path "$SITE_PATH" --site "$SITE_NAME" --password "$WISP_APP_PASSWORD"
+      export PATH="$HOME/.nix-profile/bin:$PATH"
+      npx --yes wispctl@latest deploy "$WISP_HANDLE" \
+        --path "$SITE_PATH" \
+        --site "$SITE_NAME" \
+        --password "$WISP_APP_PASSWORD"
