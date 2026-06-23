@@ -6,7 +6,6 @@ import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from "../src/lib/consts";
 const RECORDS_PATH = resolve(import.meta.dirname, "../src/data/standard-site-records.json");
 const POSTS_DIR = resolve(import.meta.dirname, "../src/content/posts");
 const DID = "did:plc:qiyhlatbxz3cr2dch5x5o3dy";
-const HANDLE = "jojo.news";
 
 interface RecordsFile {
   publication: { rkey: string };
@@ -44,15 +43,6 @@ function writeRecords(records: RecordsFile) {
   writeFileSync(RECORDS_PATH, JSON.stringify(records, null, 2) + "\n");
 }
 
-function colorToRgb(hex: string): { r: number; g: number; b: number } {
-  const h = hex.replace("#", "");
-  return {
-    r: parseInt(h.slice(0, 2), 16),
-    g: parseInt(h.slice(2, 4), 16),
-    b: parseInt(h.slice(4, 6), 16),
-  };
-}
-
 async function main() {
   const password = process.env.ATPROTO_APP_PASSWORD;
   if (!password) {
@@ -86,12 +76,6 @@ async function main() {
         name: SITE_TITLE,
         url: SITE_URL,
         description: SITE_DESCRIPTION,
-        basicTheme: {
-          background: colorToRgb("#FDFBF7"),
-          foreground: colorToRgb("#1C1917"),
-          accent: colorToRgb("#8B5E3C"),
-          accentForeground: { r: 255, g: 255, b: 255 },
-        },
         preferences: { showInDiscover: true },
       });
       const rkey = result.uri.split("/").pop()!;
@@ -100,6 +84,27 @@ async function main() {
     }
   } else {
     console.log(`Publication rkey: ${records.publication.rkey}`);
+
+  // Update publication to ensure it has no invalid basicTheme
+  const existingPubs = await publisher.listPublications();
+  const pub = existingPubs.find((p) => p.uri.endsWith(records.publication.rkey));
+  if (pub?.value?.basicTheme) {
+    console.log("Removing invalid basicTheme from publication...");
+    const agent = publisher.getAtpAgent();
+    await agent.api.com.atproto.repo.putRecord({
+      repo: DID,
+      collection: "site.standard.publication",
+      rkey: records.publication.rkey,
+      record: {
+        $type: "site.standard.publication",
+        url: SITE_URL,
+        name: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        preferences: { showInDiscover: true },
+      },
+    });
+    console.log("Publication updated without basicTheme.");
+  }
   }
 
   // --- Documents ---
