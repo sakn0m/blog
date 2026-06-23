@@ -1,13 +1,15 @@
 import satori from 'satori';
 import sharp from 'sharp';
-import { getCharterFont } from './og-font';
+import { getCharterRegular } from './og-font';
 
 export async function renderOgImage(
   title: string,
   subtitle: string,
   options: { isHomepage?: boolean } = {}
 ): Promise<Buffer> {
-  const fontData = await getCharterFont();
+  const fontData = await getCharterRegular();
+
+  const isHome = options.isHomepage;
 
   const svg = await satori(
     {
@@ -19,18 +21,34 @@ export async function renderOgImage(
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: '80px',
-          backgroundColor: '#fafafa',
+          padding: '80px 80px 60px',
+          backgroundColor: '#FDFBF7',
         },
         children: [
+          ...(subtitle && !isHome ? [{
+            type: 'div',
+            props: {
+              style: {
+                fontSize: 22,
+                color: '#8B5E3C',
+                marginBottom: 8,
+                fontFamily: 'Charter',
+                fontWeight: 400,
+                fontStyle: 'italic',
+                lineHeight: 1.4,
+              },
+              children: 'jojo.news',
+            },
+          }] : []),
           {
             type: 'div',
             props: {
               style: {
-                fontSize: options.isHomepage ? 64 : 56,
-                fontWeight: 500,
-                color: '#171717',
-                lineHeight: 0.9
+                fontSize: isHome ? 68 : 52,
+                fontWeight: 700,
+                color: '#1C1917',
+                lineHeight: 1.1,
+                fontFamily: 'Charter',
               },
               children: title,
             },
@@ -39,10 +57,13 @@ export async function renderOgImage(
             type: 'div',
             props: {
               style: {
-                fontSize: options.isHomepage ? 28 : 24,
-                color: '#a3a3a3',
-                marginTop: 24,
-                fontStyle: options.isHomepage ? 'normal' : 'italic'
+                fontSize: isHome ? 28 : 24,
+                color: '#78716C',
+                marginTop: 16,
+                fontFamily: 'Charter',
+                fontWeight: 400,
+                fontStyle: isHome ? 'normal' : 'italic',
+                lineHeight: 1.4,
               },
               children: subtitle,
             },
@@ -58,6 +79,12 @@ export async function renderOgImage(
           name: 'Charter',
           data: fontData,
           weight: 400,
+          style: 'normal',
+        },
+        {
+          name: 'Charter',
+          data: fontData,
+          weight: 700,
           style: 'normal',
         },
       ],
