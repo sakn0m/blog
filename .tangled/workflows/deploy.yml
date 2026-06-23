@@ -16,10 +16,17 @@ environment:
   WISP_HANDLE: "jojo.news"
 
 steps:
-  - name: "Build"
+  - name: "Sync to ATProto"
     command: |
       export PATH="$HOME/.nix-profile/bin:$PATH"
       bun install
+      bun run scripts/sync-to-atproto.ts
+    environment:
+      ATPROTO_APP_PASSWORD: "$ATPROTO_APP_PASSWORD"
+
+  - name: "Build"
+    command: |
+      export PATH="$HOME/.nix-profile/bin:$PATH"
       bun run build
 
   - name: "Deploy to Wisp"
