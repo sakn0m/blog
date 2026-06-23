@@ -25,21 +25,6 @@ export async function renderOgImage(
           backgroundColor: '#FDFBF7',
         },
         children: [
-          ...(subtitle && !isHome ? [{
-            type: 'div',
-            props: {
-              style: {
-                fontSize: 22,
-                color: '#8B5E3C',
-                marginBottom: 8,
-                fontFamily: 'Charter',
-                fontWeight: 400,
-                fontStyle: 'italic',
-                lineHeight: 1.4,
-              },
-              children: 'jojo.news',
-            },
-          }] : []),
           {
             type: 'div',
             props: {
@@ -62,7 +47,6 @@ export async function renderOgImage(
                 marginTop: 16,
                 fontFamily: 'Charter',
                 fontWeight: 400,
-                fontStyle: isHome ? 'normal' : 'italic',
                 lineHeight: 1.4,
               },
               children: subtitle,
