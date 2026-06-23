@@ -149,7 +149,7 @@ async function main() {
   for (const file of files) {
     const slug = file.replace(/\.md$/, "");
     const raw = readFileSync(join(POSTS_DIR, file), "utf-8");
-    const { data } = parseFrontmatter(raw);
+    const { data, body } = parseFrontmatter(raw);
 
     if (data.draft) {
       console.log(`  [SKIP] ${slug} (draft)`);
@@ -158,7 +158,12 @@ async function main() {
 
     const title = (data.title as string) || slug;
     const date = data.date instanceof Date ? data.date : new Date(data.date as string);
-    const description = (data.description as string) || undefined;
+    const frontDescription = data.description as string | undefined;
+    const description = frontDescription ?? body
+      .replace(/[#*_`\[\]()>~]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 300) || undefined;
     const path = `/posts/${slug}`;
 
     const pubAtUri = `at://${DID}/site.standard.publication/${records.publication.rkey}`;
