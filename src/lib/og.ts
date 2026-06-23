@@ -1,13 +1,14 @@
 import satori from 'satori';
 import sharp from 'sharp';
-import { getCharterRegular } from './og-font';
+import { getCharterRegular, getMonoFont } from './og-font';
 
 export async function renderOgImage(
   title: string,
   subtitle: string,
   options: { isHomepage?: boolean } = {}
 ): Promise<Buffer> {
-  const fontData = await getCharterRegular();
+  const charterData = await getCharterRegular();
+  const monoData = getMonoFont();
 
   const isHome = options.isHomepage;
 
@@ -45,7 +46,7 @@ export async function renderOgImage(
                 fontSize: isHome ? 28 : 24,
                 color: '#78716C',
                 marginTop: 16,
-                fontFamily: 'Charter',
+                fontFamily: 'Hack',
                 fontWeight: 400,
                 lineHeight: 1.4,
               },
@@ -61,14 +62,20 @@ export async function renderOgImage(
       fonts: [
         {
           name: 'Charter',
-          data: fontData,
+          data: charterData,
           weight: 400,
           style: 'normal',
         },
         {
           name: 'Charter',
-          data: fontData,
+          data: charterData,
           weight: 700,
+          style: 'normal',
+        },
+        {
+          name: 'Hack',
+          data: monoData,
+          weight: 400,
           style: 'normal',
         },
       ],

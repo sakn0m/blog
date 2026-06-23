@@ -5,19 +5,15 @@ import path from 'node:path';
 const fontDir = path.resolve('./src/assets/fonts');
 
 let regularCache: ArrayBuffer | null = null;
-let boldCache: ArrayBuffer | null = null;
 
-async function loadWoff2(filename: string, cache: { current: ArrayBuffer | null }): Promise<ArrayBuffer> {
-    if (cache.current) return cache.current;
-    const woff2 = fs.readFileSync(path.resolve(fontDir, filename));
-    cache.current = await decompress(woff2);
-    return cache.current;
+export async function getCharterRegular(): Promise<ArrayBuffer> {
+    if (regularCache) return regularCache;
+    const woff2 = fs.readFileSync(path.resolve(fontDir, 'charter-regular.woff2'));
+    regularCache = await decompress(woff2);
+    return regularCache;
 }
 
-export function getCharterRegular(): Promise<ArrayBuffer> {
-    return loadWoff2('charter-regular.woff2', { current: regularCache });
-}
-
-export function getCharterBold(): Promise<ArrayBuffer> {
-    return loadWoff2('charter-bold.woff2', { current: boldCache });
+export function getMonoFont(): ArrayBuffer {
+    const buf = fs.readFileSync(path.resolve(fontDir, 'hack-regular.ttf'));
+    return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
 }
