@@ -62,39 +62,42 @@ async function main() {
   const records = readRecords();
 
   // --- Publication ---
-  if (!records.publication.rkey) {
-    console.log("Checking for existing publication...");
-    const existingPubs = await publisher.listPublications();
+  const existingPubs = await publisher.listPublications();
+  let pubRkey: string | null = records.publication.rkey || null;
+
+  if (!pubRkey) {
     const pub = existingPubs.find((p) => p.value.url === SITE_URL);
     if (pub) {
-      const rkey = pub.uri.split("/").pop()!;
-      records.publication.rkey = rkey;
-      console.log(`Found existing publication: ${rkey}`);
-    } else {
-      console.log("Creating publication...");
-      const result = await publisher.publishPublication({
-        name: SITE_TITLE,
-        url: SITE_URL,
-        description: SITE_DESCRIPTION,
-        preferences: { showInDiscover: true },
-      });
-      const rkey = result.uri.split("/").pop()!;
-      records.publication.rkey = rkey;
-      console.log(`Publication created: ${result.uri}`);
+      pubRkey = pub.uri.split("/").pop()!;
+      records.publication.rkey = pubRkey;
+      console.log(`Found existing publication: ${pubRkey}`);
     }
-  } else {
-    console.log(`Publication rkey: ${records.publication.rkey}`);
+  }
 
-  // Update publication to ensure it has no invalid basicTheme
-  const existingPubs = await publisher.listPublications();
-  const pub = existingPubs.find((p) => p.uri.endsWith(records.publication.rkey));
+  if (!pubRkey) {
+    console.log("Creating publication...");
+    const result = await publisher.publishPublication({
+      name: SITE_TITLE,
+      url: SITE_URL,
+      description: SITE_DESCRIPTION,
+      preferences: { showInDiscover: true },
+    });
+    pubRkey = result.uri.split("/").pop()!;
+    records.publication.rkey = pubRkey;
+    console.log(`Publication created: ${result.uri}`);
+  } else {
+    console.log(`Publication rkey: ${pubRkey}`);
+  }
+
+  // Ensure publication has no basicTheme (publisher doesn't add $type discriminators)
+  const pub = existingPubs.find((p) => p.uri.endsWith(pubRkey!));
   if (pub?.value?.basicTheme) {
     console.log("Removing invalid basicTheme from publication...");
     const agent = publisher.getAtpAgent();
     await agent.api.com.atproto.repo.putRecord({
       repo: DID,
       collection: "site.standard.publication",
-      rkey: records.publication.rkey,
+      rkey: pubRkey!,
       record: {
         $type: "site.standard.publication",
         url: SITE_URL,
@@ -103,8 +106,7 @@ async function main() {
         preferences: { showInDiscover: true },
       },
     });
-    console.log("Publication updated without basicTheme.");
-  }
+    console.log("Publication updated.");
   }
 
   // --- Documents ---
