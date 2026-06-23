@@ -128,8 +128,9 @@ async function main() {
     const description = (data.description as string) || undefined;
     const path = `/posts/${slug}`;
 
+    const pubAtUri = `at://${DID}/site.standard.publication/${records.publication.rkey}`;
     const documentInput = {
-      site: SITE_URL,
+      site: pubAtUri,
       title,
       publishedAt: date.toISOString(),
       path,
