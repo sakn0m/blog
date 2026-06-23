@@ -18,11 +18,13 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const isoDate = toISODate(post.data.date);
-const description = post.data.description ?? post.body
+const rawDescription = (post.data.description ?? post.body
   ?.replace(/[#*_`\[\]()>~]/g, '')
   .replace(/\s+/g, ' ')
-  .trim()
-  .slice(0, 160) ?? '';
+  .trim() ?? '');
+const description = rawDescription.length > 160
+  ? rawDescription.slice(0, 160) + '...'
+  : rawDescription;
 
 const jsonLd = {
   "@context": "https://schema.org",
