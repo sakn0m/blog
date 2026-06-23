@@ -159,13 +159,10 @@ async function main() {
     const title = (data.title as string) || slug;
     const date = data.date instanceof Date ? data.date : new Date(data.date as string);
     const frontDescription = data.description as string | undefined;
-    const rawDescription = frontDescription ?? body
+    const description = frontDescription ?? body
       .replace(/[#*_`\[\]()>~]/g, '')
       .replace(/\s+/g, ' ')
-      .trim();
-    const description = rawDescription && rawDescription.length > 300
-      ? rawDescription.slice(0, 300) + '...'
-      : rawDescription || undefined;
+      .trim() || undefined;
     const path = `/posts/${slug}`;
 
     const pubAtUri = `at://${DID}/site.standard.publication/${records.publication.rkey}`;
