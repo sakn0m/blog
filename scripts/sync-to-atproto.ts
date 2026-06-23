@@ -163,11 +163,14 @@ async function main() {
       .replace(/[#*_`\[\]()>~]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
-    const description = frontDescription
-      ?? (bodyDesc.length > 300
-        ? bodyDesc.slice(0, 300) + '...'
-        : bodyDesc)
-      || undefined;
+    let description: string | undefined;
+    if (frontDescription) {
+      description = frontDescription;
+    } else if (bodyDesc.length > 300) {
+      description = bodyDesc.slice(0, 300) + '...';
+    } else if (bodyDesc) {
+      description = bodyDesc;
+    }
     const path = `/posts/${slug}`;
 
     const pubAtUri = `at://${DID}/site.standard.publication/${records.publication.rkey}`;
