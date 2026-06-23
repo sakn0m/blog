@@ -163,7 +163,11 @@ async function main() {
       .replace(/[#*_`\[\]()>~]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
-    const description = frontDescription ?? bodyDesc || undefined;
+    const description = frontDescription
+      ?? (bodyDesc.length > 300
+        ? bodyDesc.slice(0, 300) + '...'
+        : bodyDesc)
+      || undefined;
     const path = `/posts/${slug}`;
 
     const pubAtUri = `at://${DID}/site.standard.publication/${records.publication.rkey}`;
