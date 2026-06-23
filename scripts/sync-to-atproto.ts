@@ -5,6 +5,7 @@ import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from "../src/lib/consts";
 
 const RECORDS_PATH = resolve(import.meta.dirname, "../src/data/standard-site-records.json");
 const POSTS_DIR = resolve(import.meta.dirname, "../src/content/posts");
+const FAVICON_PATH = resolve(import.meta.dirname, "../public/favicon.png");
 const DID = "did:plc:qiyhlatbxz3cr2dch5x5o3dy";
 
 interface RecordsFile {
@@ -107,6 +108,37 @@ async function main() {
       },
     });
     console.log("Publication updated.");
+  }
+
+  // Upload publication icon if missing
+  if (!pub?.value?.icon) {
+    console.log("Uploading publication icon...");
+    const faviconBytes = readFileSync(FAVICON_PATH);
+    const faviconSize = faviconBytes.length;
+    const agent = publisher.getAtpAgent();
+    const blobRes = await agent.api.com.atproto.repo.uploadBlob(faviconBytes, {
+      encoding: "image/png",
+    });
+    console.log(`  Blob uploaded: ${blobRes.data.blob.ref.$link}`);
+    await agent.api.com.atproto.repo.putRecord({
+      repo: DID,
+      collection: "site.standard.publication",
+      rkey: pubRkey!,
+      record: {
+        $type: "site.standard.publication",
+        url: SITE_URL,
+        name: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        icon: {
+          $type: "blob",
+          ref: { $link: blobRes.data.blob.ref.$link },
+          mimeType: "image/png",
+          size: faviconSize,
+        },
+        preferences: { showInDiscover: true },
+      },
+    });
+    console.log("  Icon added to publication.");
   }
 
   // --- Documents ---
