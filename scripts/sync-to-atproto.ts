@@ -111,10 +111,9 @@ async function main() {
   }
 
   // Upload publication icon if missing
-  if (!pub?.value?.icon) {
+  if (!pub?.value?.icon || !pub.value.icon.ref?.$link) {
     console.log("Uploading publication icon...");
     const faviconBytes = readFileSync(FAVICON_PATH);
-    const faviconSize = faviconBytes.length;
     const agent = publisher.getAtpAgent();
     const blobRes = await agent.api.com.atproto.repo.uploadBlob(faviconBytes, {
       encoding: "image/png",
@@ -129,12 +128,7 @@ async function main() {
         url: SITE_URL,
         name: SITE_TITLE,
         description: SITE_DESCRIPTION,
-        icon: {
-          $type: "blob",
-          ref: { $link: blobRes.data.blob.ref.$link },
-          mimeType: "image/png",
-          size: faviconSize,
-        },
+        icon: blobRes.data.blob,
         preferences: { showInDiscover: true },
       },
     });
