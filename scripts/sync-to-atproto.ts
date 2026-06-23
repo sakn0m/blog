@@ -59,6 +59,10 @@ async function main() {
     console.error("ATPROTO_APP_PASSWORD env var required");
     process.exit(1);
   }
+  if (password === "$ATPROTO_APP_PASSWORD") {
+    console.error("ATPROTO_APP_PASSWORD was not resolved by Tangled. Check the secret name in repo settings.");
+    process.exit(1);
+  }
 
   console.log("Authenticating...");
   console.log(`  identifier: ${DID}`);
