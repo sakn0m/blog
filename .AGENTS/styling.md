@@ -53,6 +53,8 @@ All light↔dark transitions use `transition: ... 0.4s ease` for smooth theme sw
 - `charter-bold.woff2` (weight 700, normal)
 - `charter-bold-italic.woff2` (weight 700, italic)
 
+**Monospace font** (OG cards, timestamps): `Hack Regular` (TTF) — self-hosted in `src/assets/fonts/hack-regular.ttf`. Used in the OG image pipeline for dates only; blog page timestamps use `ui-monospace, Menlo, Monaco, monospace` system stack.
+
 **Fallback stack**: `"Source Serif 4", Georgia, ui-serif, serif`
 
 **Body**: `font-serif` class, `line-height: 1.75`, antialiased.
@@ -84,4 +86,4 @@ On hover (only on devices with hover): `text-decoration-color: var(--color-accen
 - Vertical padding: `py-24 md:py-32`
 - Theme toggle positioned absolutely at `top-6 right-6 md:top-12`
 
-*Last verified: 2026-06-23 (d628adf)*
+*Last verified: 2026-06-23 (d82bfe7)*

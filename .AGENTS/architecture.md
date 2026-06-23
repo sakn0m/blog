@@ -11,6 +11,7 @@
 | Font engine | Satori | ^0.26.0 |
 | Image processing | sharp | ^0.33 |
 | Woff2 decompression | wawoff2 | ^2.0.1 |
+| ATProto publishing | @kckempf/astro-standard-site | ^1.0.7 |
 | RSS | @astrojs/rss | ^4.0.18 |
 | Sitemap | @astrojs/sitemap | ^3.7.2 |
 
@@ -45,6 +46,8 @@
 │   │   ├── rss.xml.ts         # API route → /rss.xml
 │   │   ├── posts/[slug].astro  # Dynamic post page (URL: /posts/{slug})
 │   │   └── og/[slug].png.ts   # Dynamic OG image (URL: /og/{slug}.png)
+│   │   └── .well-known/
+│   │       └── site.standard.publication.ts  # ATProto verification endpoint
 │   ├── layouts/
 │   │   └── Layout.astro       # Single layout shell
 │   ├── components/
@@ -54,12 +57,16 @@
 │   │   ├── date.ts            # formatDate, toISODate helpers
 │   │   ├── posts.ts           # getPublishedPosts (filters drafts in PROD)
 │   │   ├── og.ts              # renderOgImage (Satori SVG → PNG via sharp)
-│   │   ├── og-font.ts         # Woff2 font loading for OG image (wawoff2)
+│   │   ├── og-font.ts         # Font loading for OG image (wawoff2, Charter + Hack)
 │   │   └── wawoff2.d.ts       # Type declaration for wawoff2
 │   ├── assets/
-│   │   └── fonts/             # Charter woff2 files (4 variants)
-│   └── styles/
-│       └── globals.css        # Tailwind imports + custom properties + prose overrides
+│   │   └── fonts/             # Charter woff2 (4) + Hack Regular ttf
+│   ├── styles/
+│   │   └── globals.css        # Tailwind imports + custom properties + prose overrides
+│   └── data/
+│       └── standard-site-records.json  # ATProto rkey storage (git-tracked)
+├── scripts/
+│   └── sync-to-atproto.ts     # ATProto publish script (runs in CI before build)
 ├── docs/
 │   └── guide.md               # Authoring guide for content editors
 ├── .tangled/
@@ -93,4 +100,4 @@ const posts = defineCollection({
 });
 ```
 
-*Last verified: 2026-06-23 (d628adf)*
+*Last verified: 2026-06-23 (d82bfe7)*

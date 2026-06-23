@@ -51,4 +51,4 @@ None. No `client:load`, `client:visible`, `client:idle`, `client:only` directive
 - Post page (`[slug].astro`): back link, `<article>` with `<h1>`, `<time>`, `<div class="prose">` for content, optional `authorNote`
 - 404: simple centered message with a back-home link
 
-*Last verified: 2026-06-23 (d628adf)*
+*Last verified: 2026-06-23 (d82bfe7)*

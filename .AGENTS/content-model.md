@@ -47,6 +47,17 @@ export async function getPublishedPosts() {
 
 There is no CMS (Keystatic, Decap, etc.). Authors edit markdown directly. A style guide lives at `docs/guide.md` explaining how to use Markdown features with the Tailwind Typography prose classes.
 
+## Description auto-generation
+
+If a post has no `description` in its frontmatter, descriptions are auto-generated from the post body (strip markdown, collapse whitespace). Behavior differs by consumer:
+
+| Consumer | Uses explicit `description`? | Auto-generate if missing? | Truncation |
+|----------|------------------------------|--------------------------|------------|
+| HTML `<meta>` + OG tags (`[slug].astro`) | yes, as-is | yes, from body | 160 chars + `...` |
+| standard.site document (`sync-to-atproto.ts`) | yes, as-is | yes, from body | 300 chars + `...` |
+
+Explicit frontmatter descriptions are never truncated — only auto-generated ones are.
+
 ## No i18n
 
 Single language (English). No locale folders, no locale frontmatter, no locale-aware routing.
@@ -61,4 +72,4 @@ Renders as an italic note below the post content, separated by a border:
 ```
 Styled in `globals.css` as `.author-note` with muted color, italic, top border.
 
-*Last verified: 2026-06-23 (d628adf)*
+*Last verified: 2026-06-23 (d82bfe7)*

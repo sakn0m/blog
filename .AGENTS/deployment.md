@@ -128,5 +128,5 @@ git push main → Tangled knot
 - No database
 - No third-party analytics or tracking (explicitly anti-tracking in site ethos per `public/robots.txt`)
 
-*Last verified: 2026-06-23 (d628adf)*
+*Last verified: 2026-06-23 (d82bfe7)*
 
