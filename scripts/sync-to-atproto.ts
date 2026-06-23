@@ -61,8 +61,12 @@ async function main() {
   }
 
   console.log("Authenticating...");
+  console.log(`  identifier: ${DID}`);
+  console.log(`  password length: ${password.length}`);
+  console.log(`  password prefix: ${password.slice(0, 4)}...`);
+
   const publisher = new StandardSitePublisher({
-    identifier: HANDLE,
+    identifier: DID,
     password,
   });
   await publisher.login();
