@@ -164,7 +164,7 @@ async function main() {
       .replace(/\s+/g, ' ')
       .trim();
     let description: string | undefined;
-    if (frontDescription) {
+    if (frontDescription !== undefined) {
       description = frontDescription;
     } else if (bodyDesc.length > 300) {
       description = bodyDesc.slice(0, 300) + '...';

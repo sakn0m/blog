@@ -1,15 +1,9 @@
 ---
-title: bombing Iran won't free it
+title: "bombing Iran won't free it"
 date: 2026-03-03
 draft: false
-authorNote: >-
-  I have been wanting to write something about the myth of nation-building for a
-  while, ever since the Maduro capture in January. While this is not exactly
-  what I intended, the last few days of watching shallow, pro-interventionist
-  takes on the matter have been unbearable. It is incomplete, it lacks many
-  other perspectives and arguments and it is not as rigorous as I would like it
-  to be. But still, I felt it was important to put something out. I hope I'll
-  manage to finish the Venezuela piece.
+description: "My take on the possibility of regime change"
+authorNote: "I have been wanting to write something about the myth of nation-building for a while, ever since the Maduro capture in January. While this is not exactly what I intended, the last few days of watching shallow, pro-interventionist takes on the matter have been unbearable. It is incomplete, it lacks many other perspectives and arguments and it is not as rigorous as I would like it to be. But still, I felt it was important to put something out. I hope I'll manage to finish the Venezuela piece."
 ---
 The logic seems almost intuitive: destroy the infrastructure of a regime, and the regime falls. It's the kind of reasoning that sounds clean in everyday talk, on TikTok, or in the talking points of those who've spent decades calling for "maximum pressure" on Tehran. But history and basic political theory tell a very different story.
 
