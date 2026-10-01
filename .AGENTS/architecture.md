@@ -4,25 +4,27 @@
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Framework | Astro | ^6.1.5 |
-| CSS | Tailwind CSS | ^4 (via `@tailwindcss/vite`) |
-| CSS plugin | @tailwindcss/typography | ^0.5 |
+| Framework | Astro | ^7.3.5 (Vite 8, Node ≥22.12) |
+| Markdown | Sätteri (Astro's native pipeline) | built-in (Astro 7 default) |
+| CSS | Tailwind CSS | ^4.3.3 (via `@tailwindcss/vite`) |
+| CSS plugin | @tailwindcss/typography | ^0.5.20 |
 | TS | TypeScript | ^5 (strict mode, extends `astro/tsconfigs/strict`) |
 | Font engine | Satori | ^0.26.0 |
-| Image processing | sharp | ^0.33 |
+| Image processing | sharp | ^0.35.5 |
 | Woff2 decompression | wawoff2 | ^2.0.1 |
-| ATProto publishing | @kckempf/astro-standard-site | ^1.0.7 |
-| RSS | @astrojs/rss | ^4.0.18 |
-| Sitemap | @astrojs/sitemap | ^3.7.2 |
+| ATProto publishing | @kckempf/astro-standard-site | ^1.1.7 |
+| RSS | @astrojs/rss | ^4.0.19 |
+| Sitemap | @astrojs/sitemap | ^3.7.4 |
 
 ## Build/output mode
 
 - **Output mode**: static (default — no adapter configured in `astro.config.mjs`)
 - **Site URL**: `https://jojo.news`
 - **trailingSlash**: `never` (URLs have no trailing slash)
+- **compressHTML**: `true` (explicit; Astro 7 now defaults to `'jsx'` whitespace stripping, this keeps pre-v7 output)
 - **Prefetch**: viewport-based (`prefetch: { defaultStrategy: 'viewport' }`)
 - **Build command**: `astro build` → output to `dist/`
-- **Dev command**: `astro dev`
+- **Dev command**: `astro dev` (Astro 7 can daemonize; `astro dev stop` / `astro dev status`)
 
 ## Folder structure
 
@@ -86,9 +88,10 @@ Defined in `astro.config.mjs`:
 
 ## Config details (`src/content.config.ts`)
 
-Astro v6 uses the new `src/content.config.ts` file (not `src/content/config.ts`):
+Uses the Content Layer API in `src/content.config.ts` (not `src/content/config.ts`). Since Astro 6, `z` must be imported from `astro/zod` (importing it from `astro:content` is deprecated):
 ```ts
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 const posts = defineCollection({

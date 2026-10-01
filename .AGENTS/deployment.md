@@ -95,7 +95,7 @@ steps:
 
 - **Trigger**: pushes to `main` branch
 - **Engine**: `nixery` (Nix-based containerized runner — each step runs in a fresh Docker container with dependencies layered via Nixery, workspace shared across steps)
-- **Dependencies**: `nodejs` from stable nixpkgs, `bun` from nixpkgs-unstable
+- **Dependencies**: `nodejs` from stable nixpkgs, `bun` from nixpkgs-unstable. Astro 7 requires Node `>=22.12.0`, so the nixpkgs `nodejs` must resolve to 22.12+.
 - **Build**: uses Bun (not npm/node) for both `install` and `build`
 - **Secrets**: `WISP_APP_PASSWORD` and `ATPROTO_APP_PASSWORD` are configured in Tangled's repo settings (not committed); injected at runtime by the spindle. Tangled uses OpenBao for secrets management on the spindle.
 - **Default env vars available**: `CI=true`, `TANGLED_REPO_KNOT`, `TANGLED_REPO_DID`, `TANGLED_REPO_SHA`, etc. (see Tangled docs for full list)

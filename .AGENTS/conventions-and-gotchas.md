@@ -68,6 +68,18 @@ No `slug` frontmatter field. The post's URL slug is its filename without `.md`. 
 
 The Tangled deploy uses `bun install` and `bun run build` — not npm. The `package-lock.json` is npm's format. If dependencies drift between bun and npm resolutions, builds might fail. Keep `package-lock.json` in sync.
 
+## Astro 7 notes (upgraded from 6.1.5)
+
+The blog runs Astro 7, which changed several defaults:
+
+- **Vite 8** — `@tailwindcss/vite` must be `^4.3.3` or newer (earlier 4.x capped the peer at Vite ^7). `astro.config.mjs` vite plugins are otherwise unchanged.
+- **Rust compiler** — Astro 7 replaced the Go compiler with a Rust one that is stricter about invalid HTML (unclosed non-void tags now error; invalid nesting is no longer auto-corrected). Templates must be well-formed. Void elements (`<meta>`, `<link>`, `<hr>`, `<br>`, `<img>`, `<path>`, `<circle>`) do not need closing tags.
+- **Markdown processor** — Astro 7 renders Markdown with **Sätteri** (native, GFM + SmartyPants) instead of remark/rehype. The blog uses no remark/rehype plugins, so nothing to port. If plugins are ever needed, install `@astrojs/markdown-remark` and set `markdown.processor: unified()`.
+- **`compressHTML`** — Astro 7 defaults to `'jsx'` (strips whitespace between inline elements). This project sets `compressHTML: true` explicitly to preserve the pre-v7 rendering.
+- **`src/fetch.ts` is reserved** for advanced routing config — do not create one for another purpose (`fetchFile: null` disables it).
+- **Zod** — import `z` from `astro/zod`, not from `astro:content` (deprecated since v6).
+- **Node** — Astro 7 requires Node `>=22.12.0` (local and CI). Vite 8 also requires a modern Node.
+
 ## robots.txt — AI crawler blocking
 
 `public/robots.txt` explicitly blocks major AI/LLM bots (GPTBot, ChatGPT-User, CCBot, Google-Extended, anthropic/claude bots, PerplexityBot, etc.) while allowing all other crawlers. Adding new bot user-agents goes here.
