@@ -86,4 +86,4 @@ On hover (only on devices with hover): `text-decoration-color: var(--color-accen
 - Vertical padding: `py-24 md:py-32`
 - Theme toggle positioned absolutely at `top-6 right-6 md:top-12`
 
-*Last verified: 2026-06-23 (d82bfe7)*
+*Last verified: 2026-10-01 (aaffd1d)*

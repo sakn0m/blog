@@ -22,6 +22,27 @@ npx --yes wispctl@latest deploy "$WISP_HANDLE" \
 - `SITE_NAME`: `blog` (site identifier within the handle)
 - `WISP_APP_PASSWORD`: secret stored in Tangled's pipeline secrets (OpenBao-backed)
 
+## Source of truth & git remotes
+
+The canonical repository is on **Tangled** (`git@tangled.org:jojo.news/blog`). A GitHub repository (`github.com/sakn0m/blog`) exists only as a **mirror** — it holds no CI/CD and is not required for deployment.
+
+Configured remotes in the local clone:
+
+| Remote | Fetch | Push |
+|--------|-------|------|
+| `tangled` | `git@tangled.org:jojo.news/blog` | `git@tangled.org:jojo.news/blog` **and** `https://github.com/sakn0m/blog.git` (dual `pushurl`) |
+| `github` | `https://github.com/sakn0m/blog.git` | `https://github.com/sakn0m/blog.git` |
+
+Because `tangled` has two `pushurl` entries, `git push tangled` sends the same commit to both Tangled and GitHub. The Tangled push triggers the deploy pipeline; the GitHub push is a backup/mirror only. To drop the mirror, remove the second `pushurl`:
+
+```bash
+git remote set-url --delete --push tangled https://github.com/sakn0m/blog.git
+```
+
+## Retired: Keystatic CMS
+
+The blog was previously editable through a self-hosted **Keystatic** CMS at `cms.jojo.news` (separate repo `github.com/sakn0m/keystatic-blog`, deployed to Vercel). That CMS has been decommissioned. Content is now authored as markdown directly in `src/content/posts/` (see `docs/guide.md`). The `github.com/sakn0m/blog` mirror is unrelated to Keystatic and is only kept as an optional git backup.
+
 ## CI/CD: Tangled (`tangled.org`)
 
 Tangled is a social coding platform built on AT Protocol. CI/CD pipelines run via **spindles** — Nix-powered CI runners. Workflows are defined in `.tangled/workflows/` at the repo root using YAML.
@@ -55,8 +76,6 @@ steps:
       export PATH="$HOME/.nix-profile/bin:$PATH"
       bun install
       bun run scripts/sync-to-atproto.ts
-    environment:
-      ATPROTO_APP_PASSWORD: "$ATPROTO_APP_PASSWORD"
 
   - name: "Build"
     command: |
@@ -128,5 +147,5 @@ git push main → Tangled knot
 - No database
 - No third-party analytics or tracking (explicitly anti-tracking in site ethos per `public/robots.txt`)
 
-*Last verified: 2026-06-23 (d82bfe7)*
+*Last verified: 2026-10-01 (aaffd1d)*
 

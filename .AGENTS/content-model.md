@@ -45,7 +45,9 @@ export async function getPublishedPosts() {
 
 ## No CMS layer
 
-There is no CMS (Keystatic, Decap, etc.). Authors edit markdown directly. A style guide lives at `docs/guide.md` explaining how to use Markdown features with the Tailwind Typography prose classes.
+There is no CMS in this repo. Authors edit markdown directly. A style guide lives at `docs/guide.md` explaining frontmatter fields, filename conventions, and how to use Markdown features with the Tailwind Typography prose classes.
+
+The blog previously used a self-hosted **Keystatic** CMS at `cms.jojo.news` (separate `keystatic-blog` repo, deployed to Vercel). It has been decommissioned; see `.AGENTS/deployment.md` → "Retired: Keystatic CMS". This repo never depended on it — content is plain markdown consumed by the `posts` collection `glob` loader.
 
 ## Description auto-generation
 
@@ -72,4 +74,4 @@ Renders as an italic note below the post content, separated by a border:
 ```
 Styled in `globals.css` as `.author-note` with muted color, italic, top border.
 
-*Last verified: 2026-06-23 (d82bfe7)*
+*Last verified: 2026-10-01 (aaffd1d)*

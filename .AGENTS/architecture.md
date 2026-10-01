@@ -69,11 +69,14 @@
 │   └── sync-to-atproto.ts     # ATProto publish script (runs in CI before build)
 ├── docs/
 │   └── guide.md               # Authoring guide for content editors
+├── .AGENTS/                   # Canonical project documentation (see README.md)
 ├── .tangled/
 │   └── workflows/
 │       └── deploy.yml         # CI/CD pipeline (Tangled → Wisp)
 └── .astro/                    # Auto-generated Astro types & metadata (gitignored)
 ```
+
+**Source of truth**: Tangled (`git@tangled.org:jojo.news/blog`). GitHub (`github.com/sakn0m/blog`) is an optional mirror via a second `pushurl` on the `tangled` remote — see `.AGENTS/deployment.md`.
 
 ## Integrations
 
@@ -100,4 +103,4 @@ const posts = defineCollection({
 });
 ```
 
-*Last verified: 2026-06-23 (d82bfe7)*
+*Last verified: 2026-10-01 (aaffd1d)*

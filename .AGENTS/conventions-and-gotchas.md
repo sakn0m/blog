@@ -86,11 +86,15 @@ Empty file at root. No `.env.example`. Two secrets are configured in Tangled's r
 
 The project is deliberately light:
 - 7 runtime dependencies: astro, @astrojs/rss, @astrojs/sitemap, @kckempf/astro-standard-site, satori, sharp, wawoff2
-- 3 devDependencies: @tailwindcss/typography, @tailwindcss/vite, tailwindcss, typescript
+- 4 devDependencies: @tailwindcss/typography, @tailwindcss/vite, tailwindcss, typescript
 - No UI framework, no CMS, no analytics
 
 ## Navigation state class: `.is-navigating`
 
 A custom pattern: when user clicks/taps a same-origin link, `.is-navigating` is added to the link before the View Transition starts, so the link immediately shows its active state (accent underline color). It's cleared on `astro:after-swap` and `touchcancel`. This bridging between tap/click and View Transition completion is custom and would need careful handling if navigation behavior changes.
 
-*Last verified: 2026-06-23 (d82bfe7)*
+## GitHub mirror
+
+The `tangled` git remote has a second `pushurl` pointing at `github.com/sakn0m/blog`, so every push is mirrored to GitHub. The GitHub copy has no CI and is not used for deployment — Tangled + Wisp remain the only pipeline. See `.AGENTS/deployment.md` → "Source of truth & git remotes".
+
+*Last verified: 2026-10-01 (aaffd1d)*

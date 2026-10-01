@@ -12,6 +12,7 @@ interface Props {
   description?: string;     // default: SITE_DESCRIPTION
   ogImage?: string;         // OG image URL (optional)
   preloadAllFonts?: boolean; // preload all 4 Charter variants (default: false)
+  headExtras?: string;      // raw HTML injected into <head> (post pages use it for the standard.site document <link>)
 }
 ```
 
@@ -47,8 +48,8 @@ None. No `client:load`, `client:visible`, `client:idle`, `client:only` directive
 
 ## Template patterns
 
-- Homepage (`index.astro`): minimal — just a `<nav>` with a `<ul>` of post links
-- Post page (`[slug].astro`): back link, `<article>` with `<h1>`, `<time>`, `<div class="prose">` for content, optional `authorNote`
+- Homepage (`index.astro`): `<header>` with `<h1>{SITE_TITLE}</h1>` + `<hr>`, then a `<nav>` with a `<ul>` of post links (title + dotted separator + date)
+- Post page (`[slug].astro`): back link, `<article>` with `<h1>`, `<time>` (long date format), `<div class="prose">` for content, optional `authorNote`, plus `BlogPosting` JSON-LD and a standard.site document `<link>` via `headExtras`
 - 404: simple centered message with a back-home link
 
-*Last verified: 2026-06-23 (d82bfe7)*
+*Last verified: 2026-10-01 (aaffd1d)*
