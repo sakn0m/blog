@@ -61,16 +61,6 @@ Because `tangled` has two `pushurl` entries, `git push tangled` sends the same c
 git remote set-url --delete --push tangled https://github.com/sakn0m/blog.git
 ```
 
-## Retired: Wisp hosting
-
-The blog was previously hosted on **Wisp** (`wisp.place`), a decentralized static host built on
-the AT Protocol (files stored as a `place.wisp.fs` record in the PDS, served by Wisp cache
-nodes). Hosting moved to Cloudflare for performance: the Wisp serving node for `jojo.news` was
-in California while the audience/PDS are in Europe. See `docs/wisp-hosting-performance.md` for
-the full investigation and `docs/cloudflare-workers-migration.md` for the migration steps.
-
-Wisp is no longer part of the deployment, but ATProto publishing continues (see below).
-
 ## Retired: Keystatic CMS
 
 The blog was previously editable through a self-hosted **Keystatic** CMS at `cms.jojo.news` (separate repo `github.com/sakn0m/keystatic-blog`, deployed to Vercel). That CMS has been decommissioned. Content is now authored as markdown directly in `src/content/posts/` (see `docs/guide.md`).

@@ -1,6 +1,6 @@
 # How to Write a Post
 
-Posts are plain Markdown files in `src/content/posts/`. There is no CMS — you edit the file directly and push to `main`, which builds and deploys via Tangled → Wisp (see `.AGENTS/deployment.md`).
+Posts are plain Markdown files in `src/content/posts/`. There is no CMS — you edit the file directly and push to `main`, which builds and deploys via Tangled → Cloudflare Workers (see `.AGENTS/deployment.md`).
 
 ## File name = URL slug
 

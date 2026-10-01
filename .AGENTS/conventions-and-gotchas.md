@@ -91,8 +91,9 @@ Contains Claude Code agent settings (`settings.local.json`) with permission allo
 
 ## `.env` file
 
-Empty file at root. No `.env.example`. Two secrets are configured in Tangled's repo settings (never committed):
-- `WISP_APP_PASSWORD` — Wisp deploy authentication
+Empty file at root. No `.env.example`. Secrets are configured in Tangled's repo settings (never committed):
+- `CLOUDFLARE_API_TOKEN` — Cloudflare Workers deploy authentication
+- `CLOUDFLARE_ACCOUNT_ID` — Cloudflare account for `wrangler deploy`
 - `ATPROTO_APP_PASSWORD` — Bluesky app password for standard.site publishing
 
 ## Minimal dependencies
