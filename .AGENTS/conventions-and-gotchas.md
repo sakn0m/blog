@@ -36,7 +36,8 @@ The blog publishes to AT Protocol using `@kckempf/astro-standard-site` (v1.0.7, 
 ### CI pipeline gotchas
 
 - **Steps must be in order**: Sync → Build → Deploy. The sync writes rkeys to `src/data/standard-site-records.json`, the build reads them for `<link>` tags and the well-known endpoint.
-- **Tangled secrets**: Secrets are auto-injected as env vars by Tangled. Do NOT put them in the `environment:` block of a step — that overrides with the literal string. Reference them directly in the shell command (like `$WISP_APP_PASSWORD` is used).
+- **Tangled secrets**: Secrets are auto-injected as env vars by Tangled. Do NOT put them in the `environment:` block of a step — that overrides with the literal string. Reference them directly. `wrangler deploy` reads `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` from the environment automatically.
+- **Deploy target is Cloudflare**: the final step is `npx --yes wrangler@latest deploy`, which uploads `dist/` per `wrangler.jsonc`. `wrangler.jsonc` has no `main` (assets-only Worker). The Worker name (`jojo-news`) must match the Cloudflare dashboard Worker.
 - **Records file is ephemeral**: `standard-site-records.json` is overwritten on each CI run by querying the PDS. The repo copy is a placeholder — the live rkeys are always fetched at sync time.
 
 ## Bun syntax quirks

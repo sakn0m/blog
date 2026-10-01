@@ -31,6 +31,7 @@
 ```
 /
 ├── astro.config.mjs           # Astro config (site, integrations, prefetch, vite)
+├── wrangler.jsonc             # Cloudflare Workers static-assets config (deploy target)
 ├── tsconfig.json              # Strict TS, extends astro/tsconfigs/strict
 ├── package.json               # Scripts: dev, build, preview
 ├── public/                    # Static assets copied verbatim to dist/
@@ -78,7 +79,7 @@
 └── .astro/                    # Auto-generated Astro types & metadata (gitignored)
 ```
 
-**Source of truth**: Tangled (`git@tangled.org:jojo.news/blog`). GitHub (`github.com/sakn0m/blog`) is an optional mirror via a second `pushurl` on the `tangled` remote — see `.AGENTS/deployment.md`.
+**Source of truth**: Tangled (`git@tangled.org:jojo.news/blog`). GitHub (`github.com/sakn0m/blog`) is an optional mirror via a second `pushurl` on the `tangled` remote. **Hosting**: Cloudflare Workers static assets (serving `dist/` via `wrangler.jsonc`), deployed from Tangled CI — see `.AGENTS/deployment.md`.
 
 ## Integrations
 

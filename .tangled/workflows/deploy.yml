@@ -10,11 +10,6 @@ dependencies:
   github:NixOS/nixpkgs/nixpkgs-unstable:
     - bun
 
-environment:
-  SITE_PATH: "dist"
-  SITE_NAME: "blog"
-  WISP_HANDLE: "jojo.news"
-
 steps:
   - name: "Sync to ATProto"
     command: |
@@ -27,10 +22,7 @@ steps:
       export PATH="$HOME/.nix-profile/bin:$PATH"
       bun run build
 
-  - name: "Deploy to Wisp"
+  - name: "Deploy to Cloudflare"
     command: |
       export PATH="$HOME/.nix-profile/bin:$PATH"
-      npx --yes wispctl@latest deploy "$WISP_HANDLE" \
-        --path "$SITE_PATH" \
-        --site "$SITE_NAME" \
-        --password "$WISP_APP_PASSWORD"
+      npx --yes wrangler@latest deploy

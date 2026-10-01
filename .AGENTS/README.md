@@ -5,7 +5,7 @@
 - **routing-and-pages.md** — URL → file mapping, dynamic routes, `getStaticPaths`
 - **components-and-layouts.md** — layouts, components, islands, hydration
 - **styling.md** — Tailwind v4 setup, design tokens, typography, dark mode
-- **deployment.md** — hosting (Wisp), CI (Tangled), git remotes, env vars
+- **deployment.md** — hosting (Cloudflare Workers), CI (Tangled), git remotes, DNS, env vars
 - **conventions-and-gotchas.md** — non-obvious behavior, custom scripts, warnings
 
 *Last verified: 2026-10-01 (aaffd1d)*

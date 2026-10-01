@@ -1,30 +1,52 @@
 # deployment
 
-## Hosting: Wisp (`wisp.place`)
+## Hosting: Cloudflare Workers (static assets)
 
-Wisp is a decentralized static site hosting platform built on the **AT Protocol**. Your site's files are stored as `place.wisp.fs` records in an AT Protocol repository (PDS). Hosting services watch the AT Protocol firehose, cache the files, and serve them with CDN-like performance. The PDS is the source of truth; hosting servers are read-only caches.
+The blog is a purely static Astro site. It is hosted on **Cloudflare Workers static assets**:
+Cloudflare serves the contents of `dist/` from its global edge. There is **no Cloudflare
+adapter and no Worker script** — the Worker is an assets-only Worker. The custom domain
+`jojo.news` is attached to the Worker via a Cloudflare custom domain.
 
-- **Domain**: `jojo.news` (custom domain mapped via DNS TXT record)
-- **Deploy tool**: `wispctl` CLI
-- **Docs**: https://docs.wisp.place
+- **Domain**: `jojo.news` (zone is on Cloudflare nameservers; custom domain managed by Cloudflare)
+- **Deploy tool**: `wrangler` CLI
+- **Worker name**: `jojo-news`
+- **Config**: `wrangler.jsonc` at the repo root
+- **Docs**: https://developers.cloudflare.com/workers/static-assets/
 
-### wispctl deploy command (from workflow)
+### `wrangler.jsonc`
 
-```bash
-npx --yes wispctl@latest deploy "$WISP_HANDLE" \
-  --path "$SITE_PATH" \
-  --site "$SITE_NAME" \
-  --password "$WISP_APP_PASSWORD"
+```jsonc
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "jojo-news",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash"
+  }
+}
 ```
 
-- `WISP_HANDLE`: `jojo.news` (the domain/handle on Wisp)
-- `SITE_PATH`: `dist` (the directory to upload)
-- `SITE_NAME`: `blog` (site identifier within the handle)
-- `WISP_APP_PASSWORD`: secret stored in Tangled's pipeline secrets (OpenBao-backed)
+- No `main` field → static-only Worker.
+- `not_found_handling: "404-page"` serves `dist/404.html` for unknown routes.
+- `html_handling: "drop-trailing-slash"` matches Astro's `trailingSlash: "never"`.
+- The custom domain is attached via the Cloudflare dashboard. It can optionally be made
+  declarative with `"routes": [{ "pattern": "jojo.news", "custom_domain": true }]` once the
+  zone is active.
+
+### Deploy command (from workflow)
+
+```bash
+npx --yes wrangler@latest deploy
+```
+
+`wrangler` reads `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` from the environment
+(injected as Tangled secrets).
 
 ## Source of truth & git remotes
 
-The canonical repository is on **Tangled** (`git@tangled.org:jojo.news/blog`). A GitHub repository (`github.com/sakn0m/blog`) exists only as a **mirror** — it holds no CI/CD and is not required for deployment.
+The canonical repository is on **Tangled** (`git@tangled.org:jojo.news/blog`). A GitHub repository (`github.com/sakn0m/blog`) exists only as a **mirror** — it holds no CI/CD and is not used for deployment.
 
 Configured remotes in the local clone:
 
@@ -39,9 +61,19 @@ Because `tangled` has two `pushurl` entries, `git push tangled` sends the same c
 git remote set-url --delete --push tangled https://github.com/sakn0m/blog.git
 ```
 
+## Retired: Wisp hosting
+
+The blog was previously hosted on **Wisp** (`wisp.place`), a decentralized static host built on
+the AT Protocol (files stored as a `place.wisp.fs` record in the PDS, served by Wisp cache
+nodes). Hosting moved to Cloudflare for performance: the Wisp serving node for `jojo.news` was
+in California while the audience/PDS are in Europe. See `docs/wisp-hosting-performance.md` for
+the full investigation and `docs/cloudflare-workers-migration.md` for the migration steps.
+
+Wisp is no longer part of the deployment, but ATProto publishing continues (see below).
+
 ## Retired: Keystatic CMS
 
-The blog was previously editable through a self-hosted **Keystatic** CMS at `cms.jojo.news` (separate repo `github.com/sakn0m/keystatic-blog`, deployed to Vercel). That CMS has been decommissioned. Content is now authored as markdown directly in `src/content/posts/` (see `docs/guide.md`). The `github.com/sakn0m/blog` mirror is unrelated to Keystatic and is only kept as an optional git backup.
+The blog was previously editable through a self-hosted **Keystatic** CMS at `cms.jojo.news` (separate repo `github.com/sakn0m/keystatic-blog`, deployed to Vercel). That CMS has been decommissioned. Content is now authored as markdown directly in `src/content/posts/` (see `docs/guide.md`).
 
 ## CI/CD: Tangled (`tangled.org`)
 
@@ -65,11 +97,6 @@ dependencies:
   github:NixOS/nixpkgs/nixpkgs-unstable:
     - bun
 
-environment:
-  SITE_PATH: "dist"
-  SITE_NAME: "blog"
-  WISP_HANDLE: "jojo.news"
-
 steps:
   - name: "Sync to ATProto"
     command: |
@@ -82,13 +109,10 @@ steps:
       export PATH="$HOME/.nix-profile/bin:$PATH"
       bun run build
 
-  - name: "Deploy to Wisp"
+  - name: "Deploy to Cloudflare"
     command: |
       export PATH="$HOME/.nix-profile/bin:$PATH"
-      npx --yes wispctl@latest deploy "$WISP_HANDLE" \
-        --path "$SITE_PATH" \
-        --site "$SITE_NAME" \
-        --password "$WISP_APP_PASSWORD"
+      npx --yes wrangler@latest deploy
 ```
 
 ### Pipeline details
@@ -97,20 +121,34 @@ steps:
 - **Engine**: `nixery` (Nix-based containerized runner — each step runs in a fresh Docker container with dependencies layered via Nixery, workspace shared across steps)
 - **Dependencies**: `nodejs` from stable nixpkgs, `bun` from nixpkgs-unstable. Astro 7 requires Node `>=22.12.0`, so the nixpkgs `nodejs` must resolve to 22.12+.
 - **Build**: uses Bun (not npm/node) for both `install` and `build`
-- **Secrets**: `WISP_APP_PASSWORD` and `ATPROTO_APP_PASSWORD` are configured in Tangled's repo settings (not committed); injected at runtime by the spindle. Tangled uses OpenBao for secrets management on the spindle.
+- **Deploy**: `wrangler deploy` uploads `dist/` as Cloudflare Workers static assets
+- **Secrets**: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `ATPROTO_APP_PASSWORD` are configured in Tangled's repo settings (not committed); injected at runtime by the spindle. Do not put secrets in a step's `environment:` block — reference them directly (wrangler reads the Cloudflare vars from the environment).
 - **Default env vars available**: `CI=true`, `TANGLED_REPO_KNOT`, `TANGLED_REPO_DID`, `TANGLED_REPO_SHA`, etc. (see Tangled docs for full list)
+- **Workers Builds is not used** — Cloudflare's own Git integration is intentionally bypassed; Tangled remains the CI.
 
 ## Environment variables
 
 - `.env` file exists at root but is **empty** (0 bytes). No `.env.example`.
-- `WISP_APP_PASSWORD` — set in Tangled repo settings, consumed by `wispctl deploy`
+- `CLOUDFLARE_API_TOKEN` — set in Tangled repo settings, consumed by `wrangler deploy`
+- `CLOUDFLARE_ACCOUNT_ID` — set in Tangled repo settings, consumed by `wrangler deploy`
 - `ATPROTO_APP_PASSWORD` — set in Tangled repo settings, consumed by the ATProto sync script
+
+## DNS
+
+The `jojo.news` zone is on **Cloudflare nameservers** (changed from Spaceship). Records that
+matter:
+
+| Name | Type | Value | Notes |
+|------|------|-------|-------|
+| `jojo.news` | CNAME/A | managed by Cloudflare custom domain | points to the Worker |
+| `_atproto.jojo.news` | TXT | `did=did:plc:qiyhlatbxz3cr2dch5x5o3dy` | **critical** — verifies the ATProto/Bluesky handle |
+| `jojo.news` | TXT | `protonmail-verification=...` | email/domain verification |
 
 ## standard.site integration
 
-This blog publishes its posts to the AT Protocol using the [standard.site](https://standard.site/) lexicon, enabling federated discovery and enhanced Bluesky link previews.
+This blog publishes its posts to the AT Protocol using the [standard.site](https://standard.site/) lexicon, enabling federated discovery and enhanced Bluesky link previews. This is independent of hosting and continues to run in the Tangled pipeline.
 
-**Package**: `@kckempf/astro-standard-site` (v1.0.7, fork for Astro 5/6 compatibility)
+**Package**: `@kckempf/astro-standard-site` (^1.1.7, fork for Astro 6/7 + Zod 4 compatibility)
 
 ### Architecture
 
@@ -119,7 +157,7 @@ This blog publishes its posts to the AT Protocol using the [standard.site](https
 - **rkey storage**: `src/data/standard-site-records.json` — git-tracked JSON mapping slugs to rkeys. Populated by the sync script, read by Astro at build time for `<link>` tags.
 - **Well-known endpoint**: `src/pages/.well-known/site.standard.publication.ts` → `/.well-known/site.standard.publication` serves the publication's AT-URI, proving domain ownership.
 - **Link tags**: each post page includes `<link rel="site.standard.document" href="at://...">` for document verification.
-- **Sync script**: `scripts/sync-to-atproto.ts` — runs before each build in CI, creates/updates publication and document records, writes rkeys to the JSON file.
+- **Sync script**: `scripts/sync-to-atproto.ts` — runs before each build in CI, creates/updates publication and document records, writes rkeys to the JSON file. The author's PDS is `https://eurosky.social`.
 
 ### Deploy flow
 
@@ -128,7 +166,7 @@ git push main → Tangled knot
   → spindle picks up pipeline
     → Step 1 (Sync): bun install, sync-to-atproto.ts → updates JSON + ATProto records
     → Step 2 (Build): astro build → reads JSON for link tags → dist/
-    → Step 3 (Deploy): wispctl deploy dist/ → Wisp → PDS → CDN
+    → Step 3 (Deploy): wrangler deploy → Cloudflare Workers static assets → global edge
 ```
 
 ## Build artifacts (in `dist/`)
@@ -140,12 +178,12 @@ git push main → Tangled knot
 - `dist/rss.xml` (RSS feed)
 - `dist/og.png` (homepage OG image)
 - `dist/.well-known/site.standard.publication` (text/plain, AT-URI for verification)
+- `dist/404.html` (served by Cloudflare via `not_found_handling: "404-page"`)
 
-## No external services
+## External services
 
-- No object storage (R2, S3, etc.)
+- **Cloudflare Workers** — static hosting + edge + TLS
 - No database
 - No third-party analytics or tracking (explicitly anti-tracking in site ethos per `public/robots.txt`)
 
 *Last verified: 2026-10-01 (aaffd1d)*
-
