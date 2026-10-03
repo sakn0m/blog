@@ -130,6 +130,7 @@ Dopo la prima valutazione dell'agente:
 - Aggiunto `public/favicon.ico` (ICO con PNG 32×32) e `<link rel="icon" href="/favicon.ico" sizes="any">` per i crawler legacy.
 - Reso coerente il remote `tangled`: rimossa la `pushurl` ridondante verso GitHub (ora fetch/push solo su `tangled.org`).
 
-Rilievi aperti (non bloccanti, da decidere):
-- Branch stantii locali/remoti non rimossi (es. `react-legacy`, `retro-redesign`, `copilot/*`).
-- Regola `_headers` per `*.workers.dev` non verificabile dal repo (matching hostname).
+Rilievi aperti (non bloccanti):
+- Ripuliti tutti i branch non-`main` in locale e su `origin` e `tangled` (resta solo `main`).
+- Regola `_headers` per `*.workers.dev`: mantenuta (innocua; il `<link canonical>` copre già il
+  duplicate content). Non verificabile dal repo (serve il sottodominio dell'account).
