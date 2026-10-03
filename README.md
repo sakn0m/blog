@@ -893,6 +893,10 @@ Volar) consumes the TypeScript **JavaScript** compiler API (`typescript.js` /
 JS API yet — so the checker cannot run against it. `@astrojs/check`'s peer range is therefore
 `^5 || ^6` (the JS line, which continues as 6.x).
 
+This is **temporary and only about `astro check`**, not about Astro's TypeScript support: Astro
+itself (`.ts`, typed `.astro` frontmatter, strict `tsconfig`) is unaffected. `astro check` will
+support TypeScript 7 once the native compiler exposes an equivalent JS API.
+
 ### Known advisories
 
 `npm audit` reports a high-severity advisory in `http-cache-semantics` (CVE-2026-93748),
