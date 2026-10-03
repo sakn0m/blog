@@ -1,14 +1,14 @@
 # jojo.news
 
 A minimal, static blog. Posts are plain Markdown in `src/content/posts/`, built with
-[Astro](https://astro.build) and hosted on **Cloudflare Workers static assets**, deployed
-from **Tangled** CI.
+[Astro](https://astro.build) and hosted on **Cloudflare Workers static assets**, deployed with
+**Cloudflare Workers Builds** (GitHub integration).
 
 - **Live site**: https://jojo.news
 - **Source of truth**: GitHub (`github.com/sakn0m/blog`)
-- **Deploy**: Tangled CI → Cloudflare Workers
+- **Deploy**: Cloudflare Workers Builds (on push to `main`)
 
-*Last verified: 2026-10-03 (3d65f85)*
+*Last verified: 2026-10-03*
 
 ---
 
@@ -109,9 +109,6 @@ const posts = defineCollection({
 │   │   └── fonts/             # Charter woff2 (4) + Hack Regular ttf
 │   └── styles/
 │       └── globals.css        # Tailwind imports + custom properties + prose overrides
-├── .tangled/
-│   └── workflows/
-│       └── deploy.yml         # CI/CD pipeline (Tangled → Cloudflare)
 └── .astro/                    # Auto-generated Astro types & metadata (gitignored)
 ```
 
@@ -120,8 +117,8 @@ const posts = defineCollection({
 ## How to write a post
 
 Posts are plain Markdown files in `src/content/posts/`. There is no CMS — you edit the file
-directly and push to `main` (GitHub). To deploy, also push to Tangled (`git push tangled main`)
-— see [Deployment](#deployment).
+directly and push to `main`, which triggers Cloudflare Workers Builds to build and deploy (see
+[Deployment](#deployment)).
 
 ### File name = URL slug
 
@@ -546,10 +543,10 @@ adapter and no Worker script** — the Worker is an assets-only Worker. The cust
 | | Value |
 |---|---|
 | Hosting | Cloudflare Workers static assets (global edge) |
-| CI | Tangled spindles |
-| Deploy step | `wrangler deploy` |
+| CI/CD | Cloudflare Workers Builds (GitHub integration) |
+| Build command | `npm run build` (set in the Worker's build settings) |
+| Deploy command | `npx wrangler deploy` (default) |
 | DNS | Cloudflare nameservers (required for a Worker custom domain) |
-| Secrets | `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` |
 
 Cloudflare docs: [Workers static assets](https://developers.cloudflare.com/workers/static-assets/),
 [Astro on Workers](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/),
@@ -581,87 +578,59 @@ Cloudflare docs: [Workers static assets](https://developers.cloudflare.com/worke
 
 ### Deploy command
 
+Workers Builds runs the deploy command configured in the dashboard, which defaults to:
+
 ```bash
-npx --yes wrangler@latest deploy
+npx wrangler deploy
 ```
 
-`wrangler` reads `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` from the environment
-(injected as Tangled secrets).
+It uses the Wrangler version declared in `package.json`. No manual `CLOUDFLARE_API_TOKEN` /
+`CLOUDFLARE_ACCOUNT_ID` are needed — Workers Builds creates and manages the API token when you
+connect the repository.
 
 ### Source of truth & git remotes
 
 The canonical repository is **GitHub** (`github.com/sakn0m/blog`). It is configured as the
 `origin` remote, and `main` tracks `origin/main`, so `git push` / `git pull` target GitHub.
-
-**Tangled** (`git@tangled.org:jojo.news/blog`) is kept as a **separate** remote: its CI builds
-and deploys to Cloudflare on pushes to `main`. It also has a second `pushurl` pointing at
-GitHub, so `git push tangled` mirrors to GitHub as well.
+Pushing to `main` triggers a Cloudflare Workers Build.
 
 | Remote | Fetch | Push |
 |--------|-------|------|
 | `origin` | `https://github.com/sakn0m/blog.git` | `https://github.com/sakn0m/blog.git` |
 | `tangled` | `git@tangled.org:jojo.news/blog` | `git@tangled.org:jojo.news/blog` **and** `https://github.com/sakn0m/blog.git` (dual `pushurl`) |
 
-- Publish code: `git push` (GitHub).
-- Trigger the Cloudflare deploy via Tangled: `git push tangled main`.
+The `tangled` remote is a legacy mirror kept for reference; it is **not** part of the deploy
+pipeline anymore.
 
-### CI/CD: Tangled (`tangled.org`)
+### CI/CD: Cloudflare Workers Builds
 
-Tangled is a social coding platform built on AT Protocol. CI/CD pipelines run via
-**spindles** — Nix-powered CI runners. Workflows are defined in `.tangled/workflows/` at the
-repo root using YAML. Docs: https://docs.tangled.org/spindles.html. There are **no GitHub
-Actions** — `.github/` does not exist.
+Deploys are handled by **Cloudflare Workers Builds**, Cloudflare's Git integration. The
+`jojo-news` Worker is connected to the GitHub repository `sakn0m/blog` and builds on every
+push to `main`; other branches produce preview builds.
 
-#### Workflow: `.tangled/workflows/deploy.yml`
+- **Docs**: https://developers.cloudflare.com/workers/ci-cd/builds/
+- **Build command**: `npm run build` (Astro build → `dist/`)
+- **Deploy command**: `npx wrangler deploy` (default), using the Wrangler version from
+  `package.json`
+- **Worker name**: must match `"name": "jojo-news"` in `wrangler.jsonc`, or the build fails
+- **Node version**: Astro 7 requires Node `>=22.12.0`; set `NODE_VERSION` in the build
+  environment if the Workers Builds default is older
+- **API token**: Workers Builds manages its own token automatically — no manual
+  `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
+- **Default build env vars**: `CI`, `WORKERS_CI`, `WORKERS_CI_BUILD_UUID`,
+  `WORKERS_CI_COMMIT_SHA`, `WORKERS_CI_BRANCH`
+- **No GitHub Actions** — `.github/` does not exist
+- **No Tangled CI** — `.tangled/` has been removed
 
-```yaml
-when:
-  - event: ["push"]
-    branch: ["main"]
-
-engine: "nixery"
-
-dependencies:
-  nixpkgs:
-    - nodejs
-  github:NixOS/nixpkgs/nixpkgs-unstable:
-    - bun
-
-steps:
-  - name: "Build"
-    command: |
-      export PATH="$HOME/.nix-profile/bin:$PATH"
-      bun install
-      bun run build
-
-  - name: "Deploy to Cloudflare"
-    command: |
-      export PATH="$HOME/.nix-profile/bin:$PATH"
-      npx --yes wrangler@latest deploy
-```
-
-#### Pipeline details
-
-- **Trigger**: pushes to `main` branch
-- **Engine**: `nixery` (Nix-based containerized runner — each step runs in a fresh Docker
-  container with dependencies layered via Nixery, workspace shared across steps)
-- **Dependencies**: `nodejs` from stable nixpkgs, `bun` from nixpkgs-unstable. Astro 7
-  requires Node `>=22.12.0`, so the nixpkgs `nodejs` must resolve to 22.12+.
-- **Build**: uses Bun (not npm/node) for both `install` and `build`
-- **Deploy**: `wrangler deploy` uploads `dist/` as Cloudflare Workers static assets
-- **Secrets**: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are configured in Tangled's
-  repo settings (not committed); injected at runtime by the spindle. Do not put secrets in a
-  step's `environment:` block — reference them directly.
-- **Default env vars available**: `CI=true`, `TANGLED_REPO_KNOT`, `TANGLED_REPO_DID`,
-  `TANGLED_REPO_SHA`, etc.
-- **Workers Builds is not used** — Cloudflare's own Git integration is intentionally bypassed;
-  Tangled remains the CI.
+Pipeline: `git push origin main` → Cloudflare Workers Builds (`npm run build`) →
+`npx wrangler deploy` → static assets served from `dist/` on the global edge.
 
 ### Environment variables
 
 - `.env` file exists at root but is **empty** (0 bytes). No `.env.example`.
-- `CLOUDFLARE_API_TOKEN` — set in Tangled repo settings, consumed by `wrangler deploy`
-- `CLOUDFLARE_ACCOUNT_ID` — set in Tangled repo settings, consumed by `wrangler deploy`
+- No secrets are required in the repository: Cloudflare Workers Builds manages its own deploy
+  API token. Any build-time variables are configured in the dashboard under the Worker's build
+  settings.
 
 ### DNS
 
@@ -717,33 +686,32 @@ Cloudflare's nameservers.
    with Cloudflare's two nameservers (`david.ns.cloudflare.com`, `nora.ns.cloudflare.com`).
 4. Wait until Cloudflare shows the zone as **Active**.
 
-### Part 2 — Cloudflare account prerequisites for `wrangler`
+### Part 2 — Connect the Worker to GitHub (Workers Builds)
 
-1. Find your **Account ID**: Cloudflare dashboard → **Workers & Pages** → right sidebar (or
-   **Account Home** → API section).
-2. Create an **API token** with permission to deploy Workers: **My Profile → API Tokens →
-   Create Token**, use the **"Edit Cloudflare Workers"** template (Account: Workers Scripts:
-   Edit; Zone: Workers Routes: Edit for `jojo.news`).
-3. Store both as **Tangled repo secrets**:
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ACCOUNT_ID`
+The `jojo-news` Worker is connected to the GitHub repository through **Workers Builds**:
 
-You do **not** need to create the Worker in the dashboard first — `wrangler deploy` creates
-it. Do **not** choose "Continue with GitHub/GitLab" — that would set up Workers Builds, which
-you're replacing with Tangled.
+1. Cloudflare dashboard → **Workers & Pages** → `jojo-news` → **Settings** → **Builds** →
+   **Connect**.
+2. Select the GitHub account and the `sakn0m/blog` repository, production branch `main`.
+3. Set the **build command** to `npm run build` and leave the deploy command as
+   `npx wrangler deploy`.
+4. Save. Workers Builds creates and manages the deploy API token automatically — no
+   `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` need to be stored manually.
+
+The Worker name in the dashboard must match `"name": "jojo-news"` in `wrangler.jsonc`, or the
+build fails.
 
 ### Part 3 — Deploy
 
-Push to `main` on Tangled (`git push tangled main`). Tangled runs:
+Push to `main` on GitHub (`git push origin main`). Cloudflare Workers Builds runs:
 
 ```
-bun install
-bun run build
-npx --yes wrangler@latest deploy
+npm run build
+npx wrangler deploy
 ```
 
-On success the site is live at `https://jojo-news.<subdomain>.workers.dev` and in the
-Cloudflare dashboard under Workers & Pages.
+On success the site is live at `https://jojo-news.<subdomain>.workers.dev` and promoted to the
+production deployment in the Cloudflare dashboard.
 
 ### Part 4 — Attach the custom domain `jojo.news`
 
@@ -814,21 +782,6 @@ formats at build time. The Hack TTF was sourced from GitHub releases.
 **Gotcha**: `og-font.ts` uses `path.resolve('./src/assets/fonts/...')` — relies on Astro
 setting CWD to project root at build time.
 
-### Bun syntax quirks
-
-The `bun` runtime (used in Tangled CI) is stricter than Node for certain TS patterns:
-
-- **No `|| undefined` at end of expression**: `expr || undefined` after a chain fails. Use
-  `if/else` or `let` with assignment instead.
-- **No mixed `??` + `||`**: Combining nullish coalescing with logical OR in the same
-  expression can fail. Use explicit `if/else` blocks.
-
-### Bun for builds
-
-The Tangled deploy uses `bun install` and `bun run build` — not npm. The `package-lock.json`
-is npm's format. If dependencies drift between bun and npm resolutions, builds might fail.
-Keep `package-lock.json` in sync.
-
 ### Dark mode implementation detail
 
 The dark mode flash-prevention script uses `<script is:inline>` to set `.dark` class before
@@ -894,11 +847,8 @@ The blog runs Astro 7, which changed several defaults:
 
 ### `.env` file
 
-Empty file at root. No `.env.example`. Secrets are configured in Tangled's repo settings
-(never committed):
-
-- `CLOUDFLARE_API_TOKEN` — Cloudflare Workers deploy authentication
-- `CLOUDFLARE_ACCOUNT_ID` — Cloudflare account for `wrangler deploy`
+Empty file at root. No `.env.example`. No secrets are committed: Cloudflare Workers Builds
+manages the deploy API token, and any build-time variables live in the dashboard.
 
 ### Minimal dependencies
 
@@ -910,10 +860,10 @@ The project is deliberately light:
 
 ### Remotes
 
-GitHub is `origin` (`github.com/sakn0m/blog`) and is canonical. The `tangled` remote is kept
-separately for the Cloudflare deploy pipeline and also mirrors to GitHub. See
+GitHub is `origin` (`github.com/sakn0m/blog`) and is canonical; pushing to `main` triggers
+Cloudflare Workers Builds. The `tangled` remote is a legacy mirror. See
 [Source of truth & git remotes](#source-of-truth--git-remotes).
 
 ---
 
-*Last verified: 2026-10-03 (3d65f85)*
+*Last verified: 2026-10-03*
