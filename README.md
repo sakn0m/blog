@@ -27,7 +27,7 @@ A minimal, static blog. Posts are plain Markdown in `src/content/posts/`, built 
 | RSS | @astrojs/rss | ^4.0.19 |
 | Sitemap | @astrojs/sitemap | ^3.7.4 |
 
-The project is deliberately light: 6 runtime dependencies and 4 devDependencies. No UI
+The project is deliberately light: 6 runtime dependencies and 6 devDependencies. No UI
 framework, no CMS, no analytics.
 
 ## Build/output mode
@@ -78,7 +78,8 @@ const posts = defineCollection({
 ├── README.md                  # This file — canonical documentation
 ├── wrangler.jsonc             # Cloudflare Workers static-assets config (deploy target)
 ├── tsconfig.json              # Strict TS, extends astro/tsconfigs/strict
-├── package.json               # Scripts: dev, check, build, preview
+├── biome.json                 # Lint/format config (Biome)
+├── package.json               # Scripts: dev, check, lint, format, build, preview
 ├── public/                    # Static assets copied verbatim to dist/
 │   ├── favicon-16x16.png
 │   ├── favicon-32x32.png
@@ -873,12 +874,25 @@ The blog runs Astro 7, which changed several defaults:
 Empty file at root. No `.env.example`. No secrets are committed: Cloudflare Workers Builds
 manages the deploy API token, and any build-time variables live in the dashboard.
 
+### Type-check, lint & format
+
+- **Type-check**: `npm run check` (`astro check`). `npm run build` runs it before `astro build`,
+  so type errors fail the deploy.
+- **Lint**: `npm run lint` (`biome check`); apply safe fixes with `npm run lint:fix`.
+- **Format**: `npm run format` (`biome format --write`).
+
+Biome is scoped to TypeScript and JSON. `.astro` files are excluded because Biome does not link
+component imports to template usage (false positives), and `src/styles/globals.css` is excluded
+because it uses Tailwind v4 at-rules (`@plugin`, `@theme`, `@custom-variant`) that Biome's CSS
+parser cannot read.
+
 ### Minimal dependencies
 
 The project is deliberately light:
 
 - 6 runtime dependencies: astro, @astrojs/rss, @astrojs/sitemap, satori, sharp, wawoff2
-- 4 devDependencies: @tailwindcss/typography, @tailwindcss/vite, tailwindcss, typescript
+- 6 devDependencies: @astrojs/check, @biomejs/biome, @tailwindcss/typography,
+  @tailwindcss/vite, tailwindcss, typescript
 - No UI framework, no CMS, no analytics
 
 ### Remotes

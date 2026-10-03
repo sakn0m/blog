@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "build": "astro check && astro build",
     "preview": "astro preview"
   },
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@biomejs/biome": "^2.5.15",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "tailwindcss": "^4.3.3",

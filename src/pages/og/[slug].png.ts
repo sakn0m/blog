@@ -1,6 +1,6 @@
 import type { APIRoute, InferGetStaticPropsType } from 'astro';
-import { renderOgImage } from '../../lib/og';
 import { formatDate } from '../../lib/date';
+import { renderOgImage } from '../../lib/og';
 import { getPublishedPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {

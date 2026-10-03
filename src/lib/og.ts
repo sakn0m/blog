@@ -5,7 +5,7 @@ import { getCharterRegular, getMonoFont } from './og-font';
 export async function renderOgImage(
   title: string,
   subtitle: string,
-  options: { isHomepage?: boolean } = {}
+  options: { isHomepage?: boolean } = {},
 ): Promise<Buffer> {
   const charterData = await getCharterRegular();
   const monoData = getMonoFont();
@@ -39,20 +39,24 @@ export async function renderOgImage(
               children: title,
             },
           },
-          ...(subtitle ? [{
-            type: 'div',
-            props: {
-              style: {
-                fontSize: isHome ? 28 : 24,
-                color: '#78716C',
-                marginTop: 16,
-                fontFamily: 'Hack',
-                fontWeight: 400,
-                lineHeight: 1.4,
-              },
-              children: subtitle,
-            },
-          }] : []),
+          ...(subtitle
+            ? [
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      fontSize: isHome ? 28 : 24,
+                      color: '#78716C',
+                      marginTop: 16,
+                      fontFamily: 'Hack',
+                      fontWeight: 400,
+                      lineHeight: 1.4,
+                    },
+                    children: subtitle,
+                  },
+                },
+              ]
+            : []),
         ],
       },
     },
@@ -79,7 +83,7 @@ export async function renderOgImage(
           style: 'normal',
         },
       ],
-    }
+    },
   );
 
   return sharp(Buffer.from(svg)).png().toBuffer();
