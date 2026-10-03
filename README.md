@@ -354,7 +354,8 @@ All metadata is set in `Layout.astro` via props:
 - `ogType` (defaults to `website`; post pages pass `article`)
 - `publishedTime` (ISO date; adds `article:published_time` on post pages)
 - `canonical` URL = `Astro.url.href`
-- `og:site_name`, `og:image:alt` / `twitter:image:alt`, `theme-color` (light/dark)
+- `og:site_name`, `og:image:width`/`og:image:height` (1200×630), `og:image:alt` /
+  `twitter:image:alt`, `theme-color` (light/dark)
 - Twitter card: `summary_large_image`
 - JSON-LD structured data on post pages (`BlogPosting` with `url`, `mainEntityOfPage`,
   `image`)

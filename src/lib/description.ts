@@ -1,4 +1,4 @@
-export function stripMarkdown(markdown: string): string {
+function stripMarkdown(markdown: string): string {
   return markdown
     .replace(/[#*_`[\]()>~]/g, '')
     .replace(/\s+/g, ' ')
