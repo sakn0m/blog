@@ -48,7 +48,7 @@ unico `README.md` alla root; eliminati `docs/` e `.AGENTS/`. Ogni affermazione v
 | Commit | Cosa |
 |---|---|
 | `b105dc2` | **RSS**: `trailingSlash:false` (coerente con `trailingSlash:"never"` + `drop-trailing-slash`); description autogenerata via helper condiviso `src/lib/description.ts` |
-| `aafd65c` | **`public/_headers`**: `Cache-Control: immutable` per `/_astro/*`, security header, `X-Robots-Tag: noindex` per `*.workers.dev` |
+| `aafd65c` | **`public/_headers`**: `Cache-Control: immutable` per `/_astro/*` e security header |
 | `3742f5f` | **Favicon**: 16/32/180 + apple-touch-icon al posto del PNG 1024×1024/143 KB |
 | `0ccf651` | **SEO/a11y**: `og:site_name`, `og:image:alt`/`twitter:image:alt`, `theme-color` light/dark, `og:type=article`+`article:published_time`, JSON-LD (`url`/`mainEntityOfPage`/`image`), `aria-pressed` sul toggle |
 | `081e9a1` | **Type-check**: `@astrojs/check`, `npm run check`, `build = astro check && astro build`. Sistemati 4 type error reali |
@@ -98,7 +98,6 @@ ma **non** funziona perché Astro prerenderizza da `dist/.prerender`; la risoluz
 - **Nessuna CSP**: `security.csp` di Astro richiederebbe test dedicati con gli script inline; non
   introdotta per non rischiare regressioni.
 - **Favicon master** 1024px rimosso dal working tree (recuperabile da git history).
-- **`_headers` workers.dev** noindex non verificabile dal repo (serve il sottodominio account).
 
 ## File toccati
 
@@ -132,5 +131,5 @@ Dopo la prima valutazione dell'agente:
 
 Rilievi aperti (non bloccanti):
 - Ripuliti tutti i branch non-`main` in locale e su `origin` e `tangled` (resta solo `main`).
-- Regola `_headers` per `*.workers.dev`: mantenuta (innocua; il `<link canonical>` copre già il
-  duplicate content). Non verificabile dal repo (serve il sottodominio dell'account).
+- Il sottodominio `*.workers.dev` è stato disabilitato in Cloudflare, quindi la regola
+  `X-Robots-Tag: noindex` è stata rimossa da `_headers` (era superflua).

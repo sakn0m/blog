@@ -611,8 +611,9 @@ Cloudflare Workers static assets reads `public/_headers` (copied to `dist/`, nev
   content-hashed assets
 - `/*` → `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`,
   `X-Frame-Options: DENY`, `Permissions-Policy`
-- `https://jojo-news.:subdomain.workers.dev/*` → `X-Robots-Tag: noindex` so the workers.dev
-  duplicate of `jojo.news` stays out of search results
+
+The Worker's `*.workers.dev` subdomain is disabled in the Cloudflare dashboard, so the only live
+origin is `jojo.news` (no duplicate-content rule needed).
 
 ### Source of truth & git remotes
 
@@ -736,8 +737,8 @@ npm run build
 npx wrangler deploy
 ```
 
-On success the site is live at `https://jojo-news.<subdomain>.workers.dev` and promoted to the
-production deployment in the Cloudflare dashboard.
+On success the deploy is promoted to the production deployment in the Cloudflare dashboard and
+served on the custom domain `jojo.news` (the `*.workers.dev` subdomain is disabled).
 
 ### Part 4 — Attach the custom domain `jojo.news`
 
