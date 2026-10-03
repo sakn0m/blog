@@ -104,7 +104,7 @@ const posts = defineCollection({
 │   │   └── ThemeToggle.astro  # Dark/light toggle with View Transitions support
 │   ├── lib/
 │   │   ├── consts.ts          # SITE_TITLE, SITE_DESCRIPTION, etc.
-│   │   ├── date.ts            # formatDate, toISODate helpers
+│   │   ├── date.ts            # formatDate, formatDateLong, toISODate helpers
 │   │   ├── posts.ts           # getPublishedPosts (filters drafts in PROD)
 │   │   ├── og.ts              # renderOgImage (Satori SVG → PNG via sharp)
 │   │   ├── og-font.ts         # Font loading for OG image (wawoff2, Charter + Hack)
@@ -923,9 +923,10 @@ setting CWD to project root at build time.
 - **Deploy target is Cloudflare**: the final step is `npx --yes wrangler@latest deploy`, which
   uploads `dist/` per `wrangler.jsonc`. `wrangler.jsonc` has no `main` (assets-only Worker).
   The Worker name (`jojo-news`) must match the Cloudflare dashboard Worker.
-- **Records file is ephemeral**: `standard-site-records.json` is overwritten on each CI run by
-  querying the PDS. The repo copy is a placeholder — the live rkeys are always fetched at sync
-  time.
+- **Records file is regenerated**: `standard-site-records.json` is rewritten on each CI run.
+  The script seeds missing rkeys by querying the PDS (`listPublications` / `listDocuments`),
+  so the committed copy (currently `{"publication":{"rkey":""},"documents":{}}`) is just a
+  placeholder.
 
 ### Bun syntax quirks
 
@@ -993,7 +994,7 @@ The blog runs Astro 7, which changed several defaults:
   auto-corrected). Templates must be well-formed. Void elements (`<meta>`, `<link>`, `<hr>`,
   `<br>`, `<img>`, `<path>`, `<circle>`) do not need closing tags.
 - **Markdown processor** — Astro 7 renders Markdown with **Sätteri** (native, GFM +
-  SmartyPants) instead of remark/rehype. The blog uses no remark/rehype plugins, so nothing to
+  smart punctuation) instead of remark/rehype. The blog uses no remark/rehype plugins, so nothing to
   port. If plugins are ever needed, install `@astrojs/markdown-remark` and set
   `markdown.processor: unified()`.
 - **`compressHTML`** — Astro 7 defaults to `'jsx'` (strips whitespace between inline
