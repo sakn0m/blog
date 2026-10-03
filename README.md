@@ -886,6 +886,14 @@ component imports to template usage (false positives), and `src/styles/globals.c
 because it uses Tailwind v4 at-rules (`@plugin`, `@theme`, `@custom-variant`) that Biome's CSS
 parser cannot read.
 
+### Known advisories
+
+`npm audit` reports a high-severity advisory in `http-cache-semantics` (CVE-2026-93748),
+pulled in transitively by `astro`. There is **no patched version** upstream yet, and the package
+is only used by Astro's build/dev HTTP layer — it is not shipped to the browser nor executed at
+runtime on Cloudflare Workers, so it does not affect the deployed site. Re-run `npm audit` and
+update `astro` when a fix lands upstream.
+
 ### Minimal dependencies
 
 The project is deliberately light:
