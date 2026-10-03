@@ -21,7 +21,7 @@ A minimal, static blog. Posts are plain Markdown in `src/content/posts/`, built 
 | CSS | Tailwind CSS | ^4.3.3 (via `@tailwindcss/vite`) |
 | CSS plugin | @tailwindcss/typography | ^0.5.20 |
 | TS | TypeScript | ^5 (strict mode, extends `astro/tsconfigs/strict`) |
-| Font engine | Satori | ^0.26.0 |
+| Font engine | Satori | ^0.35.0 |
 | Image processing | sharp | ^0.35.5 |
 | Woff2 decompression | wawoff2 | ^2.0.1 |
 | RSS | @astrojs/rss | ^4.0.19 |
