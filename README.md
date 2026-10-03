@@ -886,8 +886,12 @@ component imports to template usage (false positives), and `src/styles/globals.c
 because it uses Tailwind v4 at-rules (`@plugin`, `@theme`, `@custom-variant`) that Biome's CSS
 parser cannot read.
 
-TypeScript is kept on `^5`: `@astrojs/check` only supports TypeScript `^5 || ^6`, so the `7.x`
-line is intentionally not adopted yet.
+TypeScript is kept on `^5`, not `7.x`. `@astrojs/check` (via `@astrojs/language-server` and
+Volar) consumes the TypeScript **JavaScript** compiler API (`typescript.js` /
+`tsserverlibrary.js`, `ts.createLanguageService`, ...). TypeScript 7 is the native **Go** port
+(`tsgo`): the npm package ships a platform binary and only exposes `tsc` — no `tsserver` and no
+JS API yet — so the checker cannot run against it. `@astrojs/check`'s peer range is therefore
+`^5 || ^6` (the JS line, which continues as 6.x).
 
 ### Known advisories
 
