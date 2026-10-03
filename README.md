@@ -886,6 +886,9 @@ component imports to template usage (false positives), and `src/styles/globals.c
 because it uses Tailwind v4 at-rules (`@plugin`, `@theme`, `@custom-variant`) that Biome's CSS
 parser cannot read.
 
+TypeScript is kept on `^5`: `@astrojs/check` only supports TypeScript `^5 || ^6`, so the `7.x`
+line is intentionally not adopted yet.
+
 ### Known advisories
 
 `npm audit` reports a high-severity advisory in `http-cache-semantics` (CVE-2026-93748),
