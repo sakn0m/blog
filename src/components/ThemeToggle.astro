@@ -3,7 +3,8 @@
 
 <button
   id="theme-toggle"
-  aria-label="Toggle Dark Mode"
+  aria-label="Toggle dark mode"
+  aria-pressed="false"
   class="group z-50 cursor-pointer p-2 rounded-full transition-colors relative w-10 h-10 flex items-center justify-center focus:outline-none"
 >
   <!-- Sun icon -->
@@ -52,9 +53,17 @@
 </button>
 
 <script>
+  function setToggleState(button: HTMLElement) {
+    const isDark = document.documentElement.classList.contains('dark');
+    button.setAttribute('aria-pressed', String(isDark));
+    button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
   function initThemeToggle() {
     const button = document.getElementById('theme-toggle');
     if (!button) return;
+
+    setToggleState(button);
 
     button.addEventListener('click', () => {
       const html = document.documentElement;
@@ -69,6 +78,8 @@
         html.style.colorScheme = 'dark';
         localStorage.setItem('theme', 'dark');
       }
+
+      setToggleState(button);
     });
   }
 

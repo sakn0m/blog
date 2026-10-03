@@ -350,9 +350,13 @@ All metadata is set in `Layout.astro` via props:
 - `title` (page title + `— jojo's thoughts` suffix on subpages)
 - `description` (per-page; falls back to `SITE_DESCRIPTION`)
 - `ogImage` (per-page; home uses `/og.png`, posts use `/og/{slug}.png`)
+- `ogType` (defaults to `website`; post pages pass `article`)
+- `publishedTime` (ISO date; adds `article:published_time` on post pages)
 - `canonical` URL = `Astro.url.href`
+- `og:site_name`, `og:image:alt` / `twitter:image:alt`, `theme-color` (light/dark)
 - Twitter card: `summary_large_image`
-- JSON-LD structured data on post pages (`BlogPosting` schema)
+- JSON-LD structured data on post pages (`BlogPosting` with `url`, `mainEntityOfPage`,
+  `image`)
 - RSS discovery link
 
 ### Middleware
@@ -376,6 +380,8 @@ interface Props {
   title?: string;           // default: SITE_TITLE
   description?: string;     // default: SITE_DESCRIPTION
   ogImage?: string;         // OG image URL (optional)
+  ogType?: string;          // og:type (default: 'website')
+  publishedTime?: string;   // article:published_time (optional)
   preloadAllFonts?: boolean; // preload all 4 Charter variants (default: false)
 }
 ```
@@ -411,7 +417,8 @@ Two intertwined scripts in `<head>`:
 A single `<button>` with sun/moon SVG icons (transition between them via CSS
 opacity/rotation). Script:
 
-- On click: toggles `.dark` on `<html>`, sets `colorScheme`, persists to `localStorage`
+- On click: toggles `.dark` on `<html>`, sets `colorScheme`, persists to `localStorage`, and
+  updates `aria-pressed` / `aria-label`
 - Re-initializes on `astro:after-swap` (View Transitions re-attachment)
 
 **Hydration**: No `client:*` directive — the script runs as a standard module script

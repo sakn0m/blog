@@ -18,6 +18,8 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const isoDate = toISODate(post.data.date);
 const description = getDescription(post.data.description, post.body);
+const postUrl = `${SITE_URL}/posts/${post.id}`;
+const ogImage = `${SITE_URL}/og/${post.id}.png`;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -25,6 +27,9 @@ const jsonLd = {
   headline: post.data.title,
   datePublished: isoDate,
   author: { "@type": "Person", name: AUTHOR_NAME },
+  url: postUrl,
+  mainEntityOfPage: postUrl,
+  image: ogImage,
 };
 
 ---
@@ -32,7 +37,9 @@ const jsonLd = {
 <Layout
   title={`${post.data.title} — ${SITE_TITLE}`}
   description={description}
-  ogImage={`${SITE_URL}/og/${post.id}.png`}
+  ogImage={ogImage}
+  ogType="article"
+  publishedTime={isoDate}
   preloadAllFonts
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -13,6 +13,8 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogType?: string;
+  publishedTime?: string;
   preloadAllFonts?: boolean;
 }
 
@@ -20,6 +22,8 @@ const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
   ogImage,
+  ogType = 'website',
+  publishedTime,
   preloadAllFonts = false,
 } = Astro.props;
 ---
@@ -34,15 +38,21 @@ const {
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1A1A1A" media="(prefers-color-scheme: dark)" />
+    <meta property="og:site_name" content={SITE_TITLE} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:alt" content={title} />}
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
     <meta property="og:url" content={Astro.url.href} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogImage && <meta name="twitter:image:alt" content={title} />}
     <link rel="canonical" href={Astro.url.href} />
     <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
 
