@@ -82,6 +82,7 @@ const posts = defineCollection({
 ├── public/                    # Static assets copied verbatim to dist/
 │   ├── favicon.png
 │   ├── robots.txt
+│   ├── _headers               # Cloudflare cache + security headers
 │   └── images/                # Post images go here
 ├── src/
 │   ├── content.config.ts      # Content collections definition
@@ -589,6 +590,17 @@ npx wrangler deploy
 It uses the Wrangler version declared in `package.json`. No manual `CLOUDFLARE_API_TOKEN` /
 `CLOUDFLARE_ACCOUNT_ID` are needed — Workers Builds creates and manages the API token when you
 connect the repository.
+
+### Headers (`public/_headers`)
+
+Cloudflare Workers static assets reads `public/_headers` (copied to `dist/`, never served):
+
+- `/_astro/*` → `Cache-Control: public, max-age=31536000, immutable` for Astro's
+  content-hashed assets
+- `/*` → `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`,
+  `X-Frame-Options: DENY`, `Permissions-Policy`
+- `https://jojo-news.:subdomain.workers.dev/*` → `X-Robots-Tag: noindex` so the workers.dev
+  duplicate of `jojo.news` stays out of search results
 
 ### Source of truth & git remotes
 

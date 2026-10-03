@@ -1,0 +1,14 @@
+# Hashed build assets (content-addressed) can be cached forever
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Security headers for all responses
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# Keep the duplicate *.workers.dev origin out of search results
+https://jojo-news.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex
