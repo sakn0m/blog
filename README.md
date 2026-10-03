@@ -101,6 +101,7 @@ const posts = defineCollection({
 │   ├── lib/
 │   │   ├── consts.ts          # SITE_TITLE, SITE_DESCRIPTION, etc.
 │   │   ├── date.ts            # formatDate, formatDateLong, toISODate helpers
+│   │   ├── description.ts     # getDescription (explicit, else strip+truncate body)
 │   │   ├── posts.ts           # getPublishedPosts (filters drafts in PROD)
 │   │   ├── og.ts              # renderOgImage (Satori SVG → PNG via sharp)
 │   │   ├── og-font.ts         # Font loading for OG image (wawoff2, Charter + Hack)
@@ -246,8 +247,9 @@ markdown consumed by the `posts` collection `glob` loader.
 ### Description auto-generation
 
 If a post has no `description` in its frontmatter, the description is auto-generated from the
-post body (strip markdown, collapse whitespace, truncate at 160 chars + `...`). It is used
-as-is for the HTML `<meta>` and OG tags in `[slug].astro`.
+post body (strip markdown, collapse whitespace, truncate at 160 chars + `...`) by the shared
+`getDescription` helper in `src/lib/description.ts`. It is used for the HTML `<meta>`, the OG
+tags and the RSS feed.
 
 Explicit frontmatter descriptions are never truncated — only auto-generated ones are.
 
