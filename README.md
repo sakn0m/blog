@@ -788,10 +788,9 @@ Cloudflare keeps every Worker version. To roll back a bad deploy: Cloudflare das
 A custom pipeline generates PNG Open Graph images at build time using two fonts:
 
 1. **Font sources**:
-   - `src/assets/fonts/charter-regular.woff2` → decompressed via `wawoff2` → used for titles
-     (bold weight, simulated via Satori)
-   - `src/assets/fonts/hack-regular.ttf` → loaded directly (TTF) → used for dates/timestamps
-     (monospace)
+   - `src/assets/fonts/charter-regular.woff2` + `charter-bold.woff2` → decompressed via
+     `wawoff2` → titles (regular + bold)
+   - `src/assets/fonts/hack-regular.ttf` → loaded directly (TTF) → dates/timestamps (monospace)
 2. **SVG rendering**: Satori (`lib/og.ts`) creates an SVG at 1200×630
 3. **PNG conversion**: sharp converts the SVG to PNG buffer
 4. **Two endpoints**:
@@ -799,12 +798,13 @@ A custom pipeline generates PNG Open Graph images at build time using two fonts:
    - `src/pages/og/[slug].png.ts` → per-post OG (title + formatted date)
 5. **Colors** match blog design tokens: bg `#FDFBF7`, text `#1C1917`, date `#78716C`
 
-**Gotcha**: Only TTF fonts work reliably with Satori. Woff2 decompression via `wawoff2` works
-for Charter but not for some other fonts (e.g., Fira Code failed). Always test new font
-formats at build time. The Hack TTF was sourced from GitHub releases.
+**Gotcha**: `wawoff2` reuses a shared wasm heap, so its returned buffer is invalidated by the
+next `decompress()` call. `og-font.ts` serializes decompressions and copies each result
+(`.slice(0)`) before caching.
 
-**Gotcha**: `og-font.ts` uses `path.resolve('./src/assets/fonts/...')` — relies on Astro
-setting CWD to project root at build time.
+**Gotcha**: `og-font.ts` resolves fonts with `path.resolve('src/assets/fonts')` — this relies on
+Astro running the build/prerender with CWD set to the project root (a `import.meta.url` path
+would point inside the bundled `.prerender` output instead).
 
 ### Dark mode implementation detail
 
