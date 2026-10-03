@@ -5,7 +5,7 @@ import { SITE_TITLE } from '../lib/consts';
 export const GET: APIRoute = async () => {
   const png = await renderOgImage(SITE_TITLE, '', { isHomepage: true });
 
-  return new Response(png, {
+  return new Response(new Uint8Array(png), {
     headers: { 'Content-Type': 'image/png' },
   });
 };

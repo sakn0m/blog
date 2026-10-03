@@ -38,7 +38,7 @@ framework, no CMS, no analytics.
 - **compressHTML**: `true` (explicit; Astro 7 now defaults to `'jsx'` whitespace stripping,
   this keeps pre-v7 output)
 - **Prefetch**: viewport-based (`prefetch: { defaultStrategy: 'viewport' }`)
-- **Build command**: `astro build` → output to `dist/`
+- **Build command**: `npm run build` (`astro check && astro build`) → output to `dist/`
 - **Dev command**: `astro dev` (Astro 7 can daemonize; `astro dev stop` / `astro dev status`)
 
 ### Integrations (`astro.config.mjs`)
@@ -78,7 +78,7 @@ const posts = defineCollection({
 ├── README.md                  # This file — canonical documentation
 ├── wrangler.jsonc             # Cloudflare Workers static-assets config (deploy target)
 ├── tsconfig.json              # Strict TS, extends astro/tsconfigs/strict
-├── package.json               # Scripts: dev, build, preview
+├── package.json               # Scripts: dev, check, build, preview
 ├── public/                    # Static assets copied verbatim to dist/
 │   ├── favicon-16x16.png
 │   ├── favicon-32x32.png
@@ -556,7 +556,7 @@ adapter and no Worker script** — the Worker is an assets-only Worker. The cust
 |---|---|
 | Hosting | Cloudflare Workers static assets (global edge) |
 | CI/CD | Cloudflare Workers Builds (GitHub integration) |
-| Build command | `npm run build` (set in the Worker's build settings) |
+| Build command | `npm run build` (`astro check && astro build`, set in the Worker's build settings) |
 | Deploy command | `npx wrangler deploy` (default) |
 | DNS | Cloudflare nameservers (required for a Worker custom domain) |
 
@@ -632,7 +632,7 @@ Deploys are handled by **Cloudflare Workers Builds**, Cloudflare's Git integrati
 push to `main`; other branches produce preview builds.
 
 - **Docs**: https://developers.cloudflare.com/workers/ci-cd/builds/
-- **Build command**: `npm run build` (Astro build → `dist/`)
+- **Build command**: `npm run build` → runs `astro check` then `astro build` (→ `dist/`)
 - **Deploy command**: `npx wrangler deploy` (default), using the Wrangler version from
   `package.json`
 - **Worker name**: must match `"name": "jojo-news"` in `wrangler.jsonc`, or the build fails
