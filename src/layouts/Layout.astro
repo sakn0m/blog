@@ -29,7 +29,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" class="h-full" style="--font-charter: 'Charter';">
+<html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -63,38 +63,6 @@ const {
       <link rel="preload" href={fontCharterBold} as="font" type="font/woff2" crossorigin="anonymous" />
       <link rel="preload" href={fontCharterBoldItalic} as="font" type="font/woff2" crossorigin="anonymous" />
     )}
-
-    <!-- Charter font -->
-    <style>
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-regular.woff2') format('woff2');
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-italic.woff2') format('woff2');
-        font-weight: 400;
-        font-style: italic;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-bold.woff2') format('woff2');
-        font-weight: 700;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'Charter';
-        src: url('../assets/fonts/charter-bold-italic.woff2') format('woff2');
-        font-weight: 700;
-        font-style: italic;
-        font-display: swap;
-      }
-    </style>
 
     <ClientRouter />
 

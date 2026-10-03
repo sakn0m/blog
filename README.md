@@ -391,8 +391,8 @@ Responsibilities:
 
 - DOCTYPE, `<html lang="en">`, charset, viewport meta
 - SEO: `<title>`, `<meta description>`, OG tags, Twitter card, canonical, RSS link
-- Font loading: `@font-face` declarations for Charter (regular/italic/bold/bold-italic),
-  preloads regular (always) and optionally all 4
+- Font loading: preloads Charter regular (always) and optionally all 4 variants; the
+  `@font-face` declarations live in `globals.css`
 - Dark mode: inline `<script is:inline>` that applies `.dark` class before first paint (reads
   `localStorage`), re-applies on `astro:before-swap`
 - Navigation state: adds `.is-navigating` class to clicked same-origin links on
@@ -473,8 +473,8 @@ Theme override for the serif font stack:
 }
 ```
 
-CSS custom property `--font-charter` is set inline on `<html>`:
-`style="--font-charter: 'Charter';"`
+CSS custom property `--font-charter` is defined on `:root` in `globals.css` (together with the
+`@font-face` declarations).
 
 ### Design tokens
 
