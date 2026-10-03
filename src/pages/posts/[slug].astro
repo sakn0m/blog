@@ -4,8 +4,6 @@ import { render } from 'astro:content';
 import { SITE_TITLE, SITE_URL, AUTHOR_NAME } from '../../lib/consts';
 import { formatDateLong, toISODate } from '../../lib/date';
 import { getPublishedPosts } from '../../lib/posts';
-import { generateDocumentLinkTag } from '@kckempf/astro-standard-site';
-import records from '../../data/standard-site-records.json';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -36,12 +34,6 @@ const jsonLd = {
   author: { "@type": "Person", name: AUTHOR_NAME },
 };
 
-const DID = "did:plc:qiyhlatbxz3cr2dch5x5o3dy";
-const documentRkey = records.documents[post.id];
-const headExtras = documentRkey
-  ? generateDocumentLinkTag({ did: DID, documentRkey })
-  : undefined;
-
 ---
 
 <Layout
@@ -49,7 +41,6 @@ const headExtras = documentRkey
   description={description}
   ogImage={`${SITE_URL}/og/${post.id}.png`}
   preloadAllFonts
-  headExtras={headExtras}
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 

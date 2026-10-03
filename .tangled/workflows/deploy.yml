@@ -11,15 +11,10 @@ dependencies:
     - bun
 
 steps:
-  - name: "Sync to ATProto"
-    command: |
-      export PATH="$HOME/.nix-profile/bin:$PATH"
-      bun install
-      bun run scripts/sync-to-atproto.ts
-
   - name: "Build"
     command: |
       export PATH="$HOME/.nix-profile/bin:$PATH"
+      bun install
       bun run build
 
   - name: "Deploy to Cloudflare"
