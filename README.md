@@ -8,7 +8,7 @@ from **Tangled** CI.
 - **Source of truth**: GitHub (`github.com/sakn0m/blog`)
 - **Deploy**: Tangled CI → Cloudflare Workers
 
-*Last verified: 2026-10-01 (aaffd1d)*
+*Last verified: 2026-10-03 (3d65f85)*
 
 ---
 
@@ -120,8 +120,8 @@ const posts = defineCollection({
 ## How to write a post
 
 Posts are plain Markdown files in `src/content/posts/`. There is no CMS — you edit the file
-directly and push to `main`, which builds and deploys via Tangled → Cloudflare Workers
-(see [Deployment](#deployment)).
+directly and push to `main` (GitHub). To deploy, also push to Tangled (`git push tangled main`)
+— see [Deployment](#deployment).
 
 ### File name = URL slug
 
@@ -916,4 +916,4 @@ separately for the Cloudflare deploy pipeline and also mirrors to GitHub. See
 
 ---
 
-*Last verified: 2026-10-01 (aaffd1d)*
+*Last verified: 2026-10-03 (3d65f85)*
