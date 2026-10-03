@@ -121,3 +121,15 @@ npx astro preview    # oppure ispeziona dist/
 npm audit            # atteso: 2 high (http-cache-semantics + astro), nessun fix
 npm outdated         # atteso: solo typescript 7
 ```
+
+## Post-review follow-up
+
+Dopo la prima valutazione dell'agente:
+
+- Rimossi i file `.DS_Store` (root, `public/`, `src/`, `src/content/`) che finivano in `dist/` a ogni build locale.
+- Aggiunto `public/favicon.ico` (ICO con PNG 32×32) e `<link rel="icon" href="/favicon.ico" sizes="any">` per i crawler legacy.
+- Reso coerente il remote `tangled`: rimossa la `pushurl` ridondante verso GitHub (ora fetch/push solo su `tangled.org`).
+
+Rilievi aperti (non bloccanti, da decidere):
+- Branch stantii locali/remoti non rimossi (es. `react-legacy`, `retro-redesign`, `copilot/*`).
+- Regola `_headers` per `*.workers.dev` non verificabile dal repo (matching hostname).
