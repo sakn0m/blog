@@ -16,7 +16,7 @@ A minimal, static blog. Posts are plain Markdown in `src/content/posts/`, built 
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Framework | Astro | ^7.3.5 (Vite 8, Node ≥22.12) |
+| Framework | Astro | ^7.3.6 (Vite 8, Node ≥22.12) |
 | Markdown | Sätteri (Astro's native pipeline) | built-in (Astro 7 default) |
 | CSS | Tailwind CSS | ^4.3.3 (via `@tailwindcss/vite`) |
 | CSS plugin | @tailwindcss/typography | ^0.5.20 |
@@ -902,11 +902,13 @@ support TypeScript 7 once the native compiler exposes an equivalent JS API.
 
 ### Known advisories
 
-`npm audit` reports a high-severity advisory in `http-cache-semantics` (CVE-2026-93748),
-pulled in transitively by `astro`. There is **no patched version** upstream yet, and the package
-is only used by Astro's build/dev HTTP layer — it is not shipped to the browser nor executed at
-runtime on Cloudflare Workers, so it does not affect the deployed site. Re-run `npm audit` and
-update `astro` when a fix lands upstream.
+None: `npm audit` is clean. Two `overrides` keep transitive dependencies patched beyond their
+parents' exact pins:
+
+- `fflate` → `^0.8.2` (for `satori`)
+- `postcss-selector-parser` → `^7.1.6` (for `@tailwindcss/typography`)
+
+Re-run `npm audit` after dependency updates.
 
 ### Minimal dependencies
 
